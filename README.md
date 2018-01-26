@@ -11,67 +11,67 @@ There are two purposes for these classes:
 * To demonstrate ways to create BI models using InterSystems IRIS BI.
 
 This sample contains two packages:
-* The DeepSee package, which provides simple data representing a fictitious medical study, and also provides 
+* The BI package, which provides simple data representing a fictitious medical study, and also provides 
   an InterSystems IRIS BI model that uses that data.
 * The HoleFoods package, which provides simple data representing sales of food products, and also provides 
   an InterSystems IRIS BI model that uses that data.
 
 Both of these BI models are used extensively in the BI documentation. The HoleFoods model provides a quick 
-andeasy introduction to BI, and the DeepSee model demonstrates null handling, list-based levels, and other 
-features not included in HoleFoods. The DeepSee package also explicitly demonstrates how to address more difficult modeling scenarios. 
+andeasy introduction to BI, and the BI model demonstrates null handling, list-based levels, and other 
+features not included in HoleFoods. The BI package also explicitly demonstrates how to address more difficult modeling scenarios. 
 
 ************************************************************************************
-Contents of the DeepSee package
+Contents of the BI package
 ************************************************************************************
 This package provides simple data representing a fictitious medical study, and also provides 
 an InterSystems IRIS BI model that uses that data.
 
-* DeepSee.Model package contains the classes that demonstrate BI model capability.
-   -  DeepSee.Model.PatientsCube is the primary model; this defines the PATIENTS cube that is 
+* BI.Model package contains the classes that demonstrate BI model capability.
+   -  BI.Model.PatientsCube is the primary model; this defines the PATIENTS cube that is 
       used in the MDX reference documentation and for most of the sample queries in the documentation.
-      Other classes in DeepSee.Model demonstrate special cases of various kinds; see the modeling guides.
-   -  DeepSee.Model.CompoundCube package contains multiple cube definitions that collectively
+      Other classes in BI.Model demonstrate special cases of various kinds; see the modeling guides.
+   -  BI.Model.CompoundCube package contains multiple cube definitions that collectively
       demonstrate how to create a compound cube. The Advanced Modeling guide discusses these cubes.
-   -  DeepSee.Model.KPIs package contains sample InterSystems IRIS BI KPIs (key performance indicators).
+   -  BI.Model.KPIs package contains sample InterSystems IRIS BI KPIs (key performance indicators).
       All of these KPIs are either discussed in the modeling guides or are used in the sample dashboards, 
       to demonstrate different kinds of widgets.
-   -  DeepSee.Model.Portlet package demonstrates a sample custom portlet. For details, see the 
+   -  BI.Model.Portlet package demonstrates a sample custom portlet. For details, see the 
       Advanced Modeling guide.
-   -  DeepSee.Model.RelCube package contains multiple cube definitions that collectively
+   -  BI.Model.RelCube package contains multiple cube definitions that collectively
       demonstrate how to create a set of related cubes. For details, see the Advanced Modeling guide.
-   -  DeepSee.Model.SubjectAreas package contains multiple class definitions that that define 
+   -  BI.Model.SubjectAreas package contains multiple class definitions that that define 
       subject areas, which are filtered cube definitions. The documentation refers to these in several
-      places. The subject area DEMOMDX (DeepSee.Model.DemoMDX) is meant for use in getting familiar
+      places. The subject area DEMOMDX (BI.Model.DemoMDX) is meant for use in getting familiar
       with MDX.
 
-* DeepSee.Study package contains the classes that generate the data used by these models. The most 
+* BI.Study package contains the classes that generate the data used by these models. The most 
   important classes are these:
-   -  DeepSee.Study.Patient is the central class and provides the source table for the PATIENTS cube.
+   -  BI.Study.Patient is the central class and provides the source table for the PATIENTS cube.
       The patients are generated in an age-sex distribution that follows the 2010 US Census data. 
-   -  DeepSee.Diagnosis generates the diagnosis data used when generating patients. This diagnosis
+   -  BI.Diagnosis generates the diagnosis data used when generating patients. This diagnosis
       data consists of a small set of diagnoses for chronic conditions, along with morbidity data
       for these conditions (that is, chance of having this condition, based on age & sex). When data 
       for a patient is generated, the patient is assigned zero or more diagnoses, based on the 
       patient's age and sex, using this data.
-   -  DeepSee.Allergen generates a common set of allergens, and DeepSee.AllergySeverity generates a
+   -  BI.Allergen generates a common set of allergens, and BI.AllergySeverity generates a
       common set of allergy severities. When data for a patient is generated, the patient is assigned 
       zero or more allergies, each to an allergen, with a specific severity. This enables BI modelers to
       explore multiple list-based levels and how they relate to each other.
-   -  DeepSee.Study.Profession generates a set of professions, to which the working-age patients are
+   -  BI.Study.Profession generates a set of professions, to which the working-age patients are
       assigned.
 
-* DeepSee.Utils,.MDXAutoFiltersKPI is a sample class that adds cube-based filters to a KPI, when used
+* BI.Utils,.MDXAutoFiltersKPI is a sample class that adds cube-based filters to a KPI, when used
   as a superclass for that KPI. This class is discussed in the advanced modeling guide.
 
-* DeepSee.APISamples demonstrates how to execute BI queries programmatically on the server. For details,
+* BI.APISamples demonstrates how to execute BI queries programmatically on the server. For details,
   see the BI implementation guide.
 
-* DeepSee.DashboardsEtc contains the pivot table and dashboard definitions based on the models in
-  the DeepSee.Model package.
+* BI.DashboardsEtc contains the pivot table and dashboard definitions based on the models in
+  the BI.Model package.
 
-* DeepSee.Populate contains the wrapper code used to generate the data for this part of the BI sample.
+* BI.Populate contains the wrapper code used to generate the data for this part of the BI sample.
 
-* DeepSee.RESTClient allows you to exercise the BI REST interface. See the book Client-Side APIs 
+* BI.RESTClient allows you to exercise the BI REST interface. See the book Client-Side APIs 
   for InterSystems Business Intelligence.
 
 ************************************************************************************
@@ -105,7 +105,7 @@ Setup instructions
    do $system.OBJ.LoadDir(dir,"ck",,1)
    This command loads & compiles the code.
 5. Then enter either or both of the following commands (depending on which sample you plan to use):
-   do ##class(DeepSee.Populate).Setup()
+   do ##class(BI.Populate).Setup()
    do ##class(HoleFoods.Utils).Setup()
 6. Create a web application for use in this namespace and enable that web app for use with analytics.
    Here's how:
