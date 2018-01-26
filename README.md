@@ -87,7 +87,7 @@ an InterSystems IRIS BI model that uses that data.
 * HoleFoods.BudgetCube and HoleFoods.CombinedCube demonstrate a compound cube.
 * HoleFoods.KPI* classes define sample InterSystems IRIS BI KPIs (key performance indicators).
   For details, see the advanced modeling guide.
-* HoleFioods.SampleListingGroup is a sample listing group class. Via listing groups, you can define
+* HoleFoods.SampleListingGroup is a sample listing group class. Via listing groups, you can define
   detail listings without modifying the cube definition. For details, see the modeling guides.
 * HoleFoods.SubjectAreaAsia is a sample subject area. For details, see the modeling guides.
 * HoleFoods.Utils contains the code used to generate data for the HoleFoods part of the BI sample.
@@ -105,17 +105,17 @@ Setup instructions
    do $system.OBJ.LoadDir(dir,"ck",,1)
    This command loads & compiles the code.
 5. Then enter either or both of the following commands (depending on which sample you plan to use):
-   do ##class(BI.Populate).Setup()
-   do ##class(HoleFoods.Utils).Setup()
+   <p>do ##class(BI.Populate).Setup()<p>
+   <p>do ##class(HoleFoods.Utils).Setup()<p>
 6. Create a web application for use in this namespace and enable that web app for use with analytics.
    Here's how:
-   a. In the Management Portal, select System Administration > Security > Applications > Web Applications.
-   b. Click Create New Web Application.
-   c. For name, type csp/namespace where namespace is the specific namespace you're using.
-   d. For Namespace, select the same namespace.
-   e. Check the DeepSee and iKnow check boxes.
-   f. Accept all other defaults.
-   g. Click Save.
+   <p>a. In the Management Portal, select System Administration > Security > Applications > Web Applications.<p>
+   <p>b. Click Create New Web Application.<p>
+   <p>c. For name, type csp/namespace where namespace is the specific namespace you're using.<p>
+   <p>d. For Namespace, select the same namespace.<p>
+   <p>e. Check the DeepSee and iKnow check boxes.<p>
+   <p>f. Accept all other defaults.<p>
+   <p>g. Click Save.<p>
 
 Now, when you access the Analytics submenu of the Management Portal, this namespace will be listed.
 For example, you can now use the Analyzer with the cubes that are included within thihs sample.
