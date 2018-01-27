@@ -114,6 +114,7 @@ Setup instructions
 4. Enter the following commands (replacing with the full path of the buildsample/buildsamplebi.rtn file):
 
    do $system.OBJ.Load("full-path-to-buildsamplebi.rtn","ck")
+   
    do ^buildsamplebi
 5. Then answer any prompts.
 6. After the routine has finished running, create a web application for use in this namespace and 
