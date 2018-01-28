@@ -2,7 +2,7 @@ ROUTINE buildsamplebi
  // This is buildsamplebi from https://github.com/intersystems/Samples-BI
  // Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
 
-    write !, "This is the setup routine for the Samples-BI sample, which is meant for use "
+    write !!, "This is the setup routine for the Samples-BI sample, which is meant for use "
     write !, "with the InterSystems IRIS Business Intelligence capabilities. To use this sample,"
     write !, "you must have an InterSystems IRIS license that includes analytics capabilities."
 
