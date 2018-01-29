@@ -6,7 +6,7 @@ ROUTINE buildsamplebi
     write !, "with the InterSystems IRIS Business Intelligence capabilities. To use this sample,"
     write !, "you must have an InterSystems IRIS license that includes analytics capabilities."
 
-    write !, "Please specify the directory that contains this sample."
+    write !, "Please specify the full path of the directory that contains this sample."
     write !, "(This is the directory that contains the README.md and LICENSE files.)", !
     read stagingroot
     set OK=$$run(stagingroot,1)
