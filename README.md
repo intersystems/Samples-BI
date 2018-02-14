@@ -14,9 +14,9 @@ These classes provide sample data that you can use to explore the capabilities o
 They also demonstrate ways to create BI models using InterSystems IRIS BI.
 
 This sample contains two packages:
-* The BI package, which provides simple data representing a fictitious medical study, and also provides 
+* The `BI` package, which provides simple data representing a fictitious medical study, and also provides 
   an InterSystems IRIS BI model that uses that data. See details below.
-* The HoleFoods package, which provides simple data representing sales of food products, and also provides 
+* The `HoleFoods` package, which provides simple data representing sales of food products, and also provides 
   an InterSystems IRIS BI model that uses that data. See details below.
 
 The documentation for InterSystems IRIS Business Intelligence refers extensively to these samples. 
