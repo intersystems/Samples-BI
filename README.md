@@ -106,7 +106,7 @@ an InterSystems IRIS BI model that uses that data.
 
 ## Setup instructions
 
-1. 1. Clone or [download](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=asamples) the repository.
+1. Clone or [download](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=asamples) the repository.
 2. If you have not yet created a namespace in InterSystems IRIS, follow the [detailed instructions](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=ASAMPLES_createns) to do so.
 3. Open the InterSystems IRIS Terminal.
 4. Enter the following command (replacing `mynamespace` with the namespace where you want to load the sample):
