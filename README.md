@@ -109,9 +109,10 @@ an InterSystems IRIS BI model that uses that data.
 1. 1. Clone or [download](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=asamples) the repository.
 2. If you have not yet created a namespace in InterSystems IRIS, follow the [detailed instructions](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=ASAMPLES_createns) to do so.
 3. Open the InterSystems IRIS Terminal.
-4. Enter the following command (replacing `<namespace>` with the namespace where you want to load the sample):
-
-   `ZN "<namespace>"`
+4. Enter the following command (replacing `mynamespace` with the namespace where you want to load the sample):
+```
+   ZN "mynamespace"
+   ```
 5. Enter the following commands (replacing with the full path of the `buildsample/buildsamplebi.mac` file):
 
    ```
@@ -127,7 +128,7 @@ an InterSystems IRIS BI model that uses that data.
 
    b. Click Create New Web Application. 
 
-   c. For name, type `/csp/<namespace>` where `<namespace>` is the specific namespace you're using. 
+   c. For name, type `/csp/mynamespace` where `mynamespace` is the specific namespace you're using. 
 
    d. For Namespace, select the same namespace. 
 
