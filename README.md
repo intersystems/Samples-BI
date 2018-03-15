@@ -113,14 +113,14 @@ an InterSystems IRIS BI model that uses that data.
 ```
    ZN "mynamespace"
    ```
-5. Enter the following commands (replacing with the full path of the `buildsample/buildsamplebi.mac` file):
+5. Enter the following commands (replacing with the full path of the `buildsample/Build.BISample.cls` file):
 
    ```
-   do $system.OBJ.Load("full-path-to-buildsamplebi.mac","ck")
+   do $system.OBJ.Load("full-path-to-Build.BISample.cls","ck")
    
-   do ^buildsamplebi
+   do ##class(Build.BISample).Build()
    ```
-6. Then answer any prompts.
+6. When prompted, enter the the full path of the directory to which you downloaded this sample. 
 
 Now when you access the Analytics submenu of the Management Portal, this namespace will be listed. For example, you can now use the Analyzer with the cubes that are included within this sample.
 
