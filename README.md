@@ -120,7 +120,7 @@ an InterSystems IRIS BI model that uses that data.
    
    do ##class(Build.BISample).Build()
    ```
-6. When prompted, enter the the full path of the directory to which you downloaded this sample. 
+6. When prompted, enter the full path of the directory to which you downloaded this sample. The method then loads and compiles the code and performs other needed setup steps.
 
 Now when you access the Analytics submenu of the Management Portal, this namespace will be listed. For example, you can now use the Analyzer with the cubes that are included within this sample.
 
