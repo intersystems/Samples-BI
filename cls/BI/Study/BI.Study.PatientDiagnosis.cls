@@ -21,7 +21,7 @@ Storage Default
 </Data>
 <State>PatientDiagnosisState</State>
 <StreamLocation>^BI.Study.PatientDiagB1A7S</StreamLocation>
-<Type>%Library.CacheSerialState</Type>
+<Type>%Storage.Serial</Type>
 }
 
 }
