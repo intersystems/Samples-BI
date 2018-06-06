@@ -110,7 +110,7 @@ Storage Default
 <IdLocation>^HoleFoods.TransactionD</IdLocation>
 <IndexLocation>^HoleFoods.TransactionI</IndexLocation>
 <StreamLocation>^HoleFoods.TransactionS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
