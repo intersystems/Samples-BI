@@ -89,7 +89,7 @@ Storage Default
 <IdLocation>^BI.Study.AllergenD</IdLocation>
 <IndexLocation>^BI.Study.AllergenI</IndexLocation>
 <StreamLocation>^BI.Study.AllergenS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
