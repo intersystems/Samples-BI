@@ -38,7 +38,7 @@ Storage Default
 <IdLocation>^HoleFoods.ProductD</IdLocation>
 <IndexLocation>^HoleFoods.ProductI</IndexLocation>
 <StreamLocation>^HoleFoods.ProductS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
