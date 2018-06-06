@@ -21,7 +21,7 @@ Storage Default
 <IdLocation>^HoleFoods.RegionD</IdLocation>
 <IndexLocation>^HoleFoods.RegionI</IndexLocation>
 <StreamLocation>^HoleFoods.RegionS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
