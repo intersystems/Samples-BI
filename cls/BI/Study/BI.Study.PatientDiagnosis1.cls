@@ -33,7 +33,7 @@ Storage Default
 <IdLocation>^BI.Study.PatientC("DiagnosesAsChildren")</IdLocation>
 <IndexLocation>^BI.Study.PatientDiag6E31I</IndexLocation>
 <StreamLocation>^BI.Study.PatientDiag6E31S</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
