@@ -95,17 +95,15 @@ ClassMethod AddEncounters(percent As %Numeric = 20, rebuild As %Boolean = 1) As 
                     Set result=rset.Data("EncounterNumber")
                     }
                 If (result'="") {
-	                Set highestencno=result
+	            Set highestencno=result
                     Set encNo=$PIECE(highestencno,"-",2) + 1    ; increment by 1 from what's there
-                    }
-                    Else {
-	                    //this patient has no encounters yet
-	                    Set encNo=100
-	                    }
-                }
-                Else {
-	                Set encNo=100
-	                }
+                 } Else {
+	             //this patient has no encounters yet
+	             Set encNo=100
+	         }
+                } Else {
+	           Set encNo=100
+	        }
                    
             //number of encounters to add
             Set encountercount=$RANDOM(2)+1   ; ADD 1 or 2 encounters
@@ -155,14 +153,12 @@ ClassMethod DeleteEncounters(pat As BI.Study.Patient) As %Status
 ClassMethod GetRandomEncounterType() As %String
 {
     If ##class(BI.Populate).RandomTrue(5) {
-	    Quit "Emergency"
-	    }
-	    Elseif ##class(BI.Populate).RandomTrue(30) {
-		    Quit "Outpatient"
-		    }
-		    Else {
-			    Quit "Inpatient"
-			    }
+	 Quit "Emergency"   
+    }  Elseif ##class(BI.Populate).RandomTrue(30) {
+	 Quit "Outpatient"
+    }  Else {
+	 Quit "Inpatient"
+    }
 }
 
 ClassMethod GetRandomEncounterCount(age As %Numeric) As %Integer
@@ -198,7 +194,7 @@ Storage Default
 <IdLocation>^BI.Study.PatientEncoB0D9D</IdLocation>
 <IndexLocation>^BI.Study.PatientEncoB0D9I</IndexLocation>
 <StreamLocation>^BI.Study.PatientEncoB0D9S</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
