@@ -78,7 +78,7 @@ Storage Default
 <IdLocation>^BI.Study.AllergySeverityD</IdLocation>
 <IndexLocation>^BI.Study.AllergySeverityI</IndexLocation>
 <StreamLocation>^BI.Study.AllergySeverityS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
