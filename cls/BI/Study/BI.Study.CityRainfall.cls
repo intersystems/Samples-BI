@@ -134,7 +134,7 @@ Storage Default
 <IdLocation>^BI.Study.CityRainfallD</IdLocation>
 <IndexLocation>^BI.Study.CityRainfallI</IndexLocation>
 <StreamLocation>^BI.Study.CityRainfallS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
