@@ -102,7 +102,7 @@ Storage Default
 <IdLocation>^BI.Study.ProfessionD</IdLocation>
 <IndexLocation>^BI.Study.ProfessionI</IndexLocation>
 <StreamLocation>^BI.Study.ProfessionS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
