@@ -96,7 +96,7 @@ Storage Default
 <IdLocation>^BI.Study.CityD</IdLocation>
 <IndexLocation>^BI.Study.CityI</IndexLocation>
 <StreamLocation>^BI.Study.CityS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
