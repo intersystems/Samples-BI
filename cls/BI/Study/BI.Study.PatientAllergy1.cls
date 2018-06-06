@@ -61,7 +61,7 @@ Storage Default
 <IdLocation>^BI.Study.PatientAllergy1D</IdLocation>
 <IndexLocation>^BI.Study.PatientAllergy1I</IndexLocation>
 <StreamLocation>^BI.Study.PatientAllergy1S</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
