@@ -190,7 +190,7 @@ Storage Default
 <IdLocation>^BI.Study.PatientSet2D</IdLocation>
 <IndexLocation>^BI.Study.PatientSet2I</IndexLocation>
 <StreamLocation>^BI.Study.PatientSet2S</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
