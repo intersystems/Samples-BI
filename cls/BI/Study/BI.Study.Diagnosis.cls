@@ -150,7 +150,7 @@ Storage Default
 <IdLocation>^BI.Study.DiagnosisD</IdLocation>
 <IndexLocation>^BI.Study.DiagnosisI</IndexLocation>
 <StreamLocation>^BI.Study.DiagnosisS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
