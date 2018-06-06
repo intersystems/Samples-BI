@@ -95,7 +95,7 @@ Storage Default
 </Data>
 <State>PatientAllergyState</State>
 <StreamLocation>^BI.Study.PatientAllergyS</StreamLocation>
-<Type>%Library.CacheSerialState</Type>
+<Type>%Storage.Serial</Type>
 }
 
 }
