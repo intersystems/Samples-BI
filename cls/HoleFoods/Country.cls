@@ -27,7 +27,7 @@ Storage Default
 <IdLocation>^HoleFoods.CountryD</IdLocation>
 <IndexLocation>^HoleFoods.CountryI</IndexLocation>
 <StreamLocation>^HoleFoods.CountryS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<Type>%Storage.Persistent</Type>
 }
 
 }
