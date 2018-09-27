@@ -113,10 +113,10 @@ an InterSystems IRIS BI model that uses that data.
 ```
    ZN "mynamespace"
    ```
-5. Enter the following commands (replacing with the full path of the `buildsample/Build.BISample.cls` file):
+5. Enter the following commands (replacing with the full path of the `buildsample/Build.SampleBI.cls` file):
 
    ```
-   do $system.OBJ.Load("full-path-to-Build.BISample.cls","ck")
+   do $system.OBJ.Load("full-path-to-Build.SampleBI.cls","ck")
    
    do ##class(Build.BISample).Build()
    ```
