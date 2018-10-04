@@ -107,21 +107,27 @@ an InterSystems IRIS BI model that uses that data.
 ## Setup instructions
 
 1. Clone or [download](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=asamples) the repository.
-2. If you have not yet created a namespace in InterSystems IRIS, follow the [detailed instructions](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=ASAMPLES_createns) to do so. These instructions also provide the steps to create a web application for use in this namespace and enable that web app for use with analytics. Complete those steps as well.
-3. Open the InterSystems IRIS Terminal.
-4. Enter the following command (replacing `mynamespace` with the namespace where you want to load the sample):
+2. If you have not yet created a namespace in InterSystems IRIS, follow the [detailed instructions](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=ASAMPLES_createns) to do so. 
+3. In the Management Portal, click System Administration > Security > Applications > Web Applications.
+4. Click the link in the first column of the row /csp/mynamespace where `mynamespace` is the namespace from step 2.
+5. Click the Analytics checkbox and then click Save.
+
+6. Open the InterSystems IRIS Terminal.
+7. Enter the following command (replacing `mynamespace` with the namespace from step 2):
 ```
    ZN "mynamespace"
    ```
-5. Enter the following commands (replacing with the full path of the `buildsample/Build.SampleBI.cls` file):
+8. Enter the following commands (replacing with the full path of the `buildsample/Build.SampleBI.cls` file):
 
    ```
    do $system.OBJ.Load("full-path-to-Build.SampleBI.cls","ck")
    
    do ##class(Build.BISample).Build()
    ```
-6. When prompted, enter the full path of the directory to which you downloaded this sample. The method then loads and compiles the code and performs other needed setup steps.
+9. When prompted, enter the full path of the directory to which you downloaded this sample. The method then loads and compiles the code and performs other needed setup steps.
 
 Now when you access the Analytics submenu of the Management Portal, this namespace will be listed. For example, you can now use the Analyzer with the cubes that are included within this sample.
 
-IMPORTANT: If the namespace is not listed when you access the Analytics submenu of the Management Portal, double-check that you performed all parts of the [detailed instructions](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=ASAMPLES_createns).
+IMPORTANT: If the namespace is not listed when you access the Analytics submenu of the Management Portal, see [Setting Up the Web Application](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=D2IMP_ch_setup#D2IMP_setup_web_app) in the book [Implementing InterSystems IRIS Business Intelligence](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=D2IMP_ch_setup).
+
+
