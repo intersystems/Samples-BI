@@ -54,6 +54,18 @@ sort="asc"
 </hierarchy>
 </dimension>
 
+<dimension name="BirthD" displayName="BirthD" type="time" 
+sourceProperty="BirthDate" hasAll="false"
+description="These levels group patients by birth date">
+<hierarchy name="H1" displayName="H1">
+<level name="Decade" displayName="Decade" timeFunction="Decade" />
+<level name="Year"  displayName="Year" timeFunction="Year"  />
+<level name="Quarter Year" displayName="Quarter Year" timeFunction="QuarterYear" />
+<level name="Period" displayName="Period" timeFunction="MonthYear" />
+<level name="Date" displayName="Date" timeFunction="DayMonthYear" />
+</hierarchy>
+</dimension>
+
 <dimension name="DiagD" displayName="DiagD" hasAll="false" >
 <hierarchy name="H1" displayName="H1">
 <level name="Diagnoses" displayName="Diagnoses"
