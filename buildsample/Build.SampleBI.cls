@@ -77,6 +77,21 @@ ClassMethod run(stagingroot As %String = "", interactive As %Boolean = 0)
         }
         return 0
     }
+    
+    //after classes have been loaded, load data
+    set dir=stagingroot_"/data/" ;works on both Windows and Unix
+    if '##class(%File).DirectoryExists(dir) {
+        if interactive {
+            write !!, "Looking for "_dir
+            write !, "but it does not exist... Quitting."
+        }
+        return 0
+    }
+    if interactive {
+        write !!, "Loading data..."
+    }
+    do $system.OBJ.LoadDir(dir,"ck",,1)
+    
     if interactive {
         write !, "Running the BI.Populate.Setup() method..."
     }
