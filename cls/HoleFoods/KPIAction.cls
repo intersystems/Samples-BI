@@ -24,15 +24,15 @@ ClassMethod %OnDashboardAction(pAction As %String, pContext As %ZEN.proxyObject)
 	// pContext contains information from the client
 	// and can be used to return information.
 
-	// value associated with current item in widget.
-	Set tSelectedValue = pContext.currValue
+	// Value associated with current item in widget.
+	set tSelectedValue = pContext.currValue
 
-	If (pAction="ActionA") {
+	if (pAction="ActionA") {
 		// Go to a new page
-		Set pContext.command = "navigate:http://www.intersystems.com"
+		set pContext.command = "navigate:http://www.intersystems.com"
 	}
 
-	Quit $$$OK
+	quit $$$OK
 }
 
 }

@@ -17,29 +17,5 @@ Property SKU As %String(MAXLEN = 22);
 /// List price for this product.
 Property Price As %Numeric(MINVAL = 0);
 
-Storage Default
-{
-<Data name="ProductDefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>Category</Value>
-</Value>
-<Value name="3">
-<Value>Name</Value>
-</Value>
-<Value name="4">
-<Value>Price</Value>
-</Value>
-</Data>
-<DataLocation>^HoleFoods.ProductD</DataLocation>
-<DefaultData>ProductDefaultData</DefaultData>
-<IdLocation>^HoleFoods.ProductD</IdLocation>
-<IndexLocation>^HoleFoods.ProductI</IndexLocation>
-<StreamLocation>^HoleFoods.ProductS</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
-
 }
 

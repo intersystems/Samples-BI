@@ -31,86 +31,86 @@ XData KPI [ XMLNamespace = "http://www.intersystems.com/deepsee/kpi" ]
 /// This is a good place to override properties, such as range and threshold.
 Method %OnLoadKPI() As %Status
 {
-	Set tSC = $$$OK
+	set tSC = $$$OK
 
 	// Compute additional values
-	Set tFilters = ..%filterValues
+	set tFilters = ..%filterValues
 
-	// compute recent history using query
-	If ((tFilters.Year'="")&&(tFilters.Year'="*")&&(tFilters.Year'="&[NOW]")) {
+	// Compute recent history using query
+	if ((tFilters.Year'="")&&(tFilters.Year'="*")&&(tFilters.Year'="&[NOW]")) {
 		// Take &[] off of Year value!
-		Set tStartMonth = "Jan-"_$E(tFilters.Year,3,6)
-		Set tEndMonth = "Dec-"_$E(tFilters.Year,3,6)
+		set tStartMonth = "Jan-"_$E(tFilters.Year,3,6)
+		set tEndMonth = "Dec-"_$E(tFilters.Year,3,6)
 	}
-	Else {
-		Set tStartMonth = "NOW-12"
-		Set tEndMonth = "NOW"
+	else {
+		set tStartMonth = "NOW-12"
+		set tEndMonth = "NOW"
 	}
 
-	Set tROWS = ..RowsClause
-	Set tMDX = "SELECT "_tROWS_"%LIST(DateOfSale.[MonthSold].["_tStartMonth_"]:["_tEndMonth_"]) ON COLUMNS FROM HOLEFOODSCOMBINED WHERE Measures.[Amount Sold] " _ ..FilterClause
-	Set tRS = ##class(%DeepSee.ResultSet).%New()
-	Set tSC = tRS.%PrepareMDX(tMDX)
-	If $$$ISERR(tSC) Quit tSC
-	Set tSC = tRS.%Execute()
-	If $$$ISERR(tSC) Quit tSC
+	set tROWS = ..RowsClause
+	set tMDX = "SELECT "_tROWS_"%LIST(DateOfSale.[MonthSold].["_tStartMonth_"]:["_tEndMonth_"]) ON COLUMNS FROM HOLEFOODSCOMBINED WHERE Measures.[Amount Sold] " _ ..FilterClause
+	set tRS = ##class(%DeepSee.Resultset).%New()
+	set tSC = tRS.%PrepareMDX(tMDX)
+	if $$$ISERR(tSC) quit tSC
+	set tSC = tRS.%Execute()
+	if $$$ISERR(tSC) quit tSC
 
-	For n = 1:1:..%seriesCount {
-		Set tValue = tRS.%GetOrdinalValue(1,n)
-		Set ..%data(n,"History") = tValue
+	for n = 1:1:..%seriesCount {
+		set tValue = tRS.%GetOrdinalValue(1,n)
+		set ..%data(n,"History") = tValue
 	}
-	Quit tSC
+	quit tSC
 }
 
 /// Return an MDX statement to execute.
 Method %OnGetMDX(ByRef pMDX As %String) As %Status
 {
-	Set tFilters = ..%filterValues
+	set tFilters = ..%filterValues
 
 	// Construct an MDX query based on the current filter values
-	Set tROWS = ""
-	Set tFILTER = ""
+	set tROWS = ""
+	set tFILTER = ""
 
-	// show by
-	If (tFilters.ShowBy="Year") {
-		Set tROWS = "[DateOfSale].[YearSold].Members"
+	// Show by
+	if (tFilters.ShowBy="Year") {
+		set tROWS = "[DateOfSale].[YearSold].Members"
 	}
-	ElseIf (tFilters.ShowBy="Month") {
-		Set tROWS = "[DateOfSale].[MonthSold].Members"
+	elseif (tFilters.ShowBy="Month") {
+		set tROWS = "[DateOfSale].[MonthSold].Members"
 	}
-	ElseIf ((tFilters.ShowBy="ProductCategory")) {
-		Set tROWS = "[Product].[Product Category].Members"
+	elseif ((tFilters.ShowBy="ProductCategory")) {
+		set tROWS = "[Product].[Product Category].Members"
 	}
-	ElseIf ((tFilters.ShowBy="ProductName")||(tFilters.ShowBy="")) {
-		Set tROWS = "[Product].[Product Name].Members"
+	elseif ((tFilters.ShowBy="ProductName")||(tFilters.ShowBy="")) {
+		set tROWS = "[Product].[Product Name].Members"
 	}
-	ElseIf (tFilters.ShowBy="Country") {
-		Set tROWS = "[Outlet].[Country].Members"
+	elseif (tFilters.ShowBy="Country") {
+		set tROWS = "[Outlet].[Country].Members"
 	}
-	ElseIf (tFilters.ShowBy="City") {
-		Set tROWS = "[Outlet].[City].Members"
+	elseif (tFilters.ShowBy="City") {
+		set tROWS = "[Outlet].[City].Members"
 	}
 	
-	If (tROWS'="") {
-		Set tROWS = "NON EMPTY "_tROWS_" ON ROWS,"
+	if (tROWS'="") {
+		set tROWS = "NON EMPTY "_tROWS_" ON ROWS,"
 	}
 
-	// filters
-	If ((tFilters.Year'="")&&(tFilters.Year'="*")) {
-		Set tFILTER = tFILTER_" %FILTER [DateOfSale].[YearSold]."_tFilters.Year
+	// Filters
+	if ((tFilters.Year'="")&&(tFilters.Year'="*")) {
+		set tFILTER = tFILTER_" %FILTER [DateOfSale].[YearSold]."_tFilters.Year
 	}
-	If ((tFilters.Product'="")&&(tFilters.Product'="*")) {
-		Set tFILTER = tFILTER_" %FILTER [Product].[Product Category]."_tFilters.Product
+	if ((tFilters.Product'="")&&(tFilters.Product'="*")) {
+		set tFILTER = tFILTER_" %FILTER [Product].[Product Category]."_tFilters.Product
 	}
-	If ((tFilters.Country'="")&&(tFilters.Country'="*")) {
-		Set tFILTER = tFILTER_" %FILTER [Outlet].[Country]."_tFilters.Country
+	if ((tFilters.Country'="")&&(tFilters.Country'="*")) {
+		set tFILTER = tFILTER_" %FILTER [Outlet].[Country]."_tFilters.Country
 	}
 
-	Set ..FilterClause = tFILTER
-	Set ..RowsClause = tROWS
+	set ..FilterClause = tFILTER
+	set ..RowsClause = tROWS
 
-	Set pMDX = "SELECT "_tROWS_"{Measures.[Amount Sold],Measures.[Target]} ON Columns FROM HOLEFOODSCOMBINED "_tFILTER
-	Quit $$$OK
+	set pMDX = "SELECT "_tROWS_"{Measures.[Amount Sold],Measures.[Target]} ON Columns FROM HOLEFOODSCOMBINED "_tFILTER
+	quit $$$OK
 }
 
 /// Callback to get additional members for a KPI filter.
@@ -118,26 +118,26 @@ Method %OnGetMDX(ByRef pMDX As %String) As %Status
 /// pMembers($I(pMembers))=$LB(text,value)<br/>
 ClassMethod %OnGetFilterMembers(pFilter As %String, Output pMembers As %List, pSearchKey As %String) As %Status
 {
-	Set tSC = $$$OK
-	Try {
-		// get member list from cube
-		If (pFilter = "Year") {
-			Set tSC = ..%GetMembersForFilter("HOLEFOODSCOMBINED","[DateOfSale].[Actual].[YearSold]",.pMembers,pSearchKey)
-			If $$$ISERR(tSC) Quit
+	set tSC = $$$OK
+	try {
+		// Get member list from cube
+		if (pFilter = "Year") {
+			set tSC = ..%GetMembersForFilter("HOLEFOODSCOMBINED","[DateOfSale].[Actual].[YearSold]",.pMembers,pSearchKey)
+			if $$$ISERR(tSC) quit
 		}
-		ElseIf (pFilter = "Product") {
-			Set tSC = ..%GetMembersForFilter("HOLEFOODSCOMBINED","[Product].[P1].[Product Name]",.pMembers,pSearchKey)
-			If $$$ISERR(tSC) Quit
+		elseif (pFilter = "Product") {
+			set tSC = ..%GetMembersForFilter("HOLEFOODSCOMBINED","[Product].[P1].[Product Name]",.pMembers,pSearchKey)
+			if $$$ISERR(tSC) quit
 		}
-		ElseIf (pFilter = "Country") {
-			Set tSC = ..%GetMembersForFilter("HOLEFOODSCOMBINED","[Outlet].[H1].[Country]",.pMembers,pSearchKey)
-			If $$$ISERR(tSC) Quit
+		elseif (pFilter = "Country") {
+			set tSC = ..%GetMembersForFilter("HOLEFOODSCOMBINED","[Outlet].[H1].[Country]",.pMembers,pSearchKey)
+			if $$$ISERR(tSC) quit
 		}
 	}
-	Catch(ex) {
-		Set tSC = ex.AsStatus()
+	catch(ex) {
+		set tSC = ex.AsStatus()
 	}
-	Quit tSC
+	quit tSC
 }
 
 }
