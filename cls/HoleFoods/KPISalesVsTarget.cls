@@ -49,7 +49,7 @@ Method %OnLoadKPI() As %Status
 
 	set tROWS = ..RowsClause
 	set tMDX = "SELECT "_tROWS_"%LIST(DateOfSale.[MonthSold].["_tStartMonth_"]:["_tEndMonth_"]) ON COLUMNS FROM HOLEFOODSCOMBINED WHERE Measures.[Amount Sold] " _ ..FilterClause
-	set tRS = ##class(%DeepSee.Resultset).%New()
+	set tRS = ##class(%DeepSee.ResultSet).%New()
 	set tSC = tRS.%PrepareMDX(tMDX)
 	if $$$ISERR(tSC) quit tSC
 	set tSC = tRS.%Execute()

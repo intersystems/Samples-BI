@@ -58,8 +58,8 @@ Method %OnGetSQL(ByRef pSQL As %String) As %Status
 /// pSelection("rowValues") contains a csv-list of "row" values for the selected rows in the pivot (similar
 /// to the $$$VALUELIST value used for OpenWindow URLs. This may contain "\," for "," within the data values.<br/>
 /// <var>pListingName</var> is the name of the listing to display. This is reserved for future use.<br/>
-/// This method is simply a convenient alternative to the <method>%OnGetListingResultset</method> method.
-/// It takes precedence over the <method>%OnGetListingResultset</method> method.
+/// This method is simply a convenient alternative to the <method>%OnGetListingResultSet</method> method.
+/// It takes precedence over the <method>%OnGetListingResultSet</method> method.
 ClassMethod %OnGetListingSQL(ByRef pFilters As %String, ByRef pSelection As %String, pListingName As %String = "") As %String
 {
 	set tSQL = "SELECT TOP 1000 %ID,DateOfSale,Product FROM HoleFoods.SalesTransaction"

@@ -15,26 +15,5 @@ Property DiagnosedBy As BI.Study.Doctor;
 
 Index PatientIndex On Patient;
 
-Storage Default
-{
-<Data name="PatientDiagnosis1DefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>DiagnosisCode</Value>
-</Value>
-<Value name="3">
-<Value>DiagnosedBy</Value>
-</Value>
-</Data>
-<DataLocation>{%%PARENT}("DiagnosesAsChildren")</DataLocation>
-<DefaultData>PatientDiagnosis1DefaultData</DefaultData>
-<IdLocation>^BI.Study.PatientC("DiagnosesAsChildren")</IdLocation>
-<IndexLocation>^BI.Study.PatientDiag6E31I</IndexLocation>
-<StreamLocation>^BI.Study.PatientDiag6E31S</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
-
 }
 

@@ -36,33 +36,5 @@ ClassMethod CreateOne(patient As BI.Study.Patient, allergen As BI.Study.Allergen
 	set status=new.%Save()
 	quit status
 }
-
-Storage Default
-{
-<Data name="PatientAllergy1DefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>Allergen</Value>
-</Value>
-<Value name="3">
-<Value>Severity</Value>
-</Value>
-<Value name="4">
-<Value>DiagnosedBy</Value>
-</Value>
-<Value name="5">
-<Value>Patient</Value>
-</Value>
-</Data>
-<DataLocation>^BI.Study.PatientAllergy1D</DataLocation>
-<DefaultData>PatientAllergy1DefaultData</DefaultData>
-<IdLocation>^BI.Study.PatientAllergy1D</IdLocation>
-<IndexLocation>^BI.Study.PatientAllergy1I</IndexLocation>
-<StreamLocation>^BI.Study.PatientAllergy1S</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
-
 }
 

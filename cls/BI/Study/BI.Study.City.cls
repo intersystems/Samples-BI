@@ -15,8 +15,8 @@ Property Population As %Integer;
 
 Property PrincipalExport As %String;
 
-/// fields: postal code^city^city population^principal export
-/// there are multiple cities in most postal codes
+/// Fields: postal code^city^city population^principal export
+/// There are multiple cities in most postal codes
 XData LoadData
 {
 <table>
@@ -34,70 +34,43 @@ XData LoadData
 
 /// This method reads the XData block in this class and uses it to populate the table. 
 /// This method is called by BI.Populate:GenerateData().
-ClassMethod Setup() As %Status
+ClassMethod setup() As %Status
 {
-   Set status=$$$OK
-   //first kill extent and child extent
-   //never use %KillExtent() in a real application
-   Do ..%KillExtent()
+   set status=$$$OK
+   // First kill extent and child extent
+   // Never use %KillExtent() in a real application
+   do ..%KillExtent()
 
    // Get a stream of XML from the XData block contained in this class
-   Set tStream=##class(%Dictionary.CompiledXData).IDKEYOpen($CLASSNAME(),"LoadData").Data
-   If '$IsObject(tStream) {Set tSC=%objlasterror Quit}
+   set tStream=##class(%Dictionary.CompiledXData).IDKEYOpen($CLASSNAME(),"LoadData").Data
+   if '$IsObject(tStream) {set tSC=%objlasterror quit}
    
-   Set status=##class(%XML.TextReader).ParseStream(tStream,.textreader)
-   //check status
-   If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
+   set status=##class(%XML.TextReader).ParseStream(tStream,.textreader)
    
-   //iterate through document, node by node
-   While textreader.Read()
+   // Check status
+   if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
+   
+   // Iterate through document, node by node
+   while textreader.Read()
    {
-       If (textreader.NodeType="chars")
+       if (textreader.NodeType="chars")
        {
-           Set value=textreader.Value
-           //write !, "value is: ", value
-           Set obj=..%New()
-           Set obj.PostalCode=$Piece(value,"^",1)
-           Set obj.Name=$Piece(value,"^",2)
-           Set obj.Population=$Piece(value,"^",3)
-           Set obj.PrincipalExport=$Piece(value,"^",4)
-           Set status=obj.%Save()
-           If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
+           set value=textreader.Value
+           // Write !, "value is: ", value
+           set obj=..%New()
+           set obj.PostalCode=$Piece(value,"^",1)
+           set obj.Name=$Piece(value,"^",2)
+           set obj.Population=$Piece(value,"^",3)
+           set obj.PrincipalExport=$Piece(value,"^",4)
+           set status=obj.%Save()
+           if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
            }
    }
 
-   //create an "extent set" from which we can later get random IDs
-   Set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
+   // Create an "extent set" from which we can later get random IDs
+   set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
    
-   Quit status
+   quit status
 }
-
-Storage Default
-{
-<Data name="CityDefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>PostalCode</Value>
-</Value>
-<Value name="3">
-<Value>Name</Value>
-</Value>
-<Value name="4">
-<Value>Population</Value>
-</Value>
-<Value name="5">
-<Value>PrincipalExport</Value>
-</Value>
-</Data>
-<DataLocation>^BI.Study.CityD</DataLocation>
-<DefaultData>CityDefaultData</DefaultData>
-<IdLocation>^BI.Study.CityD</IdLocation>
-<IndexLocation>^BI.Study.CityI</IndexLocation>
-<StreamLocation>^BI.Study.CityS</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
-
 }
 

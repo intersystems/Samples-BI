@@ -11,11 +11,11 @@ Include %DeepSee
 /// The first argument is the number of records to create, 
 /// the second argument indicates that index building should be done in parallel,
 /// the third is a verbose flag; if true, then progress is displayed as the data is built.
-Class HoleFoods.Utils Extends %Registeredobject
+Class HoleFoods.Utils Extends %RegisteredObject
 {
 
-/// Add this alias so that each DeepSee sample has a setup() method
-ClassMethod setup(pCount As %Integer = 1000, pASync As %Boolean = 1, pVerbose As %Boolean = 1)
+/// Add this alias so that each DeepSee sample has a Setup() method
+ClassMethod Setup(pCount As %Integer = 1000, pASync As %Boolean = 1, pVerbose As %Boolean = 1)
 {
 	do ..BuildData(pCount,pASync,pVerbose)
 }
@@ -33,11 +33,11 @@ ClassMethod BuildData(pCount As %Integer = 1000, pASync As %Boolean = 1, pVerbos
 	}
 
 	// kill old data
-	do ##class(Region).%killExtent()
-	do ##class(Country).%killExtent()
-	do ##class(Outlet).%killExtent()
-	do ##class(Product).%killExtent()
-	do ##class(Transaction).%killExtent()
+	do ##class(Region).%KillExtent()
+	do ##class(Country).%KillExtent()
+	do ##class(Outlet).%KillExtent()
+	do ##class(Product).%KillExtent()
+	do ##class(Transaction).%KillExtent()
 
 	// build new data
 	do ..CreateRecords(1,pCount,pVerbose)
@@ -60,10 +60,10 @@ ClassMethod BuildData(pCount As %Integer = 1000, pASync As %Boolean = 1, pVerbos
 	}
 
     //define term lists
-    do ..setupTermLists()
+    do ..SetupTermLists()
 
     //define pivot variables
-    do ..setupVariables()
+    do ..SetupVariables()
 }
 
 /// Add new records to the transactional data that will provide data for the DeepSee model.
@@ -461,8 +461,8 @@ ClassMethod CreateRecords(pNewBuild As %Boolean, pCount As %Integer = 100, pVerb
 						set tRecord = ##class(Transaction).%New()
 						set tRecord.Actual = 0
 						set tRecord.TargetAmount = tSalesTotal(tDate,tProductId,tOutletId)
-						do tRecord.ProductsetObjectId(tProductId)
-						do tRecord.OutletsetObjectId(tOutletId)
+						do tRecord.ProductSetObjectId(tProductId)
+						do tRecord.OutletSetObjectId(tOutletId)
 						set tRecord.DateOfSale = +$ZDTH(tDate_"-01",3)
 						set tSkip = 0
 
@@ -549,7 +549,7 @@ ClassMethod CreateGeoIndex(ByRef pRegionList) As %Status
 }
 
 /// Get city, latitude, and longitude for customer near the given store.
-ClassMethod GetCustomerLocation(pStoreCity As %String, Output pZipCode As %String, Output pLatitude As %double, Output pLongitude As %double) As %Boolean
+ClassMethod GetCustomerLocation(pStoreCity As %String, Output pZipCode As %String, Output pLatitude As %Double, Output pLongitude As %Double) As %Boolean
 {
 	if $D(^||HoleFoods.GeoData) {
 		// find city near the store
@@ -702,7 +702,7 @@ ClassMethod ChangeCity(pRecordID As %String, pNewCityID As %Integer)
 }
 
 /// Purely for demo purposes, this method defines term lists used by this sample.
-ClassMethod setupTermLists()
+ClassMethod SetupTermLists()
 {
 	set name="Region Colors"
 	set uname="REGION COLORS"
@@ -719,7 +719,7 @@ ClassMethod setupTermLists()
 }
 
 /// Purely for demo purposes, this method defines pivot variables used by this sample.
-ClassMethod setupVariables()
+ClassMethod SetupVariables()
 {
 	//cannot assume the following will work from release to release; replace with use of API when available
 
