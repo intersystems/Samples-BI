@@ -1,8 +1,8 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This class is part of the BI Patients sample, whose purpose is to provide
+/// This class is part of the BI Patients sample, whose purpose is to provide
 /// sample data for use with InterSystems IRIS BI. 
-/// <p>This class contains the doctors. 
-Class BI.Study.doctor Extends %Persistent
+/// This class contains the doctors. 
+Class BI.Study.Doctor Extends %Persistent
 {
 
 Property FirstName As %String(MAXLEN = 100);
@@ -13,10 +13,10 @@ Property LastName As %String(MAXLEN = 100);
 Property MainCity As BI.Study.City;
 
 /// Group into which this "study" places this doctor
-Property doctorGroup As %String;
+Property DoctorGroup As %String;
 
 /// Primary focus of this doctor's work;
-Property doctorType As %String;
+Property DoctorType As %String;
 
 /// Average number of patients that this doctor sees per week
 /// (included to provide a numeric value in this table)
@@ -30,28 +30,28 @@ ClassMethod GenerateData(count As %Integer = 100, genNulls = 1) As %Status
     //first kill extent
     //never use %KillExtent() in a real application
     do ..%KillExtent()
-    set ^BI.Study.setupData("Pediatricians")=""
-    set ^BI.Study.setupData("OBGYNs")=""
-    set ^BI.Study.setupData("Otherdoctors")=""
+    set ^BI.Study.SetupData("Pediatricians")=""
+    set ^BI.Study.SetupData("OBGYNs")=""
+    set ^BI.Study.SetupData("OtherDoctors")=""
     
 
     For n = 1:1:count {
-        set doc = ##class(BI.Study.doctor).%New()
+        set doc = ##class(BI.Study.Doctor).%New()
         set doc.FirstName = ##class(%PopulateUtils).FirstName()
         set doc.LastName = ##class(%PopulateUtils).LastName()
         
         // Assign to a doctor group
         set grouplist=$LB("I","II","III")
-        set groupID=$RANdoM($LISTLENGTH(grouplist))+1
-        set doc.doctorGroup=$LI(grouplist,groupID)
+        set groupID=$RANDOM($LISTLENGTH(grouplist))+1
+        set doc.DoctorGroup=$LI(grouplist,groupID)
 
         // Set PatientsPerWeek property
-        set doc.PatientsPerWeek=130+$RANdoM(40)
+        set doc.PatientsPerWeek=130+$RANDOM(40)
         
         // Null out the previous two properties in some cases
         if (genNulls && ##class(BI.Populate).RandomTrue(20)){
             set doc.PatientsPerWeek=""
-            set doc.doctorGroup=""
+            set doc.DoctorGroup=""
             }
         
 
@@ -62,29 +62,29 @@ ClassMethod GenerateData(count As %Integer = 100, genNulls = 1) As %Status
         // Specify the doctor type; these are assigned somewhat randomly
         if ##class(BI.Populate).RandomTrue(70) {
             set typelist=$LB("General Physician","Internist","Pediatrician","OB/GYN")
-            set typeid=$RANdoM($LISTLENGTH(typelist))+1
-            set doc.doctorType=$LI(typelist,typeid)
+            set typeid=$RANDOM($LISTLENGTH(typelist))+1
+            set doc.DoctorType=$LI(typelist,typeid)
             }
         else {
             set typelist=$LB("Anesthesiologist","Allergist","Cardiologist","Dermatologist",
                         "Emergency Physician","Gastroenterologist","Radiologist","Surgeon")
-            set typeid=$RANdoM($LISTLENGTH(typelist))+1
-            set doc.doctorType=$LI(typelist,typeid)
+            set typeid=$RANDOM($LISTLENGTH(typelist))+1
+            set doc.DoctorType=$LI(typelist,typeid)
 	    }
-	    if (doc.doctorType="Pediatrician") {
-		    set ^BI.Study.setupData("Pediatricians")=^BI.Study.setupData("Pediatricians")_","_n
-	    } elseif (doc.doctorType="OB/GYN") {
-		    set ^BI.Study.setupData("OBGYNs")=^BI.Study.setupData("OBGYNs")_","_n
+	    if (doc.DoctorType="Pediatrician") {
+		    set ^BI.Study.SetupData("Pediatricians")=^BI.Study.SetupData("Pediatricians")_","_n
+	    } elseif (doc.DoctorType="OB/GYN") {
+		    set ^BI.Study.SetupData("OBGYNs")=^BI.Study.SetupData("OBGYNs")_","_n
 	    } else {
-		    set ^BI.Study.setupData("Otherdoctors")=^BI.Study.setupData("Otherdoctors")_","_n
+		    set ^BI.Study.SetupData("OtherDoctors")=^BI.Study.SetupData("OtherDoctors")_","_n
 	    }
 
         set status=doc.%Save()
         if $$$ISERR(status) {do $System.Status.DisplayError(status)}
 
    }
-   set ^BI.Study.setupData("Pediatricians")=$ZSTRIP(^BI.Study.setupData("Pediatricians"),"<",",")
-   set ^BI.Study.setupData("OBGYNs")=$ZSTRIP(^BI.Study.setupData("OBGYNs"),"<",",")
+   set ^BI.Study.SetupData("Pediatricians")=$ZSTRIP(^BI.Study.SetupData("Pediatricians"),"<",",")
+   set ^BI.Study.SetupData("OBGYNs")=$ZSTRIP(^BI.Study.SetupData("OBGYNs"),"<",",")
 
    // Create an "extent set" from which we can later get random IDs
    set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
@@ -94,9 +94,9 @@ ClassMethod GenerateData(count As %Integer = 100, genNulls = 1) As %Status
 /// Randomly change doctor group and patients per week for some doctors. 
 /// if rebuild is 1, this method updates the BI indices for each patient affected
 /// by these changes. 
-ClassMethod ChangeSomedoctors(percent As %Numeric = 20, rebuild As %Boolean = 1)
+ClassMethod ChangeSomeDoctors(percent As %Numeric = 20, rebuild As %Boolean = 1)
 {
-    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Changing some doctor data..."
+    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Changing some Doctor data..."
 
     // Create an "extent set" from which we can later get random IDs
     set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
@@ -114,11 +114,11 @@ ClassMethod ChangeSomedoctors(percent As %Numeric = 20, rebuild As %Boolean = 1)
 
             // Assign to a doctor group
             set grouplist=$LB("I","II","III")
-            set groupID=$RANdoM($LISTLENGTH(grouplist))+1
-            set doc.doctorGroup=$LI(grouplist,groupID)
+            set groupID=$RANDOM($LISTLENGTH(grouplist))+1
+            set doc.DoctorGroup=$LI(grouplist,groupID)
 
             // Set PatientsPerWeek property
-            set doc.PatientsPerWeek=130+$RANdoM(40)
+            set doc.PatientsPerWeek=130+$RANDOM(40)
             do doc.%Save()
             
             if rebuild {
@@ -145,58 +145,58 @@ ClassMethod ChangeSomedoctors(percent As %Numeric = 20, rebuild As %Boolean = 1)
         } 
 
     // If rebuild {Kill %this} ; needed because zzBuildone doesn't clean this up
-    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" "_changecount_" doctors changed"
+    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" "_changecount_" Doctors changed"
 }
 
 /// Based on patient age (in years) and gender ("F" or "M"), return the ID of a suitable doctor
-ClassMethod GetdoctorId(patientAge As %Integer = "", patientGender As %String = "") As %Integer
+ClassMethod GetDoctorId(patientAge As %Integer = "", patientGender As %String = "") As %Integer
 {
     if (patientAge="") {
-	    quit ..GetRandomOtherdoctor()
+	    quit ..GetRandomOtherDoctor()
     } elseif (patientAge<12)	{
 	    if ##class(BI.Populate).RandomTrue(90) {
 		    quit ..GetRandomPediatrician()
 	    } else {
-		    quit ..GetRandomOtherdoctor()
+		    quit ..GetRandomOtherDoctor()
 	    }
     } 
     
     if (patientGender="") {
-	    quit ..GetRandomOtherdoctor()
+	    quit ..GetRandomOtherDoctor()
     } elseif (patientGender="F") {
 	    if ##class(BI.Populate).RandomTrue(70) {
 		    quit ..GetRandomOBGYN()
 	    } else {
-		    quit ..GetRandomOtherdoctor()
+		    quit ..GetRandomOtherDoctor()
 	    }
     } else {
-	    quit ..GetRandomOtherdoctor()
+	    quit ..GetRandomOtherDoctor()
     }
 }
 
 ClassMethod GetRandomPediatrician() As %Integer
 {
-   set choosefrom=^BI.Study.setupData("Pediatricians")
+   set choosefrom=^BI.Study.SetupData("Pediatricians")
    set choosenumber=$L(choosefrom,",")
-   set randomnumber=$RANdoM(choosenumber)+1
+   set randomnumber=$RANDOM(choosenumber)+1
    set randomdoc=$P(choosefrom,",",randomnumber)
    quit randomdoc
 }
 
 ClassMethod GetRandomOBGYN()
 {
-   set choosefrom=^BI.Study.setupData("OBGYNs")
+   set choosefrom=^BI.Study.SetupData("OBGYNs")
    set choosenumber=$L(choosefrom,",")
-   set randomnumber=$RANdoM(choosenumber)+1
+   set randomnumber=$RANDOM(choosenumber)+1
    set randomdoc=$P(choosefrom,",",randomnumber)
    quit randomdoc
 }
 
-ClassMethod GetRandomOtherdoctor()
+ClassMethod GetRandomOtherDoctor()
 {
-   set choosefrom=^BI.Study.setupData("Otherdoctors")
+   set choosefrom=^BI.Study.SetupData("OtherDoctors")
    set choosenumber=$L(choosefrom,",")
-   set randomnumber=$RANdoM(choosenumber)+1
+   set randomnumber=$RANDOM(choosenumber)+1
    set randomdoc=$P(choosefrom,",",randomnumber)
    quit randomdoc
 }

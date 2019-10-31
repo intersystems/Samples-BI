@@ -65,7 +65,7 @@ ClassMethod CreatePatientDetails(PatientID As %String, age As %Numeric = 35, gen
 }
 
 /// Iterate through patient extent and change color for some percentage of patients.
-/// if rebuild is 1, this method updates the BI indices for each patient 
+/// If rebuild is 1, this method updates the BI indices for each patient 
 /// affected by these changes. 
 ClassMethod ChangePatientDetails(percent As %Numeric = 10, rebuild As %Boolean = 1)
 {

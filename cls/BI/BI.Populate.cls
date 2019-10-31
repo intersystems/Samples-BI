@@ -8,7 +8,7 @@ Class BI.Populate Extends %RegisteredObject
 {
 
 /// Invoke this method to set up all the data for these classes.
-ClassMethod setup(patCount As %Integer = 1000, options As %String = "ADTR")
+ClassMethod Setup(patCount As %Integer = 1000, options As %String = "ADTR")
 {
 	// Generates patients & rainfall data
 	// also builds patients and cityrainfall cube 
@@ -32,30 +32,28 @@ ClassMethod setup(patCount As %Integer = 1000, options As %String = "ADTR")
 	do ..BuildCompoundCubes()
 	
 	// set up term lists used by controls on dashboards
-	do ..setupTermLists()
+	do ..SetupTermLists()
 
     // Define pivot variables
-    do ..setupVariables()
+    do ..SetupVariables()
 }
 
 /// This method generates the sample data for the patients and related classes.
 /// <p>patCount specifies the number of patients to generate in BI.Study.Patients.
 /// <p>patientsPerDoc specifies the approximate ratio of patients per doctor.
 /// At least one doctor is always created.
-/// <p>options is a case-insensitive string that controls whether certain child data is also generated.
-/// <ul>
-/// <li>if it includes the letter A, allergy data is generated. This option is on by default.</li>
-/// <li>if it includes the letter D, diagnosis data is generated. This option is on by default.</li>
-/// <li>if it includes the letter T, the PatientDetails table is populated. This option is on by default.</li>
-/// <li>if it includes the letter E, the PatientEncounter table is populated. This option is off by default.</li>
-/// <li>if it includes the letter R, the CityRainfall table is populated. This option is off by default.</li>
-/// <li>if it includes the letter X, half the patients are written to the BI.Study.Patientset2 
-/// table (the "extra" set) and half are written to BI.Study.Patients. This option is off by default.</li>
-/// </ul>
+/// options is a case-insensitive string that controls whether certain child data is also generated.
+/// If it includes the letter A, allergy data is generated. This option is on by default.
+/// If it includes the letter D, diagnosis data is generated. This option is on by default.
+/// If it includes the letter T, the PatientDetails table is populated. This option is on by default.
+/// If it includes the letter E, the PatientEncounter table is populated. This option is off by default.
+/// If it includes the letter R, the CityRainfall table is populated. This option is off by default.
+/// If it includes the letter X, half the patients are written to the BI.Study.Patientset2 
+/// table (the "extra" set) and half are written to BI.Study.Patients. This option is off by default.
 /// genNulls specifies whether to insert random null values. By default, this option is on, and the
 /// GenerateData method sets the patient's primary care physician, part of the allergy data, and assorted
 /// other data to null in a percentage of cases (or in some cases, it simply does not generate child data).
-/// <p>genDateNulls specifies whether to insert random null values for birth dates. 
+/// genDateNulls specifies whether to insert random null values for birth dates. 
 /// By default, this option is off.
 ClassMethod GenerateData(patCount As %Integer = 10000, patientsPerDoc As %Numeric = 25, options As %String = "ADT", genNulls As %Boolean = 1, genDateNulls As %Boolean = 0) As %Status
 {
@@ -74,7 +72,7 @@ ClassMethod GenerateData(patCount As %Integer = 10000, patientsPerDoc As %Numeri
 
     // First set up code tables
     write !, "setting up code tables"
-    set status=..setUpCodeTables()
+    set status=..SetupCodeTables()
     if $$$ISERR(status) {Do $System.Status.DisplayError(status) quit}
     
     if ($FIND(options,"R")) {
@@ -110,19 +108,19 @@ ClassMethod GenerateData(patCount As %Integer = 10000, patientsPerDoc As %Numeri
 }
 
 /// Called by GenerateData
-ClassMethod setUpCodeTables() As %Status [ Internal ]
+ClassMethod SetupCodeTables() As %Status [ Internal ]
 {
-    kill ^BI.Study.setupData
-    set ^BI.Study.setupData="This global is created by setup methods in the BI.Study package."
-    set status=##class(BI.Study.Allergen).setup()
+    kill ^BI.Study.SetupData
+    set ^BI.Study.SetupData="This global is created by Setup methods in the BI.Study package."
+    set status=##class(BI.Study.Allergen).Setup()
     if $$$ISERR(status) {Do $System.Status.DisplayError(status) quit}
-    set status=##class(BI.Study.AllergySeverity).setup()
+    set status=##class(BI.Study.AllergySeverity).Setup()
     if $$$ISERR(status) {Do $System.Status.DisplayError(status) quit}
-    set status=##class(BI.Study.City).setup()
+    set status=##class(BI.Study.City).Setup()
     if $$$ISERR(status) {Do $System.Status.DisplayError(status) quit}
-    set status=##class(BI.Study.Diagnosis).setup()
+    set status=##class(BI.Study.Diagnosis).Setup()
     if $$$ISERR(status) {Do $System.Status.DisplayError(status) quit}
-    set status=##class(BI.Study.Profession).setup()
+    set status=##class(BI.Study.Profession).Setup()
     if $$$ISERR(status) {Do $System.Status.DisplayError(status) quit}
     quit status
 }
@@ -361,7 +359,7 @@ ClassMethod UpdateIdCache(cls) As %Status [ Internal ]
    set tp=$INCREMENT(^CacheTemp)
    
    // Save this so we can use it later to find this cache
-   set ^BI.Study.setupData("ExtentsetPointers",cls)=tp
+   set ^BI.Study.SetupData("ExtentsetPointers",cls)=tp
    
    // Use same unique tp for temporary pointer and for "name" of
    // the extent set
@@ -374,8 +372,8 @@ ClassMethod UpdateIdCache(cls) As %Status [ Internal ]
 /// This method assumes that you have already run UpdateIdCache().
 ClassMethod GetRandomId(cls) As %String [ Internal ]
 {
-   set test=$DATA(^BI.Study.setupData("ExtentsetPointers",cls))
-   if test {set tp=^BI.Study.setupData("ExtentsetPointers",cls)}
+   set test=$DATA(^BI.Study.SetupData("ExtentsetPointers",cls))
+   if test {set tp=^BI.Study.SetupData("ExtentsetPointers",cls)}
    else {quit "no id"}
 
    // Use same unique tp for temporary pointer and for "name" of
@@ -457,7 +455,7 @@ ClassMethod ReassignPatients() As %Status
 }
 
 /// Purely for demo purposes, this method defines term lists used by this sample.
-ClassMethod setupTermLists() [ Internal ]
+ClassMethod SetupTermLists() [ Internal ]
 {
 	set name="Patients Pivots"
 	set uname="PATIENTS PIVOTS"
@@ -486,7 +484,7 @@ ClassMethod setupTermLists() [ Internal ]
 }
 
 /// Purely for demo purposes, this method defines pivot variables used by this sample.
-ClassMethod setupVariables() [ Internal ]
+ClassMethod SetupVariables() [ Internal ]
 {
 	// Cannot assume the following will work from release to release; replace with use of API when available
 

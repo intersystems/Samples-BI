@@ -72,7 +72,7 @@ ClassMethod GenerateData() As %Status
     }
    
     set myquery="select ID from BI_Study.City"
-    set rset=##class(%Resultset).%New("%DynamicQuery:SQL")
+    set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
     set status=rset.Prepare(myquery)
     if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
     set status=rset.Execute()

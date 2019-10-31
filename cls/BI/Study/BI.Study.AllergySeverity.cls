@@ -25,7 +25,7 @@ XData LoadData
 
 /// This method reads the XData block in this class and uses it to populate the table. 
 /// This method is called by BI.Populate:GenerateData().
-ClassMethod setup() As %Status
+ClassMethod Setup() As %Status
 {
    set status=$$$OK
    // First kill extent

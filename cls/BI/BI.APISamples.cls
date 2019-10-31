@@ -6,9 +6,9 @@ Class BI.APISamples
 
 /// Executes a hardcoded query and prints the results.
 /// Returns the result set as output.
-ClassMethod RunQuery1(Output result As %DeepSee.Resultset) As %Status
+ClassMethod RunQuery1(Output result As %DeepSee.ResultSet) As %Status
 {
-    set rset=##class(%DeepSee.Resultset).%New()
+    set rset=##class(%DeepSee.ResultSet).%New()
     set query="SELECT MEASURES.[%COUNT] ON 0, diagd.MEMBERS ON 1 FROM patients"
     set status=rset.%PrepareMDX(query)
     if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
@@ -23,9 +23,9 @@ ClassMethod RunQuery1(Output result As %DeepSee.Resultset) As %Status
 
 /// Executes a query that uses a named parameter and prints the results.
 /// Returns the result set as output.
-ClassMethod RunQuery2(city As %String = "Magnolia", Output result As %DeepSee.Resultset) As %Status
+ClassMethod RunQuery2(city As %String = "Magnolia", Output result As %DeepSee.ResultSet) As %Status
 {
-    set rset=##class(%DeepSee.Resultset).%New()
+    set rset=##class(%DeepSee.ResultSet).%New()
     set query="WITH %PARM c AS 'value:Magnolia'"
     _"SELECT homed.[city].@c ON 0 FROM patients"
     set status=rset.%PrepareMDX(query)
@@ -44,7 +44,7 @@ ClassMethod RunQuery2(city As %String = "Magnolia", Output result As %DeepSee.Re
 /// Returns the result set as output.
 ClassMethod RunQuery3()
 {
-    set rset=##class(%DeepSee.Resultset).%New()
+    set rset=##class(%DeepSee.ResultSet).%New()
     
     set query="DRILLTHROUGH SELECT gend.female ON 0,birthd.[1913] ON 1 "
              _"FROM patients RETURN PatientID,PrimaryCarePhysician->LastName"
@@ -63,7 +63,7 @@ ClassMethod RunQuery3()
 /// Then for comparison, displays a specific cell.
 ClassMethod ShowCell() As %Status
 {
-    set rset=##class(%DeepSee.Resultset).%New()
+    set rset=##class(%DeepSee.ResultSet).%New()
     set query="SELECT MEASURES.[avg age] ON 0, homed.[city].MEMBERS ON 1 "
              _"FROM patients"
     set status=rset.%PrepareMDX(query)
@@ -84,7 +84,7 @@ ClassMethod ShowCell() As %Status
 /// Then for comparison, displays information about the row labels.
 ClassMethod ShowRowLabels() As %Status
 {
-    set rset=##class(%DeepSee.Resultset).%New()
+    set rset=##class(%DeepSee.ResultSet).%New()
     set query="SELECT CROSSJOIN(aged.[age group].MEMBERS,"
              _"gend.gender.MEMBERS) ON 1 FROM patients"
     set status=rset.%PrepareMDX(query)
@@ -110,7 +110,7 @@ ClassMethod ShowRowLabels() As %Status
 
 /// Given a result set as input, this method generates a report on
 /// the query metadata.
-ClassMethod ShowQueryMetadata(rset As %DeepSee.Resultset) As %Status
+ClassMethod ShowQueryMetadata(rset As %DeepSee.ResultSet) As %Status
 {
     set cubename=rset.%GetCubeName()
     write !, "This result set comes from the following cube: ",cubename,!
@@ -138,13 +138,13 @@ ClassMethod ShowQueryMetadata(rset As %DeepSee.Resultset) As %Status
 
 /// Given a result set as input, this method generates a report on
 /// the result metadata.
-ClassMethod ShowResultMetadata(rset As %DeepSee.Resultset)
+ClassMethod ShowResultMetadata(rset As %DeepSee.ResultSet)
 {
     set cubename=rset.%GetCubeName()
     write !, "This result set comes from the cube ",cubename
     
     set querykey=rset.%GetQueryKey()
-    set cellcount=##class(%DeepSee.Resultset).%GetCellCount(cubename,querykey)
+    set cellcount=##class(%DeepSee.ResultSet).%GetCellCount(cubename,querykey)
     write !, "It has ", cellcount, " cells"
     
     //For i=1:1:cellcount{
@@ -154,7 +154,7 @@ ClassMethod ShowResultMetadata(rset As %DeepSee.Resultset)
 
 /// Given a result set as input, this method generates a report on
 /// the slicer statement for a given cell range.
-ClassMethod ShowSlicerStatement(rset As %DeepSee.Resultset, Row1 As %Integer = 1, Col1 As %Integer = 1, Row2 As %Integer, Col2 As %Integer) As %Status
+ClassMethod ShowSlicerStatement(rset As %DeepSee.ResultSet, Row1 As %Integer = 1, Col1 As %Integer = 1, Row2 As %Integer, Col2 As %Integer) As %Status
 {
     if '$DATA(Row2) {set Row2=Row1}
     if '$DATA(Col2) {set Col2=Col1}
@@ -180,9 +180,9 @@ ClassMethod ShowSlicerStatement(rset As %DeepSee.Resultset, Row1 As %Integer = 1
 }
 
 /// Executes a hardcoded query and returns a result set.
-ClassMethod GetResultset1() As %DeepSee.Resultset
+ClassMethod GetResultSet1() As %DeepSee.ResultSet
 {
-    set rset=##class(%DeepSee.Resultset).%New()
+    set rset=##class(%DeepSee.ResultSet).%New()
     set query="SELECT {MEASURES.[avg test score],MEASURES.[%COUNT]} ON 0, "
              _"diagd.h1.diagnoses.MEMBERS ON 1 FROM patients"
     set status=rset.%PrepareMDX(query)
@@ -195,9 +195,9 @@ ClassMethod GetResultset1() As %DeepSee.Resultset
 }
 
 /// Executes a hardcoded query and returns a result set.
-ClassMethod GetResultset2(city As %String = "Magnolia") As %DeepSee.Resultset
+ClassMethod GetResultSet2(city As %String = "Magnolia") As %DeepSee.ResultSet
 {
-    set rset=##class(%DeepSee.Resultset).%New()
+    set rset=##class(%DeepSee.ResultSet).%New()
     set query="WITH %PARM c AS 'value:Magnolia'"
              _"SELECT homed.h1.[city].@c ON 0 FROM patients"
 
@@ -212,9 +212,9 @@ ClassMethod GetResultset2(city As %String = "Magnolia") As %DeepSee.Resultset
 }
 
 /// executes a hardcoded query and returns a result set
-ClassMethod GetResultset3() As %DeepSee.Resultset
+ClassMethod GetResultSet3() As %DeepSee.ResultSet
 {
-    set rset=##class(%DeepSee.Resultset).%New()
+    set rset=##class(%DeepSee.ResultSet).%New()
     set query="DRILLTHROUGH SELECT gend.h1.gender.female ON 0,birthd.h1.year.[1913] ON 1 "
              _"FROM patients RETURN PatientID,PrimaryCarePhysician->LastName"
 
@@ -228,9 +228,9 @@ ClassMethod GetResultset3() As %DeepSee.Resultset
 }
 
 /// Executes a hardcoded query and returns a result set.
-ClassMethod GetResultset4() As %DeepSee.Resultset
+ClassMethod GetResultSet4() As %DeepSee.ResultSet
 {
-    set rset=##class(%DeepSee.Resultset).%New()
+    set rset=##class(%DeepSee.ResultSet).%New()
     set query="SELECT CROSSJOIN(gend.h1.gender.MEMBERS,MEASURES.[%COUNT]) ON 0, "
              _"aged.h1.[age bucket].MEMBERS ON 1 FROM patients"
     set status=rset.%PrepareMDX(query)

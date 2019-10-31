@@ -1,8 +1,7 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This class is part of the BI Patients sample, whose purpose is to provide
+/// This class is part of the BI Patients sample, whose purpose is to provide
 /// sample data for use with InterSystems IRIS BI. 
-/// <p>This class contains the professions and their industries.
+/// This class contains the professions and their industries.
 Class BI.Study.Profession Extends %Persistent
 {
 
@@ -28,7 +27,7 @@ XData LoadData
  <row>Finance and Insurance^Insurance Agent</row>
  <row>Finance and Insurance^Bank Teller</row>
  <row>Finance and Insurance^Benefits Coordinator</row>
- <row>Health Care and Social Assistance^do ctor</row>
+ <row>Health Care and Social Assistance^Doctor</row>
  <row>Health Care and Social Assistance^Nurse</row>
  <row>Professional, Scientific, and Technical Services^Veterinarian</row>
  <row>Professional, Scientific, and Technical Services^Programmer</row>
@@ -52,7 +51,7 @@ ClassMethod Setup() As %Status
    
    // First kill extent
    // Never use %KillExtent() in a real application
-   do  ..%KillExtent()
+   do ..%KillExtent()
    
    // Get a stream of XML from the XData block contained in this class
    set tStream=##class(%Dictionary.CompiledXData).IDKEYOpen($CLASSNAME(),"LoadData").Data
@@ -61,7 +60,7 @@ ClassMethod Setup() As %Status
    set status=##class(%XML.TextReader).ParseStream(tStream,.textreader)
    
    // Check status
-   if $$$ISERR(status) {do  $System.Status.DisplayError(status) Quit}
+   if $$$ISERR(status) {do $System.Status.DisplayError(status) Quit}
    
    set count=0
    
@@ -76,7 +75,7 @@ ClassMethod Setup() As %Status
            set obj.Industry=$Piece(value,"^",1)
            set obj.Profession=$Piece(value,"^",2)
            set status=obj.%Save()
-           if $$$ISERR(status) {do  $System.Status.DisplayError(status) Quit}
+           if $$$ISERR(status) {do $System.Status.DisplayError(status) Quit}
            set count=count+1
            }
    }

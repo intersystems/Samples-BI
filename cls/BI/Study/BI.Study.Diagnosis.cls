@@ -67,14 +67,14 @@ XData LoadData
 /// The diagnosis incidence rates are deliberately NOT put into a table where
 /// BI can access them. The idea of the sample is to simulate real-life
 /// patterns. 
-ClassMethod setup() As %Status
+ClassMethod Setup() As %Status
 {
    set status=$$$OK
    
    // First kill extent and related global
-   // Never use %killExtent() in a real application
-   do ..%killExtent()
-   kill ^BI.Study.setupData("diagnoses")
+   // Never use %KillExtent() in a real application
+   do ..%KillExtent()
+   kill ^BI.Study.SetupData("diagnoses")
    
    // Get a stream of XML from the XData block contained in this class
    set tStream=##class(%Dictionary.CompiledXData).IDKEYOpen($CLASSNAME(),"LoadData").Data
@@ -102,8 +102,8 @@ ClassMethod setup() As %Status
            set fpiece=$ZSTRIP($Piece(value,"^",3),"*CW")    ; strip out line feed & white space
            set mpiece=$ZSTRIP($Piece(value,"^",4),"*CW")    ; strip out line feed & white space
            
-           set ^BI.Study.setupData("diagnoses",diagcode,"F")=fpiece
-           set ^BI.Study.setupData("diagnoses",diagcode,"M")=mpiece
+           set ^BI.Study.SetupData("diagnoses",diagcode,"F")=fpiece
+           set ^BI.Study.SetupData("diagnoses",diagcode,"M")=mpiece
            }
                
        }
@@ -111,12 +111,12 @@ ClassMethod setup() As %Status
    quit status
 }
 
-/// For use when generating data; called by setup method.
+/// For use when generating data; called by Setup method.
 /// Can also use this at the command line for testing purposes.
 ClassMethod GetPercentChance(code As %String, gender As %String, age As %Numeric) As %Numeric
 {
     // Get appropriate global node & convert it to a list
-    set list=$LISTFROMSTRING(^BI.Study.setupData("diagnoses",code,gender))
+    set list=$LISTFROMSTRING(^BI.Study.SetupData("diagnoses",code,gender))
     
     set chance=0
     // Iterate through list and find appropriate bucket

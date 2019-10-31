@@ -35,7 +35,7 @@ Property BirthDateTimeStamp As %TimeStamp;
 /// This property contains same date as the BirthDateTimeStamp property. 
 Property BirthDateMV As %MV.Date;
 
-Property PrimaryCarePhysician As BI.Study.doctor;
+Property PrimaryCarePhysician As BI.Study.Doctor;
 
 Property Allergies As list Of BI.Study.PatientAllergy;
 
@@ -81,7 +81,7 @@ ClassMethod GenerateData(patCount As %Integer = 500, options As %String = "ADET"
     set status=$$$OK
     write !, "Deleting patient data..."
 
-    //first kill extent and kill extents of child tables
+    // First kill extent and kill extents of child tables
     do ..%KillExtent()
     do ##class(BI.Study.PatientDiagnosis1).%KillExtent()
     do ##class(BI.Study.PatientDiagnosis2).%KillExtent()
@@ -96,165 +96,167 @@ ClassMethod GenerateData(patCount As %Integer = 500, options As %String = "ADET"
 
 /// Called by GenerateData(); see the comments for that method.
 /// Can also be called directly to add patients after the initial setup.
-ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", genNulls As %Boolean = 1, initsetup As %Boolean = 0, genNullDates As %Boolean = 0) As %Status
+ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", genNulls As %Boolean = 1, initSetupAs %Boolean = 0, genNullDates As %Boolean = 0) As %Status
 {
-    if initsetup {Kill ^BI.Study.Log}
+    if initSetup{Kill ^BI.Study.Log}
     set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Adding patients..."
 
 
-    //create or update the "ID extent sets" from which we can later get random IDs
-    set status=##class(BI.Populate).UpdateIdCache("BI.Study.doctor")
+    // Create or update the "ID extent sets" from which we can later get random IDs
+    set status=##class(BI.Populate).UpdateIdCache("BI.Study.Doctor")
     set status=##class(BI.Populate).UpdateIdCache("BI.Study.City")
 
     
-    //check options; what do we need to generate?
+    // Check options; what do we need to generate?
     if ($FIND(options,"A")) {set generateallergies=1}
-        Else {set generateallergies=0}
+        else {set generateallergies=0}
     if ($FIND(options,"D")) {set generatediagnoses=1}
-        Else {set generatediagnoses=0}
+        else {set generatediagnoses=0}
     if ($FIND(options,"E")) {set generateencounters=1}
-        Else {set generateencounters=0}
+        else {set generateencounters=0}
     if ($FIND(options,"T")) {set generatedetails=1}
-        Else {set generatedetails=0}
+        else {set generatedetails=0}
     
 
-    //get diagnosis and current patient count
+    // Get diagnosis and current patient count
     set dcount=##class(BI.Populate).Count("BI.Study.Diagnosis")
     set currentpatcount=##class(BI.Populate).Count($CLASSNAME())
     
-    //initialize counters
+    // Initialize counters
     if (currentpatcount=0) {
         set initPat=100300
         }
-        Else {
-            //get highest PatientID in use
+        else {
+            // Get highest PatientID in use
             set highest=..GetHighestPatientID()
             set initPat=$PIECE(highest,"_",2)
             }
 
     set idnumber=initPat
 
-    For n = 1:1:patCount {
+    for n = 1:1:patCount {
         set pat=##class(BI.Study.Patient).%New()
         set idnumber=idnumber+1     ; increment without any gaps
         set patid="SUBJ_"_idnumber
         set pat.PatientID=patid
         
-        //get age+gender combination
+        // Get age+gender combination
         set agegender=##class(BI.Populate).RandomGenderAndAge()
         set pat.Gender=$Piece(agegender,",",1)
         set pat.Age=$Piece(agegender,",",2)
 
-        //get birthdate as a string YYYY-MM-DD
+        // Get birthdate as a string YYYY-MM-DD
         set birthdate=##class(BI.Populate).BirthDateODBC(pat.Age)
         set pat.BirthDate=$ZDATEH(birthdate,6)  ; convert to $h explicitly and write value
  
-        //get birthtime as random time hh:mm:ss
+        // Get birthtime as random time hh:mm:ss
         set timestamp=##class(%PopulateUtils).TimeStamp()   
         set timepart=$Piece(timestamp," ",2)
         set timestring=$Piece(timepart,":",1)_":"_$Piece(timepart,":",2)
         set pat.BirthTime=$ZTIMEH(timestring,2) ; convert to $h and write value
  
-        //combine date and time
+        // Combine date and time
         set birthdateandtime=birthdate_" "_timepart
         set pat.BirthDateTimeStamp=birthdateandtime ; write in ODBC format 
     
-        //set MV version
+        // Set MV version
         set pat.BirthDateMV = pat.BirthDate - 46385
     
-        //assign a doctor
-        //set docid=##class(BI.Populate).GetRandomId("BI.Study.doctor")
-        set docid=##class(BI.Study.doctor).GetdoctorId(pat.Age,pat.Gender)
-        set doctor=##class(BI.Study.doctor).%OpenId(docid,0)
+        // Assign a doctor
+        // Set docid=##class(BI.Populate).GetRandomId("BI.Study.Doctor")
+        set docid=##class(BI.Study.Doctor).GetDoctorId(pat.Age,pat.Gender)
+        set doctor=##class(BI.Study.Doctor).%OpenId(docid,0)
         set pat.PrimaryCarePhysician=doctor
 
-        // null out this property randomly to simulate missing data
+        // Null out this property randomly to simulate missing data
         if genNulls &&##class(BI.Populate).RandomTrue(5){
             set pat.PrimaryCarePhysician=""
         }
 
-        //assign to a patient group
+        // Assign to a patient group
         set grouplist=$LB("A","B")
         set groupID=$RANdoM($LISTLENGTH(grouplist))+1
         set pat.PatientGroup=$LI(grouplist,groupID)
 
-        //set TestScore property
+        // Set TestScore property
         set pat.TestScore=50+$RANdoM(50)
         
-        //null out the previous two properties in some cases
-        //score can be null but won't be 0 (see above)
-        //this lets us see how measures treat null values
+        // Null out the previous two properties in some cases
+        // Score can be null but won't be 0 (see above)
+        // This lets us see how measures treat null values
         if (genNulls && ##class(BI.Populate).RandomTrue(20)){
             set pat.TestScore=""
             set pat.PatientGroup=""
             }
         
-        //Select a city
+        // Select a city
         set cityid=##class(BI.Populate).GetRandomId("BI.Study.City")          
         set pat.HomeCity=##class(BI.Study.City).%OpenId(cityid,0)
 
-        //if asked, update PatientDetails table
+        // If asked, update PatientDetails table
         if generatedetails {
             set status=##class(PatientDetails).CreatePatientDetails(pat.PatientID,pat.Age,genNulls)
             if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Patient details error"}
             }
         
-        //if asked, generate some allergies
+        // If asked, generate some allergies
         if generateallergies {
             set status=##class(BI.Study.PatientAllergy).GenerateAllergies(pat,genNulls)
             if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Allergies insert error"}
             }
          
-         //if asked, generate some diagnoses
+         // If asked, generate some diagnoses
          if generatediagnoses {
-             //iterate through available diagnoses, look up chance of patient's
-             //receiving this diagnosis, based on gender & age
-             //save diagnosis data in all diagnosis properties
+             // Iterate through available diagnoses, look up chance of patient's
+             // receiving this diagnosis, based on gender & age
+             // save diagnosis data in all diagnosis properties
              set diagnosiscount=0    ; initialize this so we know if we're on the first one
              set diaglist = ""
              set diagstring=""
-             For k=1:1:dcount{
+             for k=1:1:dcount{
                  set potentialdiagnosis=##class(BI.Study.Diagnosis).%OpenId(k,0)
 
-                 //get the code
+                 // Get the code
                  set code=potentialdiagnosis.Code
-                 //look up how likely this patient is to have this diagnosis
+                 // Look up how likely this patient is to have this diagnosis
                  set chance=##class(BI.Study.Diagnosis).GetPercentChance(code,pat.Gender,pat.Age)
                 
                  if ##class(BI.Populate).RandomTrue(chance) {
                      set diagnosiscount=diagnosiscount+1
                      set desc=potentialdiagnosis.Description
                                         
-                     //Build basic diagnosis properties
+                     // Build basic diagnosis properties
                      set $LI(diaglist,diagnosiscount)=code 
                      set diagstring=diagstring_","_code
                      do pat.DiagnosesAsArray.setAt(code,diagnosiscount)
                     
-                     //now for the more complex properties, choose a random diagnosing doctor
+                     // Now for the more complex properties, choose a random diagnosing doctor
                      set diagdocid=##class(BI.Populate).GetRandomId("BI.Study.doctor")
                      set diagdoc=##class(BI.Study.doctor).%OpenId(diagdocid,0)
 
-                     //populate Diagnoses property
+                     // Populate Diagnoses property
                      set patdiag=##class(BI.Study.PatientDiagnosis).%New()    ; this object is serial
                      set patdiag.DiagnosisCode=code
                      set patdiag.DiagnosedBy=diagdoc
                      set status=pat.Diagnoses.Insert(patdiag)
                      if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Diagnoses error"}
 
-                     //use same data in DiagnosesAsChildren relationship
+                     // Use same data in DiagnosesAsChildren relationship
                      set patdiag1=##class(BI.Study.PatientDiagnosis1).%New()
                      set patdiag1.DiagnosisCode=code
                      set patdiag1.DiagnosedBy=diagdoc
-                     //link the objects
+                     
+                     // Link the objects
                      set patdiag1.Patient=pat
                      set status=patdiag1.%Save()
                      if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "DiagnosesAsChildren error"}
                     
-                     //use same data in DiagnosesAsMany relationship
+                     // Use same data in DiagnosesAsMany relationship
                      set patdiag2=##class(BI.Study.PatientDiagnosis2).%New()
                      set patdiag2.DiagnosisCode=code
                      set patdiag2.DiagnosedBy=diagdoc
-                     //link the objects
+                     
+                     // Link the objects
                      set patdiag2.Patient=pat
                      set status=patdiag2.%Save()
                      if $$$ISERR(status) {do $System.Status.DisplayError(status)  write !, "DiagnosesAsMany error"}
@@ -265,7 +267,7 @@ ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", 
              
              }
 
-        // now that we have used the age data,
+        // Now that we have used the age data,
         // null out birth date & age randomly to simulate missing data
         if genNullDates &&##class(BI.Populate).RandomTrue(2){
             set pat.Age=""
@@ -278,11 +280,11 @@ ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", 
        set status=pat.%Save()
        if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Patient save error"}
 
-       //if asked, generate some encounters (but not necessarily for everyone)
+       // If asked, generate some encounters (but not necessarily for everyone)
        if genNulls {
            set chance=##class(BI.Populate).RandomTrue(84)
            }
-           Else {
+           else {
                set chance=1
                }
                 
@@ -291,17 +293,17 @@ ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", 
            if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Encounter creation error"}
            }
         
-        if 'initsetup {do ##class(%DeepSee.Utils).%SynchronizeCube("patients")}
+        if 'initSetup{do ##class(%DeepSee.Utils).%SynchronizeCube("patients")}
 
        if ('(n#1000)) {write $C(13,27)_"[0J"_$FN(n,",",0)_" patients created in BI.Study.Patient"}
        }
 
-    //create or update the "ID extent sets" from which we can later get random IDs
+    // Create or update the "ID extent sets" from which we can later get random IDs
     set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
     set status=##class(BI.Populate).UpdateIdCache("BI.Study.PatientDetails")
    
-    //Store highest PatientID for later use
-    set ^BI.Study.setupData("PatientID")=pat.PatientID
+    // Store highest PatientID for later use
+    set ^BI.Study.SetupData("PatientID")=pat.PatientID
     
     write !
     write $C(13,27)_"[0J"_$FN(+$G(n),",",0)_" patient(s) created in BI.Study.Patient"
@@ -310,7 +312,7 @@ ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", 
     write !, "Current patient count is ",currentcount
     set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Current patient count is "_currentcount
 
-    if initsetup {
+    if initSetup{
         set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Building the cube..."
         do ##class(%DeepSee.Utils).%BuildCube("patients")
         set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Finished building the cube"
@@ -328,7 +330,7 @@ ClassMethod DeleteSomePatients(percent As %Numeric = 1) As %Status
     set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
     
     set patcount=##class(BI.Populate).Count($CLASSNAME())
-    For i=1:1:patcount {
+    for i=1:1:patcount {
          if ##class(BI.Populate).RandomTrue(percent) 
          {
              set patid=##class(BI.Populate).GetRandomId($CLASSNAME())
@@ -381,7 +383,7 @@ ClassMethod DeletePatient(patid As %String) As %Status
     // Clear out records in PatientDiagnosis1 (must delete children before deleting parent)
     if deletediagnoses {
         set myquery="DELETE FROM BI_Study.PatientDiagnosis1 WHERE Patient=?"
-        set rset=##class(%Resultset).%New("%DynamicQuery:SQL")
+        set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
         set status=rset.Prepare(myquery)
         if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
         set status=rset.Execute(patid)
@@ -392,10 +394,10 @@ ClassMethod DeletePatient(patid As %String) As %Status
 	        }
     }
 
-    //clear out records in PatientDiagnosis2
+    // Clear out records in PatientDiagnosis2
     if deletediagnoses {
         set myquery="DELETE FROM BI_Study.PatientDiagnosis2 WHERE Patient=?"
-        set rset=##class(%Resultset).%New("%DynamicQuery:SQL")
+        set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
         set status=rset.Prepare(myquery)
         if $$$ISERR(status) {
 	        do $System.Status.DisplayError(status) 
@@ -411,7 +413,7 @@ ClassMethod DeletePatient(patid As %String) As %Status
 
     set status=##class(BI.Study.Patient).%DeleteId(patid)
 
-    //every time we add or delete records, we need to update the ID cache
+    // Every time we add or delete records, we need to update the ID cache
     set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
 
     do ##class(%DeepSee.Utils).%SynchronizeCube("patients")
@@ -422,7 +424,7 @@ ClassMethod DeletePatient(patid As %String) As %Status
 /// Randomly reassign some patients to different patient groups. 
 ClassMethod ChangePatientGroups(percent As %Numeric = 10)
 {
-    //initialize this just in case
+    // Initialize this just in case
     set status=##class(BI.Populate).UpdateIdCache("BI.Study.Patient")
     
     set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Changing some patient group assignments..."
@@ -435,9 +437,9 @@ ClassMethod ChangePatientGroups(percent As %Numeric = 10)
             set randomid=##class(BI.Populate).GetRandomId($CLASSNAME())
             set pat=..%OpenId(randomid)
         
-            //assign to a patient group if already assigned
-            //want to avoid putting patient into group if not currently assigned
-            //because logic elsewhere ensures TestScore is null for unassigned patients
+            // Assign to a patient group if already assigned
+            // want to avoid putting patient into group if not currently assigned
+            // because logic elsewhere ensures TestScore is null for unassigned patients
             if '(pat.PatientGroup="")
             {
                 set grouplist=$LB("A","B")
@@ -470,7 +472,7 @@ ClassMethod ChangeSomePatients(percent As %Numeric = 20, rebuild As %Boolean = 1
 
 ClassMethod GetHighestPatientID() As %String
 {
-    quit ^BI.Study.setupData("PatientID")
+    quit ^BI.Study.SetupData("PatientID")
 }
 
 }
