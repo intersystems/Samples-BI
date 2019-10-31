@@ -1,7 +1,7 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
 /// This class is part of the BI Patients sample, whose purpose is to provide
 /// sample data for use with InterSystems IRIS BI. 
-/// <p>A patient can have multiple encounters 
+/// A patient can have multiple encounters 
 /// (interactions with a medical professional). The encounter data here is minimal, but you 
 /// can create dimensions/levels based on the number of encounters a patient has, as well as 
 /// on the attending physician for those encounters. 

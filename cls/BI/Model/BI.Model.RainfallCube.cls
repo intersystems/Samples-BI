@@ -1,6 +1,6 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This class contains a cube based on BI.Study.CityRainfall. 
-/// <p>The dimension, hierarchy, and level definitions here use the same names
+/// This class contains a cube based on BI.Study.CityRainfall. 
+/// The dimension, hierarchy, and level definitions here use the same names
 /// as in the Patients cube, so that these cubes can be used together.
 Class BI.Model.RainfallCube Extends %DeepSee.CubeDefinition [ DependsOn = BI.Study.CityRainfall ]
 {

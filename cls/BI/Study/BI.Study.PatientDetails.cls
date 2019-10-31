@@ -1,12 +1,12 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This class is part of the BI Patients sample, whose purpose is to provide
+/// This class is part of the BI Patients sample, whose purpose is to provide
 /// sample data for use with InterSystems IRIS BI. 
 /// It represents an additional table of data,
 /// perhaps entered by a separate research team, and its only connection to
 /// BI.Study.Patient is that both tables have the same PatientID field. Thus to use
 /// fields of this table as BI dimensions/levels, it is necessary to use an SQL query
 /// in the dimension definition. 
-/// <p>This table is populated only if you use the T option when running the
+/// This table is populated only if you use the T option when running the
 /// GenerateData() method in BI.Populate.
 Class BI.Study.PatientDetails Extends %Persistent
 {

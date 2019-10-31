@@ -1,5 +1,5 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This KPI class uses an SQL query and defines one filter.
+/// This KPI class uses an SQL query and defines one filter.
 Class BI.Model.KPIs.DemoSQL Extends %DeepSee.KPI
 {
 

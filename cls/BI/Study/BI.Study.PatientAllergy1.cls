@@ -1,7 +1,6 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This class is part of the BI Patients sample, whose purpose is to provide
+/// This class is part of the BI Patients sample, whose purpose is to provide
 /// sample data for use with InterSystems IRIS BI. 
-/// <p>
 /// An allergy has multiple pieces of information,
 /// which you can use separately or in combination to create dimensions, depending
 /// on what you want to see.

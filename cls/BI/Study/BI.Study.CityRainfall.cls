@@ -1,13 +1,12 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This class is part of the BI Patients sample, whose purpose is to provide
+/// This class is part of the BI Patients sample, whose purpose is to provide
 /// sample data for use with InterSystems IRIS BI. 
-/// <p>This class contains the rainfall for the cities, by year and month, and is meant
+/// This class contains the rainfall for the cities, by year and month, and is meant
 /// for use as an additional BI model/cube.
-/// <p>This table is populated only if you use the R option when running the 
+/// This table is populated only if you use the R option when running the 
 /// GenerateData() method in BI.Populate. You can also use
 /// the GenerateData() method in this class if you have already populated the main
 /// sample.
-/// <p>
 /// You can extend or modify the data contained here by editing the XData block in this class.
 Class BI.Study.CityRainfall Extends %Persistent
 {

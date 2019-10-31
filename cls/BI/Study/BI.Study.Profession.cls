@@ -10,10 +10,9 @@ Property Profession As %String;
 Property Industry As %String;
 
 /// Used by Setup method. The format of <row> is: 
-/// <pre>industry^profession</pre>
-/// <p>
+/// industry^profession
 /// Industries taken from http://www.census.gov/epcd/susb/latest/us/US--.HTM 
-/// <p>Only a few industries and professions are included.
+/// Only a few industries and professions are included.
 XData LoadData
 {
 <table>

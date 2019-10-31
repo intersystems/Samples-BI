@@ -1,5 +1,5 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This class contains a cube based on BI.Study.Patients. This class also contains utility methods used by this cube.
+/// This class contains a cube based on BI.Study.Patients. This class also contains utility methods used by this cube.
 Class BI.Model.PatientsCube Extends %DeepSee.CubeDefinition [ DependsOn = BI.Study.Patient ]
 {
 

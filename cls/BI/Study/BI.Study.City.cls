@@ -1,9 +1,9 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
 /// This class is part of the BI Patients sample, whose purpose is to provide
 /// sample data for use with InterSystems IRIS BI. 
-/// <p>This class contains the cities and the ZIP codes to which they belong, as
+/// This class contains the cities and the ZIP codes to which they belong, as
 /// well as city-specific properties to use as level properties in BI.
-/// <p>You can extend or modify the data contained here by editing the XData block in this class. 
+/// You can extend or modify the data contained here by editing the XData block in this class. 
 Class BI.Study.City Extends %Persistent
 {
 

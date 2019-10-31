@@ -3,9 +3,7 @@
 /// sample data for use with InterSystems IRIS BI. 
 /// This class contains the diagnosis code lookup table, with a small set of possible
 /// diagnoses. It also defines the incidence rates for these diagnoses, by age and gender.
-/// <p>
 /// You can extend or modify the data contained here by editing the XData block in this class.
-/// <p>
 /// Use the GetPercentChance() method to retrieve the chance of having
 /// a specific diagnosis, given an age and gender.
 Class BI.Study.Diagnosis Extends %Persistent
@@ -27,14 +25,12 @@ Property Description As %String;
 /// Each bucket has the following format:
 /// <pre>lowerAge_upperAge_countPerHundredPatientsOfThisAgeAndGender</pre>
 /// Each row must have data for all ages for patients of either gender.
-/// <ul>
-/// <li>asthma source: ASTHMA06FINAL.PDF from www.lungusa.org/atf/cf/</li>
-/// <li>CHD: www.heartstats.org (used numbers for 1998)</li>
-/// <li>diabetes: www.mchd.com/data_reports/mccha/12_Morbidity_and_Hospitalizations.html (Used U.S. values)</li>
-/// <li>osteoporosis source: http://www.surgeongeneral.gov/library/bonehealth/ (No data for patients under 65)</li>
-/// <li>epilepsy: wikipedia (55 cases per 100000 people)</li>
-/// </ul>
-/// 
+/// Asthma source: ASTHMA06FINAL.PDF from www.lungusa.org/atf/cf/
+/// CHD: www.heartstats.org (used numbers for 1998)
+/// Diabetes: www.mchd.com/data_reports/mccha/12_Morbidity_and_Hospitalizations.html (Used U.S. values)
+/// Osteoporosis source: http://www.surgeongeneral.gov/library/bonehealth/ (No data for patients under 65)
+/// Epilepsy: wikipedia (55 cases per 100000 people)
+
 XData LoadData
 {
 <table>

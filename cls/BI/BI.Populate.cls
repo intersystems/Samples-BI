@@ -1,7 +1,7 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
 /// This class is part of the BI Patients sample, whose purpose is to provide
 /// sample data for use with InterSystems IRIS BI. 
-/// <p>It defines overall methods to generate data for this sample.
+/// It defines overall methods to generate data for this sample.
 /// It also contains general-purpose utilities for populating these tables. 
 /// 
 Class BI.Populate Extends %RegisteredObject
@@ -39,8 +39,8 @@ ClassMethod Setup(patCount As %Integer = 1000, options As %String = "ADTR")
 }
 
 /// This method generates the sample data for the patients and related classes.
-/// <p>patCount specifies the number of patients to generate in BI.Study.Patients.
-/// <p>patientsPerDoc specifies the approximate ratio of patients per doctor.
+/// patCount specifies the number of patients to generate in BI.Study.Patients.
+/// patientsPerDoc specifies the approximate ratio of patients per doctor.
 /// At least one doctor is always created.
 /// options is a case-insensitive string that controls whether certain child data is also generated.
 /// If it includes the letter A, allergy data is generated. This option is on by default.
