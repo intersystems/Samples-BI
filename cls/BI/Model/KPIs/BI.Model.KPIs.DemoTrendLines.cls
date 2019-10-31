@@ -1,7 +1,7 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
 /// This KPI class uses an MDX query that uses %LIST to return a list of values
 /// for use as a trend line in a scorecard.
-/// <p>For each filter, multiSelect is false, which simplifies the query construction.
+/// For each filter, multiSelect is false, which simplifies the query construction.
 /// (The KPI query would be incorrectly formed if the user selected multiple values
 /// or used the EXCLUDE option.) 
 /// The KPI will not work if a URL parameter specifies multiple values or %NOT.

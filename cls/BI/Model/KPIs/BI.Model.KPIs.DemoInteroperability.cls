@@ -20,13 +20,13 @@ sourceType="mdx">
 Method %OnGetMDX(ByRef pMDX As %String) As %Status
 {
  set yaxis=", NON EMPTY [profd].[h1].[profession].MEMBERS ON 1"
- //check custom filter value
+ // Check custom filter value
  if (..%filterValues."Yaxis"'="") {
 	 set yaxis=", NON EMPTY "_..%filterValues.Yaxis_".MEMBERS ON 1"
  }
  set pMDX="SELECT {MEASURES.[%COUNT],MEASURES.[avg age]} on 0"_yaxis_" FROM "_..#CUBE
 
- /// append a %FILTER clause to handle any other filter values
+ /// Append a %FILTER clause to handle any other filter values
  Set pMDX = pMDX _ ..FilterBuilder() 
  Quit $$$OK
 }
@@ -34,11 +34,11 @@ Method %OnGetMDX(ByRef pMDX As %String) As %Status
 /// Implementation.
 ClassMethod %OnGetFilterList(ByRef pFilters As %List, pDataSourceName As %String = "") As %Status
 {
-	//call method in superclass so we can get filters of the associated cube
+	// Call method in superclass so we can get filters of the associated cube
 	set tSC=##super(.pFilters,pDataSourceName)
 	quit:$$$ISERR(tSC) tSC
 	
-	//update pFilters array to include the custom filter
+	// Update pFilters array to include the custom filter
 	set pFilters($i(pFilters)) = $lb("Yaxis","Yaxis",,0)
     
     quit $$$OK

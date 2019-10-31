@@ -1,14 +1,14 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This KPI class is intended for use in a dashboard that demos real-time updates using
+/// This KPI class is intended for use in a dashboard that demos real-time updates using
 /// the Patients sample. The actions in this class invoke methods in that sample
 /// that add, change, or delete data.
-/// <p>The actions are defined in the %OnDashboardAction() callback. The XData block in
+/// The actions are defined in the %OnDashboardAction() callback. The XData block in
 /// this class contains one <action> element for each action, to advertise these actions
 /// to the widget builder in the user interface.
-/// <p>This KPI class also defines a simple one-cell KPI which is displayed in a text meter 
+/// This KPI class also defines a simple one-cell KPI which is displayed in a text meter 
 /// widget on that dashboard. (An alternative way to access these actions from ANY dashboard 
 /// would be to use this class as the actionClass for the Patients cube.)
-/// <p>To see the full KPI definition, open this class in Studio.
+/// To see the full KPI definition, open this class in Studio.
 Class BI.Model.KPIs.DemoDataChanges Extends %DeepSee.KPI
 {
 
@@ -48,36 +48,36 @@ displayName="ChangeSomeDoctors" />
 
 ClassMethod %OnDashboardAction(pAction As %String, pContext As %ZEN.proxyObject) As %Status
 {
- Set sc = $$$OK
- Try {
-      If (pAction = "AddPatients") {
-	      Job ##class(BI.Study.Patient).AddPatients()
+ set sc = $$$OK
+ try{
+      if (pAction = "AddPatients") {
+	      job ##class(BI.Study.Patient).AddPatients()
           }
-         Elseif (pAction="ChangeFavoriteColors")
+         elseif (pAction="ChangeFavoriteColors")
          {
-	         Job ##class(BI.Study.PatientDetails).ChangePatientDetails()
+	         job ##class(BI.Study.PatientDetails).ChangePatientDetails()
                }
-         Elseif (pAction="ChangePatientGroups")
+         elseif (pAction="ChangePatientGroups")
          {
-	         Job ##class(BI.Study.Patient).ChangePatientGroups()
+	         job ##class(BI.Study.Patient).ChangePatientGroups()
                }
-         Elseif (pAction="AddEncounters")
+         elseif (pAction="AddEncounters")
          {
-	         Job ##class(BI.Study.PatientEncounter).AddEncounters()
+	         job ##class(BI.Study.PatientEncounter).AddEncounters()
                }
-         Elseif (pAction="DeleteSomePatients")
+         elseif (pAction="DeleteSomePatients")
          {
-	         Job ##class(BI.Study.Patient).DeleteSomePatients()
+	         job ##class(BI.Study.Patient).DeleteSomePatients()
                }
-         Elseif (pAction="ChangeSomeDoctors")
+         elseif (pAction="ChangeSomeDoctors")
          {
-	         Job ##class(BI.Study.Doctor).ChangeSomeDoctors()
+	         job ##class(BI.Study.Doctor).ChangeSomeDoctors()
                }
          }
         Catch(ex) {
-                Set sc = ex.AsStatus()
+                set sc = ex.AsStatus()
         }
- Quit sc
+ quit sc
 }
 
 }

@@ -316,10 +316,10 @@ valueExpression="%OR({[COLORD].[H1].[FAVORITE COLOR].&amp;[Green],[COLORD].[H1].
  WHERE $$$RESTRICT AND source.PatientID=details.PatientID ORDER BY source.PatientID"/>
 
 
-<namedSet name="Sample Set" displayName="Sample Set" 
+<namedset name="Sample Set" displayName="Sample Set" 
 setExpression="homed.h1.city.MEMBERS" />
 
-<namedSet name="Sample Set 2" displayName="Sample Set 2"
+<namedset name="Sample set 2" displayName="Sample set 2"
 setExpression="{colord.h1.[favorite color].red,allerd.h1.allergies.wheat,aged.h1.age.75}" />
 
 </cube>
@@ -329,224 +329,224 @@ setExpression="{colord.h1.[favorite color].red,allerd.h1.allergies.wheat,aged.h1
 /// used by the Allergy Count measure.
 ClassMethod GetAllergyCount(ID As %Numeric) As %Numeric
 {
-	Set allergies=##class(BI.Study.Patient).%OpenId(ID,0).Allergies
-    //check to see if patient has any recorded allergy data
-    //if not, count is null
+	set allergies=##class(BI.Study.Patient).%OpenId(ID,0).Allergies
+    // Check to see if patient has any recorded allergy data
+    // if not, count is null
     
-    If allergies.Count()=0 {
-		Set allcount=""
+    if allergies.Count()=0 {
+		set allcount=""
 		}
 		 //check to see if patient has "Nil known allergies"
 		 //in this case, the patient has one "allergen" whose code is 000
-		Elseif ((allergies.Count()=1) && (allergies.GetAt(1).Allergen.Code="000")) {
-		        Set allcount=0
+		elseif ((allergies.Count()=1) && (allergies.GetAt(1).Allergen.Code="000")) {
+		        set allcount=0
 		        }
-		Else {
-	        Set allcount=allergies.Count()
+		else {
+	        set allcount=allergies.Count()
 	        }		        
 	    
-	Quit allcount
+	quit allcount
 	
-	//Quit allergies.Count() ; old simple version doesn't handle case where "allergen"
-	//is "Nil known allergies"
+	// Quit allergies.Count() ; old simple version doesn't handle case where "allergen"
+	// is "Nil known allergies"
 }
 
 /// Returns the number of encounters recorded for the patient; 
 /// used by the Encounter Count measure.
 ClassMethod GetEncounterCount(ID As %Numeric) As %Numeric
 {
-    Set myquery="SELECT Count(*) AS ReturnValue FROM BI_Study.PatientEncounter "
+    set myquery="SELECT Count(*) AS ReturnValue FROM BI_Study.PatientEncounter "
               _ "WHERE Patient=?"
-    Set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
-    Set status=rset.Prepare(myquery)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Write "Prepare error"}
-    Set status=rset.Execute(ID)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Write "Execute error"}
-    While rset.Next() {
-     Set ReturnValue=rset.Data("ReturnValue")
+    set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
+    set status=rset.Prepare(myquery)
+    if $$$ISERR(status) {Do $System.Status.DisplayError(status) Write "Prepare error"}
+    set status=rset.Execute(ID)
+    if $$$ISERR(status) {Do $System.Status.DisplayError(status) Write "Execute error"}
+    while rset.Next() {
+     set ReturnValue=rset.Data("ReturnValue")
      }
-    If ReturnValue="" {
-        Set ReturnValue=0
+    if ReturnValue="" {
+        set ReturnValue=0
         }        
-    Quit ReturnValue
+    quit ReturnValue
 }
 
 /// Returns a $LIST of the allergies of the patient; 
 /// used by the [AllerD].[H1].[Allergies] level."
 ClassMethod GetAllergies(ID As %Numeric) As %List
 {
-    Set allergies=##class(BI.Study.Patient).%OpenId(ID,0).Allergies
-    If (allergies.Count()=0) {Quit $LISTFROMSTRING("")}
-    Set list=""
-    For i=1:1:allergies.Count() {
-        Set $LI(list,i)=allergies.GetAt(i).Allergen.Description
+    set allergies=##class(BI.Study.Patient).%OpenId(ID,0).Allergies
+    if (allergies.Count()=0) {quit $LISTFROMSTRING("")}
+    set list=""
+    for i=1:1:allergies.Count() {
+        set $LI(list,i)=allergies.GetAt(i).Allergen.Description
         }
-    Quit list
+    quit list
 }
 
 /// Returns a $LIST of the allergy severities of the patient; 
 /// used by the [AllerSevD].[H1].[Allergy Severities] level.
-/// <p>Not currently used.
+/// Not currently used.
 ClassMethod GetAllergySeverities(ID As %Numeric) As %List
 {
-    Set allergies=##class(BI.Study.Patient).%OpenId(ID,0).Allergies
-    If (allergies.Count()=0) {
-	    Set list=$LISTFROMSTRING("")
+    set allergies=##class(BI.Study.Patient).%OpenId(ID,0).Allergies
+    if (allergies.Count()=0) {
+	    set list=$LISTFROMSTRING("")
 	    }
         //check to see if patient has "Nil known allergies"
 		//in this case, the patient has one "allergen" whose code is 000
-	    Elseif ((allergies.Count()=1) && (allergies.GetAt(1).Allergen.Code="000")) {
-		    Set list=$LISTFROMSTRING("Nil known allergies")
+	    elseif ((allergies.Count()=1) && (allergies.GetAt(1).Allergen.Code="000")) {
+		    set list=$LISTFROMSTRING("Nil known allergies")
 		    }
-    	Else {
-	    	Set list=""
-            For i=1:1:allergies.Count() {
-                Set $LI(list,i)=allergies.GetAt(i).Severity.Description
+    	else {
+	    	set list=""
+            for i=1:1:allergies.Count() {
+                set $LI(list,i)=allergies.GetAt(i).Severity.Description
                 }
 	        }
-    Quit list
+    quit list
 }
 
 /// Returns a $LIST of the allergy severities of the patient; 
 /// used by the [AllerSevD].[H1].[Allergy Severities] level.
-/// <p> In this version, prepend each severity with the corresponding numeric code
+/// In this version, prepend each severity with the corresponding numeric code
 /// (or an invented code), in order to force the members to sort as wanted.
 ClassMethod GetAllergySeverities2(ID As %Numeric) As %List
 {
-    Set allergies=##class(BI.Study.Patient).%OpenId(ID,0).Allergies
-    If (allergies.Count()=0) {
-	    Set list=$LISTFROMSTRING("999 No Data Available")
+    set allergies=##class(BI.Study.Patient).%OpenId(ID,0).Allergies
+    if (allergies.Count()=0) {
+	    set list=$LISTFROMSTRING("999 No Data Available")
 	    }
         //check to see if patient has "Nil known allergies"
 		//in this case, the patient has one "allergen" whose code is 000
-	    Elseif ((allergies.Count()=1) && (allergies.GetAt(1).Allergen.Code="000")) {
-		    Set list=$LISTFROMSTRING("000 Nil known allergies")
+	    elseif ((allergies.Count()=1) && (allergies.GetAt(1).Allergen.Code="000")) {
+		    set list=$LISTFROMSTRING("000 Nil known allergies")
 		    }
-    	Else {
-	    	Set list=""
-            For i=1:1:allergies.Count() {
+    	else {
+	    	set list=""
+            for i=1:1:allergies.Count() {
 	            //get the code, check to see if null
 	            //if so, replace with standard no data available string
-	            Set code=allergies.GetAt(i).Severity.Code
-	            If code="" { Set code="999 No Data Available"}
-                Set $LI(list,i)=code_" "_allergies.GetAt(i).Severity.Description
+	            set code=allergies.GetAt(i).Severity.Code
+	            if code="" { set code="999 No Data Available"}
+                set $LI(list,i)=code_" "_allergies.GetAt(i).Severity.Description
                 }
 	        }
-    Quit list
+    quit list
 }
 
 /// Returns a $LIST of the diagnoses of the patient; 
 /// used by the [DiagD].[H1].[Diagnoses] level.
 ClassMethod GetDiagnoses(ID As %Numeric) As %List
 {
-    Set diagnoses=##class(BI.Study.Patient).%OpenId(ID,0).DiagnosesAsChildren
-    If (diagnoses.Count()=0) {Quit $LISTFROMSTRING("")}
-    Set list=""
-    For i=1:1:diagnoses.Count() {
-        Set $LI(list,i)=diagnoses.GetAt(i).DiagnosisCode
+    set diagnoses=##class(BI.Study.Patient).%OpenId(ID,0).DiagnosesAsChildren
+    if (diagnoses.Count()=0) {quit $LISTFROMSTRING("")}
+    set list=""
+    for i=1:1:diagnoses.Count() {
+        set $LI(list,i)=diagnoses.GetAt(i).DiagnosisCode
         }
-    Quit list
+    quit list
 }
 
 /// Returns the favorite color of the patient; 
 /// used by the [ColorD].[H1].[Favorite Color] level.
 ClassMethod GetFavoriteColor(patientID As %String) As %String
 {
-    New SQLCODE
+    new SQLCODE
     &sql(SELECT FavoriteColor INTO :ReturnValue 
     FROM BI_Study.PatientDetails 
     WHERE PatientID=:patientID)
-    If (SQLCODE'=0) {
-        Set ReturnValue=""
+    if (SQLCODE'=0) {
+        set ReturnValue=""
         }
-    Quit ReturnValue
+    quit ReturnValue
 }
 
 /// Returns the profession of the patient; 
 /// used by the [ProfD].[H1].[Profession] level.
 ClassMethod GetProfession(patientID As %String) As %String
 {
-    New SQLCODE
+    new SQLCODE
     &sql(SELECT Profession->Profession INTO :ReturnValue 
     FROM BI_Study.PatientDetails 
     WHERE PatientID=:patientID)
-    If (SQLCODE'=0) {
-        Set ReturnValue=""
+    if (SQLCODE'=0) {
+        set ReturnValue=""
         }
-    Quit ReturnValue
+    quit ReturnValue
 }
 
 /// Returns the industry of the patient; 
 /// used by the [ProfD].[H1].[Industry] level.
 ClassMethod GetIndustry(patientID As %String) As %String
 {
-    New SQLCODE
+    new SQLCODE
     &sql(SELECT Profession->Industry INTO :ReturnValue 
     FROM BI_Study.PatientDetails 
     WHERE PatientID=:patientID)
-    If (SQLCODE'=0) {
-        Set ReturnValue=""
+    if (SQLCODE'=0) {
+        set ReturnValue=""
         }
-    Quit ReturnValue
+    quit ReturnValue
 }
 
 /// Returns the name of the patient's primary care physician. 
 /// Not used by the cube but included as an example of a utility method.
 ClassMethod GetDocName(ID As %Numeric) As %String
 {
-    Set pat=##class(BI.Study.Patient).%OpenId(ID,0)
-    Set doc=pat.PrimaryCarePhysician
+    set pat=##class(BI.Study.Patient).%OpenId(ID,0)
+    set doc=pat.PrimaryCarePhysician
     
-    Set docname=""
-    If (doc'="") {
-	      Set docname=doc.LastName_", "_doc.FirstName
+    set docname=""
+    if (doc'="") {
+	      set docname=doc.LastName_", "_doc.FirstName
 		  }
-	Quit docname
+	quit docname
 }
 
 /// Given a number, returns one of the strings "0 to 9", "10 to 19", "20 to 29", etc. 
 /// Used by the cube as an alternative to rangeExpression
 ClassMethod GetAgeBucket(age As %Numeric) As %String
 {
-    If (age="") {Set return=""}
-    ElseIf (age<10) {Set return="0 to 9"}
-    ElseIf (age<20) {Set return="10 to 19"}
-    ElseIf (age<30) {Set return="20 to 29"}
-    ElseIf (age<40) {Set return="30 to 39"}
-    ElseIf (age<50) {Set return="40 to 49"}
-    ElseIf (age<60) {Set return="50 to 59"}
-    ElseIf (age<70) {Set return="60 to 69"}
-    ElseIf (age<80) {Set return="70 to 79"}
-    Else {Set return="80+"}
-    Quit return
+    if (age="") {set return=""}
+    elseif (age<10) {set return="0 to 9"}
+    elseif (age<20) {set return="10 to 19"}
+    elseif (age<30) {set return="20 to 29"}
+    elseif (age<40) {set return="30 to 39"}
+    elseif (age<50) {set return="40 to 49"}
+    elseif (age<60) {set return="50 to 59"}
+    elseif (age<70) {set return="60 to 69"}
+    elseif (age<80) {set return="70 to 79"}
+    else {set return="80+"}
+    quit return
 }
 
 /// Given a number, returns one of the strings "0 to 29", "30 to 59",or "60+". 
 /// Not used by the cube, but included as an example of a utility method.
 ClassMethod GetAgeGroup(age As %Numeric) As %String
 {
-    If (age="") {Set return=""}
-    ElseIf (age<30) {Set return="0 to 29"}
-    ElseIf (age<60) {Set return="30 to 59"}
-    Else {Set return="60+"}
-    Quit return
+    if (age="") {set return=""}
+    elseif (age<30) {set return="0 to 29"}
+    elseif (age<60) {set return="30 to 59"}
+    else {set return="60+"}
+    quit return
 }
 
 /// Given a patient, returns the name of the doctor at the patient's last encounter, if any.
 /// Not used by the cube but included as an example of a utility method.
 ClassMethod GetLastDoctor(pat As %Numeric) As %String
 {
-    New SQLCODE
-    Set docname=""
+    new SQLCODE
+    set docname=""
     &sql(select TOP 1 PrimaryDoctor INTO :doctor 
 	FROM BI_Study.PatientEncounter 
 	WHERE Patient=:pat ORDER BY EncounterNumber )
-    If (SQLCODE'=0) {
-        Quit ""
+    if (SQLCODE'=0) {
+        quit ""
         }
-    Set doc=##class(BI.Study.Doctor).%OpenId(doctor,0)
-    Set docname=doc.LastName_", "_doc.FirstName
-    Quit docname
+    set doc=##class(BI.Study.Doctor).%OpenId(doctor,0)
+    set docname=doc.LastName_", "_doc.FirstName
+    quit docname
 }
 
 /// used to control sort order of Allergy Severity level

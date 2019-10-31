@@ -1,6 +1,6 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
 /// This class is for use in a compound cube (and can also be used on its own).
-/// <p>To view the cube definition, open this class in Studio.
+/// To view the cube definition, open this class in Studio.
 Class BI.Model.CompoundCube.CityRainfall Extends %DeepSee.CubeDefinition [ DependsOn = (BI.Study.CityRainfall, BI.Model.CompoundCube.Patients) ]
 {
 

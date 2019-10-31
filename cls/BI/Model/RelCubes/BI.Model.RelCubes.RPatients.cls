@@ -1,8 +1,8 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
 /// This class is for use with InterSystems IRIS BI. 
-/// <p>It contains a cube based on BI.Study.Patients. 
+/// It contains a cube based on BI.Study.Patients. 
 /// To view the cube definition, open this class in Studio or the BI Architect.
-/// <p>The RelatedCubes/* cubes (like this one) use cube-to-cube relationships.
+/// The RelatedCubes/* cubes (like this one) use cube-to-cube relationships.
 Class BI.Model.RelCubes.RPatients Extends %DeepSee.CubeDefinition [ DependsOn = (BI.Study.Patient, BI.Model.RelCubes.RDoctors, BI.Model.RelCubes.RCities) ]
 {
 

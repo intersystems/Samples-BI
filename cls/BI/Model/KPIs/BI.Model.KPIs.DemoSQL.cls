@@ -29,36 +29,35 @@ displayName="ZipCode"
 /// This callback defines the basic SQL query and also checks for the current values
 /// in the filter. The callback adds an SQL WHERE clause with one of the following forms,
 /// depending on the user's selections:
-/// <ul>
-/// <li> WHERE HomeCity->PostalCode = zip_code_selected_by_user
-/// <li> WHERE HomeCity->PostalCode IN (zip_code_1,zip_code_2,...)
-/// <li> WHERE HomeCity->PostalCode <> zip_code_selected_by_user
-/// <li> WHERE HomeCity->PostalCode NOT IN (zip_code_1,zip_code_2,...)
-/// </ul>
+/// WHERE HomeCity->PostalCode = zip_code_selected_by_user
+/// WHERE HomeCity->PostalCode IN (zip_code_1,zip_code_2,...)
+/// WHERE HomeCity->PostalCode <> zip_code_selected_by_user
+/// WHERE HomeCity->PostalCode NOT IN (zip_code_1,zip_code_2,...)
 Method %OnGetSQL(ByRef pSQL As %String) As %Status
 {
-    //this is the start of the SQL query for this KPI
-    Set pSQL = "SELECT HomeCity->Name, Count(*),AVG(Age) FROM BI_Study.Patient "
+    // This is the start of the SQL query for this KPI
+    set pSQL = "SELECT HomeCity->Name, Count(*),AVG(Age) FROM BI_Study.Patient "
     
-    Set where = ""
-    //look at %filterValues to see if a filter has been applied to this KPI instance
-    If $IsObject(..%filterValues) {
-        If (..%filterValues.ZipCode'="") 
+    set where = ""
+
+    // Look at %filterValues to see if a filter has been applied to this KPI instance
+    if $IsObject(..%filterValues) {
+        if (..%filterValues.ZipCode'="") 
         {
             // Call utility method that returns filter data in convenient format
-            Set sqlstring=..%GetSQLForFilter("HomeCity->PostalCode","ZipCode")
-            Set where = "WHERE "_sqlstring
+            set sqlstring=..%GetSQLForFilter("HomeCity->PostalCode","ZipCode")
+            set where = "WHERE "_sqlstring
             
             // Old version -- this works but only if you disable multiselect for this fitler
-            // Set where = "WHERE HomeCity->PostalCode = '" _ ..%filterValues.ZipCode _ "' "
+            // set where = "WHERE HomeCity->PostalCode = '" _ ..%filterValues.ZipCode _ "' "
         } 
     }
 
-    Set groupby="GROUP BY HomeCity "
-    Set orderby="ORDER BY HomeCity "
+    set groupby="GROUP BY HomeCity "
+    set orderby="ORDER BY HomeCity "
     // assemble the SQL statement
-    Set pSQL=pSQL_where_groupby_orderby
-	Quit $$$OK
+    set pSQL=pSQL_where_groupby_orderby
+	quit $$$OK
 }
 
 }
