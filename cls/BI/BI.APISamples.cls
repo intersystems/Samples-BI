@@ -6,239 +6,240 @@ Class BI.APISamples
 
 /// Executes a hardcoded query and prints the results.
 /// Returns the result set as output.
-ClassMethod RunQuery1(Output result As %DeepSee.ResultSet) As %Status
+ClassMethod RunQuery1(Output result As %DeepSee.Resultset) As %Status
 {
-    Set rset=##class(%DeepSee.ResultSet).%New()
-    Set query="SELECT MEASURES.[%COUNT] ON 0, diagd.MEMBERS ON 1 FROM patients"
-    Set status=rset.%PrepareMDX(query)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit status}
+    set rset=##class(%DeepSee.Resultset).%New()
+    set query="SELECT MEASURES.[%COUNT] ON 0, diagd.MEMBERS ON 1 FROM patients"
+    set status=rset.%PrepareMDX(query)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
 
-    Set status=rset.%Execute()
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit status}
+    set status=rset.%Execute()
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
    
-    Write !, "Full results are as follows ***************",!
-    Do rset.%Print()
-    Quit $$$OK
+    write !, "Full results are as follows ***************",!
+    do rset.%Print()
+    quit $$$OK
 }
 
 /// Executes a query that uses a named parameter and prints the results.
 /// Returns the result set as output.
-ClassMethod RunQuery2(city As %String = "Magnolia", Output result As %DeepSee.ResultSet) As %Status
+ClassMethod RunQuery2(city As %String = "Magnolia", Output result As %DeepSee.Resultset) As %Status
 {
-    Set rset=##class(%DeepSee.ResultSet).%New()
-    Set query="WITH %PARM c AS 'value:Magnolia'"
+    set rset=##class(%DeepSee.Resultset).%New()
+    set query="WITH %PARM c AS 'value:Magnolia'"
     _"SELECT homed.[city].@c ON 0 FROM patients"
-    Set status=rset.%PrepareMDX(query)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit status}
+    set status=rset.%PrepareMDX(query)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
 
-    Set myparms("c")=city
-    Set status=rset.%Execute(.myparms)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit status}
+    set myparms("c")=city
+    set status=rset.%Execute(.myparms)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
    
-    Write !, "Full results are as follows ***************",!
-    Do rset.%Print()
-    Quit $$$OK
+    write !, "Full results are as follows ***************",!
+    do rset.%Print()
+    quit $$$OK
 }
 
 /// Executes a query that does a detail listing and prints the results.
 /// Returns the result set as output.
 ClassMethod RunQuery3()
 {
-    Set rset=##class(%DeepSee.ResultSet).%New()
+    set rset=##class(%DeepSee.Resultset).%New()
     
-    Set query="DRILLTHROUGH SELECT gend.female ON 0,birthd.[1913] ON 1 "
+    set query="DRILLTHROUGH SELECT gend.female ON 0,birthd.[1913] ON 1 "
              _"FROM patients RETURN PatientID,PrimaryCarePhysician->LastName"
 
-    Set status=rset.%PrepareMDX(query)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
+    set status=rset.%PrepareMDX(query)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
 
-    Set status=rset.%Execute()
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
+    set status=rset.%Execute()
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
     
-    Write !, "Listing details for the first cell are as follows ***************",!
-    Do rset.%PrintListing()
+    write !, "Listing details for the first cell are as follows ***************",!
+    do rset.%PrintListing()
 }
 
 /// Executes a query and prints the results.
 /// Then for comparison, displays a specific cell.
 ClassMethod ShowCell() As %Status
 {
-    Set rset=##class(%DeepSee.ResultSet).%New()
-    Set query="SELECT MEASURES.[avg age] ON 0, homed.[city].MEMBERS ON 1 "
+    set rset=##class(%DeepSee.Resultset).%New()
+    set query="SELECT MEASURES.[avg age] ON 0, homed.[city].MEMBERS ON 1 "
              _"FROM patients"
-    Set status=rset.%PrepareMDX(query)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit status}
+    set status=rset.%PrepareMDX(query)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
 
-    Set status=rset.%Execute()
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit status}
+    set status=rset.%Execute()
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
     
-    Write !, "Full results are as follows ***************",!
-    Do rset.%Print()
+    write !, "Full results are as follows ***************",!
+    do rset.%Print()
     
-    Write !, "Cell 1,5 is as follows  ***************",!
-    Write rset.%GetOrdinalValue(1,5)
-    Quit status
+    write !, "Cell 1,5 is as follows  ***************",!
+    write rset.%GetOrdinalValue(1,5)
+    quit status
 }
 
 /// Executes a query and prints the results.
 /// Then for comparison, displays information about the row labels.
 ClassMethod ShowRowLabels() As %Status
 {
-    Set rset=##class(%DeepSee.ResultSet).%New()
-    Set query="SELECT CROSSJOIN(aged.[age group].MEMBERS,"
+    set rset=##class(%DeepSee.Resultset).%New()
+    set query="SELECT CROSSJOIN(aged.[age group].MEMBERS,"
              _"gend.gender.MEMBERS) ON 1 FROM patients"
-    Set status=rset.%PrepareMDX(query)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit status}
+    set status=rset.%PrepareMDX(query)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
 
-    Set status=rset.%Execute()
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit status}
+    set status=rset.%Execute()
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
     
-    Write !, "Full results are as follows ***************",!
-    Do rset.%Print()
+    write !, "Full results are as follows ***************",!
+    do rset.%Print()
     
-    Write !, "Labels used on the rows are as follows ***************",!
-    For j=1:1:rset.%GetRowCount() {
-        Write !, "Row ",j
-        Set labelcount=rset.%GetOrdinalLabel(.pLabel,2,j)
+    write !, "Labels used on the rows are as follows ***************",!
+    for j=1:1:rset.%GetRowCount() {
+        write !, "Row ",j
+        set labelcount=rset.%GetOrdinalLabel(.pLabel,2,j)
         For i=1:1:labelcount {
-            Write !, "    label("_i_") is "_pLabel(i)
+            write !, "    label("_i_") is "_pLabel(i)
             }
        }
     
-    Quit $$$OK
+    quit $$$OK
 }
 
 /// Given a result set as input, this method generates a report on
 /// the query metadata.
-ClassMethod ShowQueryMetadata(rset As %DeepSee.ResultSet) As %Status
+ClassMethod ShowQueryMetadata(rset As %DeepSee.Resultset) As %Status
 {
-    Set cubename=rset.%GetCubeName()
-    Write !, "This result set comes from the following cube: ",cubename,!
+    set cubename=rset.%GetCubeName()
+    write !, "This result set comes from the following cube: ",cubename,!
     
-    Set status=rset.%GetParameterInfo(.pParms)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit status}
-    If $DATA(pParms) {
-        Write "The query uses the following parameters:",!
-        Set p = $ORDER(pParms(""))
+    set status=rset.%GetParameterInfo(.pParms)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
+    if $DATA(pParms) {
+        write "The query uses the following parameters:",!
+        set p = $ORDER(pParms(""))
             While (p '= "") {
-                Write $$$UPPER(p), " = " ,$GET(pParms(p,"VALUE")),!
-                Set p = $ORDER(pParms(p))
+                write $$$UPPER(p), " = " ,$GET(pParms(p,"VALUE")),!
+                set p = $ORDER(pParms(p))
         }
     }
-    Set query=rset.%GetQueryText()
-    Write "The query is as follows:",!, query,!
+    set query=rset.%GetQueryText()
+    write "The query is as follows:",!, query,!
 
-    Set isdrill=rset.%IsDrillThrough()
-    If isdrill {
-        Set listingsql=rset.%GetListingSQL()
-        Write !!, "It uses the following SQL to drill into the source table:"
-        Write !, listingsql
+    set isdrill=rset.%IsDrillThrough()
+    if isdrill {
+        set listingsql=rset.%GetListingSQL()
+        write !!, "It uses the following SQL to drill into the source table:"
+        write !, listingsql
         }
 }
 
 /// Given a result set as input, this method generates a report on
 /// the result metadata.
-ClassMethod ShowResultMetadata(rset As %DeepSee.ResultSet)
+ClassMethod ShowResultMetadata(rset As %DeepSee.Resultset)
 {
-    Set cubename=rset.%GetCubeName()
-    Write !, "This result set comes from the cube ",cubename
+    set cubename=rset.%GetCubeName()
+    write !, "This result set comes from the cube ",cubename
     
-    Set querykey=rset.%GetQueryKey()
-    Set cellcount=##class(%DeepSee.ResultSet).%GetCellCount(cubename,querykey)
-    Write !, "It has ", cellcount, " cells"
+    set querykey=rset.%GetQueryKey()
+    set cellcount=##class(%DeepSee.Resultset).%GetCellCount(cubename,querykey)
+    write !, "It has ", cellcount, " cells"
     
     //For i=1:1:cellcount{
-      //  Write !, "cell number ",i," has the value ",rset.%GetOrdinalValue(i)
+      //  write !, "cell number ",i," has the value ",rset.%GetOrdinalValue(i)
         //}
 }
 
 /// Given a result set as input, this method generates a report on
 /// the slicer statement for a given cell range.
-ClassMethod ShowSlicerStatement(rset As %DeepSee.ResultSet, Row1 As %Integer = 1, Col1 As %Integer = 1, Row2 As %Integer, Col2 As %Integer) As %Status
+ClassMethod ShowSlicerStatement(rset As %DeepSee.Resultset, Row1 As %Integer = 1, Col1 As %Integer = 1, Row2 As %Integer, Col2 As %Integer) As %Status
 {
-    If '$DATA(Row2) {Set Row2=Row1}
-    If '$DATA(Col2) {Set Col2=Col1}
+    if '$DATA(Row2) {set Row2=Row1}
+    if '$DATA(Col2) {set Col2=Col1}
 
-    Set status=rset.%GetSlicerForCellRange(.slicer,Row1,Col1,Row2,Col2)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit status}
+    set status=rset.%GetSlicerForCellRange(.slicer,Row1,Col1,Row2,Col2)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit status}
     
-    Write !, "The requested cell range:"
-    Write !, "   Columns ",Col1, " through ", Col2
-    Write !, "   Rows    ",Row1, " through ", Row2
+    write !, "The requested cell range:"
+    write !, "   Columns ",Col1, " through ", Col2
+    write !, "   Rows    ",Row1, " through ", Row2
 
-    Write !, "The slicer statement for the given cell range is as follows:"
-    Write !, slicer
+    write !, "The slicer statement for the given cell range is as follows:"
+    write !, slicer
     
-    If 'rset.%IsDrillThrough(){
-        Write !!, "For comparison, the query results are as follows:",!
-        Do rset.%Print()
+    if 'rset.%IsDrillThrough(){
+        write !!, "For comparison, the query results are as follows:",!
+        do rset.%Print()
     }
     Else {
-	    Write !!, "This is a drillthrough query and %Print "
+	    write !!, "This is a drillthrough query and %Print "
 	    _"does not provide a useful basis of comparison"
 	    }
 }
 
 /// Executes a hardcoded query and returns a result set.
-ClassMethod GetResultSet1() As %DeepSee.ResultSet
+ClassMethod GetResultset1() As %DeepSee.Resultset
 {
-    Set rset=##class(%DeepSee.ResultSet).%New()
-    Set query="SELECT {MEASURES.[avg test score],MEASURES.[%COUNT]} ON 0, "
+    set rset=##class(%DeepSee.Resultset).%New()
+    set query="SELECT {MEASURES.[avg test score],MEASURES.[%COUNT]} ON 0, "
              _"diagd.h1.diagnoses.MEMBERS ON 1 FROM patients"
-    Set status=rset.%PrepareMDX(query)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit $$$NULLOREF}
+    set status=rset.%PrepareMDX(query)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit $$$NULLOREF}
 
-    Set status=rset.%Execute()
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit $$$NULLOREF}
+    set status=rset.%Execute()
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit $$$NULLOREF}
     
-    Quit rset
+    quit rset
 }
 
 /// Executes a hardcoded query and returns a result set.
-ClassMethod GetResultSet2(city As %String = "Magnolia") As %DeepSee.ResultSet
+ClassMethod GetResultset2(city As %String = "Magnolia") As %DeepSee.Resultset
 {
-    Set rset=##class(%DeepSee.ResultSet).%New()
-    Set query="WITH %PARM c AS 'value:Magnolia'"
+    set rset=##class(%DeepSee.Resultset).%New()
+    set query="WITH %PARM c AS 'value:Magnolia'"
              _"SELECT homed.h1.[city].@c ON 0 FROM patients"
 
-    Set status=rset.%PrepareMDX(query)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit $$$NULLOREF}
+    set status=rset.%PrepareMDX(query)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit $$$NULLOREF}
 
-    Set myparms("c")=city
-    Set status=rset.%Execute(.myparms)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit $$$NULLOREF}
+    set myparms("c")=city
+    set status=rset.%Execute(.myparms)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit $$$NULLOREF}
     
-    Quit rset
+    quit rset
 }
 
 /// executes a hardcoded query and returns a result set
-ClassMethod GetResultSet3() As %DeepSee.ResultSet
+ClassMethod GetResultset3() As %DeepSee.Resultset
 {
-    Set rset=##class(%DeepSee.ResultSet).%New()
-    Set query="DRILLTHROUGH SELECT gend.h1.gender.female ON 0,birthd.h1.year.[1913] ON 1 "
+    set rset=##class(%DeepSee.Resultset).%New()
+    set query="DRILLTHROUGH SELECT gend.h1.gender.female ON 0,birthd.h1.year.[1913] ON 1 "
              _"FROM patients RETURN PatientID,PrimaryCarePhysician->LastName"
 
-    Set status=rset.%PrepareMDX(query)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit $$$NULLOREF}
+    set status=rset.%PrepareMDX(query)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit $$$NULLOREF}
 
-    Set status=rset.%Execute()
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit $$$NULLOREF}
+    set status=rset.%Execute()
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit $$$NULLOREF}
     
-    Quit rset
+    quit rset
 }
 
-ClassMethod GetResultSet4() As %DeepSee.ResultSet
+/// Executes a hardcoded query and returns a result set.
+ClassMethod GetResultset4() As %DeepSee.Resultset
 {
-    Set rset=##class(%DeepSee.ResultSet).%New()
-    Set query="SELECT CROSSJOIN(gend.h1.gender.MEMBERS,MEASURES.[%COUNT]) ON 0, "
+    set rset=##class(%DeepSee.Resultset).%New()
+    set query="SELECT CROSSJOIN(gend.h1.gender.MEMBERS,MEASURES.[%COUNT]) ON 0, "
              _"aged.h1.[age bucket].MEMBERS ON 1 FROM patients"
-    Set status=rset.%PrepareMDX(query)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit $$$NULLOREF}
+    set status=rset.%PrepareMDX(query)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit $$$NULLOREF}
 
-    Set status=rset.%Execute()
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit $$$NULLOREF}
+    set status=rset.%Execute()
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit $$$NULLOREF}
     
-    Quit rset
+    quit rset
 }
 
 }

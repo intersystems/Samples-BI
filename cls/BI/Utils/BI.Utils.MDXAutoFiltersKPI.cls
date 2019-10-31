@@ -39,7 +39,7 @@ Parameter CUBE As %String;
 ClassMethod %OnGetFilterMembers(pFilter As %String, Output pMembers As %List, pSearchKey As %String = "", pDataSourceName As %String = "") As %Status
 {
     set sc=..%GetMembersForFilter(..#CUBE_".cube",pFilter,.pMembers)
-	Quit sc
+	quit sc
 }
 
 /// Implementation; can be overridden.
@@ -57,7 +57,7 @@ Method FilterBuilder() As %String [ Internal, Private ]
  	set tSC = ##class(%DeepSee.Dashboard.Utils).%GetFiltersForDataSource(..#CUBE_".cube",.tFilters)
 	quit:$$$ISERR(tSC) ""
    
-    //iterate through defined filters and build up usedFilters array
+    // Iterate through defined filters and build up usedFilters array
 	set i = "",usedFilters=0
 	for {
 		set i = $order(tFilters(i))
@@ -106,7 +106,7 @@ ClassMethod CombineFilterStrings(ByRef usedFilters) As %String [ Private ]
 /// which describes the filter state.
 ClassMethod ParseFilterValue(filterValue As %String, Output FilterStateArray) As %Status [ Private ]
 {
-    //initialize this node 
+    // Initialize this node 
     kill FilterStateArray  
     set FilterStateArray("not")=0
     
@@ -117,13 +117,13 @@ ClassMethod ParseFilterValue(filterValue As %String, Output FilterStateArray) As
 		set filterValue=$EXTRACT(filterValue,6,*)
 	}
 
-    //now check if we have a set
+    // Now check if we have a set
     set nextbit=$EXTRACT(filterValue)
     if nextbit="{" {
-	    //take off { from the start and } from the end
+	    // Take off { from the start and } from the end
 	    set filterValue=$EXTRACT(filterValue,2,*-1)
         
-		//parse the list of values the same way that Joe does
+		// Parse the list of values the same way that Joe does
 		Set valueCount=..%SplitList(filterValue,.tList)
 		set FilterStateArray=valueCount
 		for i=1:1:valueCount {
@@ -131,7 +131,7 @@ ClassMethod ParseFilterValue(filterValue As %String, Output FilterStateArray) As
 			}
 	    
 	} else {
-		//list has only 1 item; put it into the array
+		// List has only 1 item; put it into the array
 		set FilterStateArray=1
 		set FilterStateArray(1)=filterValue
 	}
@@ -153,11 +153,11 @@ ClassMethod BuildString(filterName, ByRef FilterStateArray) As %String [ Private
 	    for i=1:1:FilterStateArray{
 		   set string=string_filterName_"."_FilterStateArray(i)_","
 		   } 
-        //remove trailing comma and close set (which is wrapped in %OR)
+        // Remove trailing comma and close set (which is wrapped in %OR)
         set string=$EXTRACT(string,1,*-1)
 	    set string=string_"})"
 	   
-        //deal with NOT case
+        // Deal with NOT case
         if FilterStateArray("not")=1 {
 	       set string="EXCEPT("_filterName_".MEMBERS,"_string_")"
 	       }
@@ -177,7 +177,7 @@ ClassMethod %OnGetFilterList(Output pFilters As %List, pDataSourceName As %Strin
 			
 			set pFilters($i(pFilters)) = $lb($lg(data,2), $lg(data,1),,1)
 		}
-        Quit $$$OK
+        quit $$$OK
 }
 
 }
