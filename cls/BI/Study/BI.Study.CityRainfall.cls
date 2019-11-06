@@ -1,13 +1,12 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This class is part of the BI Patients sample, whose purpose is to provide
+/// This class is part of the BI Patients sample, whose purpose is to provide
 /// sample data for use with InterSystems IRIS BI. 
-/// <p>This class contains the rainfall for the cities, by year and month, and is meant
+/// This class contains the rainfall for the cities, by year and month, and is meant
 /// for use as an additional BI model/cube.
-/// <p>This table is populated only if you use the R option when running the 
+/// This table is populated only if you use the R option when running the 
 /// GenerateData() method in BI.Populate. You can also use
 /// the GenerateData() method in this class if you have already populated the main
 /// sample.
-/// <p>
 /// You can extend or modify the data contained here by editing the XData block in this class.
 Class BI.Study.CityRainfall Extends %Persistent
 {
@@ -21,7 +20,7 @@ Property MonthAndYear As %Date;
 
 Property InchesOfRain As %Numeric;
 
-/// fields: month number^average rainfall in inches^variance in inches
+/// Fields: month number^average rainfall in inches^variance in inches
 XData LoadData
 {
 <table>
@@ -43,99 +42,75 @@ XData LoadData
 /// Call this after the cities have been set up; this means we reopen each city once.
 ClassMethod GenerateData() As %Status
 {
-    Write !, "Creating rainfall data for the cities..."
-    //never use %KillExtent() in a real application
-    Do ..%KillExtent()
+    write !, "Creating rainfall data for the cities..."
+    
+    // Never use %KillExtent() in a real application
+    do ..%KillExtent()
 
     // Get a stream of XML from the XData block contained in this class
-    Set tStream=##class(%Dictionary.CompiledXData).IDKEYOpen($CLASSNAME(),"LoadData").Data
-    If '$IsObject(tStream) {Set tSC=%objlasterror Quit}
+    set tStream=##class(%Dictionary.CompiledXData).IDKEYOpen($CLASSNAME(),"LoadData").Data
+    if '$IsObject(tStream) {set tSC=%objlasterror quit}
    
-    Set status=##class(%XML.TextReader).ParseStream(tStream,.textreader)
+    set status=##class(%XML.TextReader).ParseStream(tStream,.textreader)
     //check status
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
    
     //iterate through document, node by node
-    While textreader.Read()
+    while textreader.Read()
     {
-        If (textreader.NodeType="chars")
+        if (textreader.NodeType="chars")
         {
-            Set value=textreader.Value
+            set value=textreader.Value
 
-            Set month=$Piece(value,"^",1)
-            Set avgrainfall=$Piece(value,"^",2)
-            Set var=$Piece(value,"^",3)
-            Set ^||myvar("rainfall",month,"min")=avgrainfall-var
-            Set ^||myvar("rainfall",month,"max")=avgrainfall+var
+            set month=$Piece(value,"^",1)
+            set avgrainfall=$Piece(value,"^",2)
+            set var=$Piece(value,"^",3)
+            set ^||myvar("rainfall",month,"min")=avgrainfall-var
+            set ^||myvar("rainfall",month,"max")=avgrainfall+var
             }
     }
    
-    Set myquery="select ID from BI_Study.City"
-    Set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
-    Set status=rset.Prepare(myquery)
-    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
-    Set status=rset.Execute()
+    set myquery="select ID from BI_Study.City"
+    set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
+    set status=rset.Prepare(myquery)
+    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
+    set status=rset.Execute()
     
-    While (rset.Next(.status)) {
-	    If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
-	    Set cityid=rset.Data("ID")
-	    Set city=##class(BI.Study.City).%OpenId(cityid,0)
+    while (rset.Next(.status)) {
+	    if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
+	    set cityid=rset.Data("ID")
+	    set city=##class(BI.Study.City).%OpenId(cityid,0)
 	    	        
         //we have rainfall data for a particular span of years
         set separator=##class(%SYS.NLS.Format).GetFormatItem("DateSeparator")
-        For year=1900:1:$Piece($Zdate($h,1),separator,3) {
-	        For month=1:1:12 {
-		        Set record=..%New()
-		   		Set record.City=city
-		   		If (month<10) {
-			   		Set monthstring="0"_month
+        for year=1900:1:$Piece($Zdate($h,1),separator,3) {
+	        for month=1:1:12 {
+		        set record=..%New()
+		   		set record.City=city
+		   		if (month<10) {
+			   		set monthstring="0"_month
 			   		}
-			   		Else {
-				   		Set monthstring=month
+			   		else {
+				   		set monthstring=month
 				   		}
-		    Set datestring=year_"-"_monthstring_"-01"
-    	    Set min=^||myvar("rainfall",month,"min")
-    	    Set max=^||myvar("rainfall",month,"max")
-    	    Set rainfall=min + ($RANDOM(max*100)+1)/100	
+		    set datestring=year_"-"_monthstring_"-01"
+    	    set min=^||myvar("rainfall",month,"min")
+    	    set max=^||myvar("rainfall",month,"max")
+    	    set rainfall=min + ($RANdoM(max*100)+1)/100	
 
 
-    	    Set record.MonthAndYear=$ZDATEH(datestring,3)
-	        Set record.InchesOfRain=rainfall
-	        Set status=record.%Save()
-            If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
+    	    set record.MonthAndYear=$ZDATEH(datestring,3)
+	        set record.InchesOfRain=rainfall
+	        set status=record.%Save()
+            if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
 		   }
 	   }
 	   
     }
      
-    Do ##class(%DeepSee.Utils).%SynchronizeCube("cityrainfall")
+    do ##class(%DeepSee.Utils).%SynchronizeCube("cityrainfall")
 
-    Quit status
+    quit status
 }
-
-Storage Default
-{
-<Data name="CityRainfallDefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>City</Value>
-</Value>
-<Value name="3">
-<Value>MonthAndYear</Value>
-</Value>
-<Value name="4">
-<Value>InchesOfRain</Value>
-</Value>
-</Data>
-<DataLocation>^BI.Study.CityRainfallD</DataLocation>
-<DefaultData>CityRainfallDefaultData</DefaultData>
-<IdLocation>^BI.Study.CityRainfallD</IdLocation>
-<IndexLocation>^BI.Study.CityRainfallI</IndexLocation>
-<StreamLocation>^BI.Study.CityRainfallS</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
-
 }
 

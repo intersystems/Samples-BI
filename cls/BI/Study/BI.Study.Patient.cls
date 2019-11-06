@@ -78,464 +78,401 @@ Property TestScore As %Integer;
 /// Called by BI.Populate:GenerateData(); see the comments for that method.
 ClassMethod GenerateData(patCount As %Integer = 500, options As %String = "ADET", genNulls As %Boolean = 1, genNullDates As %Boolean = 0) As %Status
 {
-    Set status=$$$OK
-    Write !, "Deleting patient data..."
+    set status=$$$OK
+    write !, "Deleting patient data..."
 
-    //first kill extent and kill extents of child tables
-    Do ..%KillExtent()
-    Do ##class(BI.Study.PatientDiagnosis1).%KillExtent()
-    Do ##class(BI.Study.PatientDiagnosis2).%KillExtent()
-    Do ##class(BI.Study.PatientDetails).%KillExtent()
-    Do ##class(BI.Study.PatientEncounter).%KillExtent()
-    Do ##class(BI.Study.PatientAllergy1).%KillExtent()
+    // First kill extent and kill extents of child tables
+    do ..%KillExtent()
+    do ##class(BI.Study.PatientDiagnosis1).%KillExtent()
+    do ##class(BI.Study.PatientDiagnosis2).%KillExtent()
+    do ##class(BI.Study.PatientDetails).%KillExtent()
+    do ##class(BI.Study.PatientEncounter).%KillExtent()
+    do ##class(BI.Study.PatientAllergy1).%KillExtent()
    
-    Write !, "Adding patients..."
-    Set status=..AddPatients(patCount,options,genNulls,1,genNullDates)
-    Quit status
+    write !, "Adding patients..."
+    set status=..AddPatients(patCount,options,genNulls,1,genNullDates)
+    quit status
 }
 
 /// Called by GenerateData(); see the comments for that method.
 /// Can also be called directly to add patients after the initial setup.
-ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", genNulls As %Boolean = 1, initSetup As %Boolean = 0, genNullDates As %Boolean = 0) As %Status
+ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", genNulls As %Boolean = 1, initSetupAs %Boolean = 0, genNullDates As %Boolean = 0) As %Status
 {
-    If initSetup {Kill ^BI.Study.Log}
-    Set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Adding patients..."
+    if initSetup{Kill ^BI.Study.Log}
+    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Adding patients..."
 
 
-    //create or update the "ID extent sets" from which we can later get random IDs
-    Set status=##class(BI.Populate).UpdateIdCache("BI.Study.Doctor")
-    Set status=##class(BI.Populate).UpdateIdCache("BI.Study.City")
+    // Create or update the "ID extent sets" from which we can later get random IDs
+    set status=##class(BI.Populate).UpdateIdCache("BI.Study.Doctor")
+    set status=##class(BI.Populate).UpdateIdCache("BI.Study.City")
 
     
-    //check options; what do we need to generate?
-    If ($FIND(options,"A")) {Set generateallergies=1}
-        Else {Set generateallergies=0}
-    If ($FIND(options,"D")) {Set generatediagnoses=1}
-        Else {Set generatediagnoses=0}
-    If ($FIND(options,"E")) {Set generateencounters=1}
-        Else {Set generateencounters=0}
-    If ($FIND(options,"T")) {Set generatedetails=1}
-        Else {Set generatedetails=0}
+    // Check options; what do we need to generate?
+    if ($FIND(options,"A")) {set generateallergies=1}
+        else {set generateallergies=0}
+    if ($FIND(options,"D")) {set generatediagnoses=1}
+        else {set generatediagnoses=0}
+    if ($FIND(options,"E")) {set generateencounters=1}
+        else {set generateencounters=0}
+    if ($FIND(options,"T")) {set generatedetails=1}
+        else {set generatedetails=0}
     
 
-    //get diagnosis and current patient count
-    Set dcount=##class(BI.Populate).Count("BI.Study.Diagnosis")
-    Set currentpatcount=##class(BI.Populate).Count($CLASSNAME())
+    // Get diagnosis and current patient count
+    set dcount=##class(BI.Populate).Count("BI.Study.Diagnosis")
+    set currentpatcount=##class(BI.Populate).Count($CLASSNAME())
     
-    //initialize counters
-    If (currentpatcount=0) {
-        Set initPat=100300
+    // Initialize counters
+    if (currentpatcount=0) {
+        set initPat=100300
         }
-        Else {
-            //get highest PatientID in use
-            Set highest=..GetHighestPatientID()
-            Set initPat=$PIECE(highest,"_",2)
+        else {
+            // Get highest PatientID in use
+            set highest=..GetHighestPatientID()
+            set initPat=$PIECE(highest,"_",2)
             }
 
-    Set idnumber=initPat
+    set idnumber=initPat
 
-    For n = 1:1:patCount {
-        Set pat=##class(BI.Study.Patient).%New()
-        Set idnumber=idnumber+1     ; increment without any gaps
-        Set patid="SUBJ_"_idnumber
-        Set pat.PatientID=patid
+    for n = 1:1:patCount {
+        set pat=##class(BI.Study.Patient).%New()
+        set idnumber=idnumber+1     ; increment without any gaps
+        set patid="SUBJ_"_idnumber
+        set pat.PatientID=patid
         
-        //get age+gender combination
-        Set agegender=##class(BI.Populate).RandomGenderAndAge()
-        Set pat.Gender=$Piece(agegender,",",1)
-        Set pat.Age=$Piece(agegender,",",2)
+        // Get age+gender combination
+        set agegender=##class(BI.Populate).RandomGenderAndAge()
+        set pat.Gender=$Piece(agegender,",",1)
+        set pat.Age=$Piece(agegender,",",2)
 
-        //get birthdate as a string YYYY-MM-DD
-        Set birthdate=##class(BI.Populate).BirthDateODBC(pat.Age)
-        Set pat.BirthDate=$ZDATEH(birthdate,6)  ; convert to $h explicitly and write value
+        // Get birthdate as a string YYYY-MM-DD
+        set birthdate=##class(BI.Populate).BirthDateODBC(pat.Age)
+        set pat.BirthDate=$ZDATEH(birthdate,6)  ; convert to $h explicitly and write value
  
-        //get birthtime as random time hh:mm:ss
-        Set timestamp=##class(%PopulateUtils).TimeStamp()   
-        Set timepart=$Piece(timestamp," ",2)
-        Set timestring=$Piece(timepart,":",1)_":"_$Piece(timepart,":",2)
-        Set pat.BirthTime=$ZTIMEH(timestring,2) ; convert to $h and write value
+        // Get birthtime as random time hh:mm:ss
+        set timestamp=##class(%PopulateUtils).TimeStamp()   
+        set timepart=$Piece(timestamp," ",2)
+        set timestring=$Piece(timepart,":",1)_":"_$Piece(timepart,":",2)
+        set pat.BirthTime=$ZTIMEH(timestring,2) ; convert to $h and write value
  
-        //combine date and time
-        Set birthdateandtime=birthdate_" "_timepart
-        Set pat.BirthDateTimeStamp=birthdateandtime ; write in ODBC format 
+        // Combine date and time
+        set birthdateandtime=birthdate_" "_timepart
+        set pat.BirthDateTimeStamp=birthdateandtime ; write in ODBC format 
     
-        //set MV version
-        Set pat.BirthDateMV = pat.BirthDate - 46385
+        // Set MV version
+        set pat.BirthDateMV = pat.BirthDate - 46385
     
-        //assign a doctor
-        //Set docid=##class(BI.Populate).GetRandomId("BI.Study.Doctor")
-        Set docid=##class(BI.Study.Doctor).GetDoctorId(pat.Age,pat.Gender)
-        Set doctor=##class(BI.Study.Doctor).%OpenId(docid,0)
-        Set pat.PrimaryCarePhysician=doctor
+        // Assign a doctor
+        // Set docid=##class(BI.Populate).GetRandomId("BI.Study.Doctor")
+        set docid=##class(BI.Study.Doctor).GetDoctorId(pat.Age,pat.Gender)
+        set doctor=##class(BI.Study.Doctor).%OpenId(docid,0)
+        set pat.PrimaryCarePhysician=doctor
 
-        // null out this property randomly to simulate missing data
-        If genNulls &&##class(BI.Populate).RandomTrue(5){
-            Set pat.PrimaryCarePhysician=""
+        // Null out this property randomly to simulate missing data
+        if genNulls &&##class(BI.Populate).RandomTrue(5){
+            set pat.PrimaryCarePhysician=""
         }
 
-        //assign to a patient group
-        Set grouplist=$LB("A","B")
-        Set groupID=$RANDOM($LISTLENGTH(grouplist))+1
-        Set pat.PatientGroup=$LI(grouplist,groupID)
+        // Assign to a patient group
+        set grouplist=$LB("A","B")
+        set groupID=$RANdoM($LISTLENGTH(grouplist))+1
+        set pat.PatientGroup=$LI(grouplist,groupID)
 
-        //Set TestScore property
-        Set pat.TestScore=50+$RANDOM(50)
+        // Set TestScore property
+        set pat.TestScore=50+$RANdoM(50)
         
-        //null out the previous two properties in some cases
-        //score can be null but won't be 0 (see above)
-        //this lets us see how measures treat null values
-        If (genNulls && ##class(BI.Populate).RandomTrue(20)){
-            Set pat.TestScore=""
-            Set pat.PatientGroup=""
+        // Null out the previous two properties in some cases
+        // Score can be null but won't be 0 (see above)
+        // This lets us see how measures treat null values
+        if (genNulls && ##class(BI.Populate).RandomTrue(20)){
+            set pat.TestScore=""
+            set pat.PatientGroup=""
             }
         
-        //Select a city
-        Set cityid=##class(BI.Populate).GetRandomId("BI.Study.City")          
-        Set pat.HomeCity=##class(BI.Study.City).%OpenId(cityid,0)
+        // Select a city
+        set cityid=##class(BI.Populate).GetRandomId("BI.Study.City")          
+        set pat.HomeCity=##class(BI.Study.City).%OpenId(cityid,0)
 
-        //If asked, update PatientDetails table
-        If generatedetails {
-            Set status=##class(PatientDetails).CreatePatientDetails(pat.PatientID,pat.Age,genNulls)
-            If $$$ISERR(status) {Do $System.Status.DisplayError(status) Write !, "Patient details error"}
+        // If asked, update PatientDetails table
+        if generatedetails {
+            set status=##class(PatientDetails).CreatePatientDetails(pat.PatientID,pat.Age,genNulls)
+            if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Patient details error"}
             }
         
-        //If asked, generate some allergies
-        If generateallergies {
-            Set status=##class(BI.Study.PatientAllergy).GenerateAllergies(pat,genNulls)
-            If $$$ISERR(status) {Do $System.Status.DisplayError(status) Write !, "Allergies insert error"}
+        // If asked, generate some allergies
+        if generateallergies {
+            set status=##class(BI.Study.PatientAllergy).GenerateAllergies(pat,genNulls)
+            if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Allergies insert error"}
             }
          
-         //If asked, generate some diagnoses
-         If generatediagnoses {
-             //iterate through available diagnoses, look up chance of patient's
-             //receiving this diagnosis, based on gender & age
-             //save diagnosis data in all diagnosis properties
-             Set diagnosiscount=0    ; initialize this so we know if we're on the first one
-             Set diaglist = ""
-             Set diagstring=""
-             For k=1:1:dcount{
-                 Set potentialdiagnosis=##class(BI.Study.Diagnosis).%OpenId(k,0)
+         // If asked, generate some diagnoses
+         if generatediagnoses {
+             // Iterate through available diagnoses, look up chance of patient's
+             // receiving this diagnosis, based on gender & age
+             // save diagnosis data in all diagnosis properties
+             set diagnosiscount=0    ; initialize this so we know if we're on the first one
+             set diaglist = ""
+             set diagstring=""
+             for k=1:1:dcount{
+                 set potentialdiagnosis=##class(BI.Study.Diagnosis).%OpenId(k,0)
 
-                 //get the code
-                 Set code=potentialdiagnosis.Code
-                 //look up how likely this patient is to have this diagnosis
-                 Set chance=##class(BI.Study.Diagnosis).GetPercentChance(code,pat.Gender,pat.Age)
+                 // Get the code
+                 set code=potentialdiagnosis.Code
+                 // Look up how likely this patient is to have this diagnosis
+                 set chance=##class(BI.Study.Diagnosis).GetPercentChance(code,pat.Gender,pat.Age)
                 
-                 If ##class(BI.Populate).RandomTrue(chance) {
-                     Set diagnosiscount=diagnosiscount+1
-                     Set desc=potentialdiagnosis.Description
+                 if ##class(BI.Populate).RandomTrue(chance) {
+                     set diagnosiscount=diagnosiscount+1
+                     set desc=potentialdiagnosis.Description
                                         
-                     //Build basic diagnosis properties
-                     Set $LI(diaglist,diagnosiscount)=code 
-                     Set diagstring=diagstring_","_code
-                     Do pat.DiagnosesAsArray.SetAt(code,diagnosiscount)
+                     // Build basic diagnosis properties
+                     set $LI(diaglist,diagnosiscount)=code 
+                     set diagstring=diagstring_","_code
+                     do pat.DiagnosesAsArray.setAt(code,diagnosiscount)
                     
-                     //now for the more complex properties, choose a random diagnosing doctor
-                     Set diagdocid=##class(BI.Populate).GetRandomId("BI.Study.Doctor")
-                     Set diagdoc=##class(BI.Study.Doctor).%OpenId(diagdocid,0)
+                     // Now for the more complex properties, choose a random diagnosing doctor
+                     set diagdocid=##class(BI.Populate).GetRandomId("BI.Study.doctor")
+                     set diagdoc=##class(BI.Study.doctor).%OpenId(diagdocid,0)
 
-                     //populate Diagnoses property
-                     Set patdiag=##class(BI.Study.PatientDiagnosis).%New()    ; this object is serial
-                     Set patdiag.DiagnosisCode=code
-                     Set patdiag.DiagnosedBy=diagdoc
-                     Set status=pat.Diagnoses.Insert(patdiag)
-                     If $$$ISERR(status) {Do $System.Status.DisplayError(status) Write !, "Diagnoses error"}
+                     // Populate Diagnoses property
+                     set patdiag=##class(BI.Study.PatientDiagnosis).%New()    ; this object is serial
+                     set patdiag.DiagnosisCode=code
+                     set patdiag.DiagnosedBy=diagdoc
+                     set status=pat.Diagnoses.Insert(patdiag)
+                     if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Diagnoses error"}
 
-                     //use same data in DiagnosesAsChildren relationship
-                     Set patdiag1=##class(BI.Study.PatientDiagnosis1).%New()
-                     Set patdiag1.DiagnosisCode=code
-                     Set patdiag1.DiagnosedBy=diagdoc
-                     //link the objects
-                     Set patdiag1.Patient=pat
-                     Set status=patdiag1.%Save()
-                     If $$$ISERR(status) {Do $System.Status.DisplayError(status) Write !, "DiagnosesAsChildren error"}
+                     // Use same data in DiagnosesAsChildren relationship
+                     set patdiag1=##class(BI.Study.PatientDiagnosis1).%New()
+                     set patdiag1.DiagnosisCode=code
+                     set patdiag1.DiagnosedBy=diagdoc
+                     
+                     // Link the objects
+                     set patdiag1.Patient=pat
+                     set status=patdiag1.%Save()
+                     if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "DiagnosesAsChildren error"}
                     
-                     //use same data in DiagnosesAsMany relationship
-                     Set patdiag2=##class(BI.Study.PatientDiagnosis2).%New()
-                     Set patdiag2.DiagnosisCode=code
-                     Set patdiag2.DiagnosedBy=diagdoc
-                     //link the objects
-                     Set patdiag2.Patient=pat
-                     Set status=patdiag2.%Save()
-                     If $$$ISERR(status) {Do $System.Status.DisplayError(status)  Write !, "DiagnosesAsMany error"}
+                     // Use same data in DiagnosesAsMany relationship
+                     set patdiag2=##class(BI.Study.PatientDiagnosis2).%New()
+                     set patdiag2.DiagnosisCode=code
+                     set patdiag2.DiagnosedBy=diagdoc
+                     
+                     // Link the objects
+                     set patdiag2.Patient=pat
+                     set status=patdiag2.%Save()
+                     if $$$ISERR(status) {do $System.Status.DisplayError(status)  write !, "DiagnosesAsMany error"}
                  }
-                 Set pat.DiagnosesAsLB=diaglist
-                 Set pat.DiagnosesAsString=diagstring
+                 set pat.DiagnosesAsLB=diaglist
+                 set pat.DiagnosesAsString=diagstring
                  }
              
              }
 
-        // now that we have used the age data,
+        // Now that we have used the age data,
         // null out birth date & age randomly to simulate missing data
-        If genNullDates &&##class(BI.Populate).RandomTrue(2){
-            Set pat.Age=""
-            Set pat.BirthDate=""
-            Set pat.BirthTime=""
-            Set pat.BirthDateTimeStamp=""
-            Set pat.BirthDateMV = ""
+        if genNullDates &&##class(BI.Populate).RandomTrue(2){
+            set pat.Age=""
+            set pat.BirthDate=""
+            set pat.BirthTime=""
+            set pat.BirthDateTimeStamp=""
+            set pat.BirthDateMV = ""
             }
         
-       Set status=pat.%Save()
-       If $$$ISERR(status) {Do $System.Status.DisplayError(status) Write !, "Patient save error"}
+       set status=pat.%Save()
+       if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Patient save error"}
 
-       //If asked, generate some encounters (but not necessarily for everyone)
-       If genNulls {
-           Set chance=##class(BI.Populate).RandomTrue(84)
+       // If asked, generate some encounters (but not necessarily for everyone)
+       if genNulls {
+           set chance=##class(BI.Populate).RandomTrue(84)
            }
-           Else {
-               Set chance=1
+           else {
+               set chance=1
                }
                 
-       If generateencounters && chance {
-           Set status=##class(BI.Study.PatientEncounter).CreateEncounters(pat)
-           If $$$ISERR(status) {Do $System.Status.DisplayError(status) Write !, "Encounter creation error"}
+       if generateencounters && chance {
+           set status=##class(BI.Study.PatientEncounter).CreateEncounters(pat)
+           if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Encounter creation error"}
            }
         
-        If 'initSetup {Do ##class(%DeepSee.Utils).%SynchronizeCube("patients")}
+        if 'initSetup{do ##class(%DeepSee.Utils).%SynchronizeCube("patients")}
 
-       If ('(n#1000)) {Write $C(13,27)_"[0J"_$FN(n,",",0)_" patients created in BI.Study.Patient"}
+       if ('(n#1000)) {write $C(13,27)_"[0J"_$FN(n,",",0)_" patients created in BI.Study.Patient"}
        }
 
-    //create or update the "ID extent sets" from which we can later get random IDs
-    Set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
-    Set status=##class(BI.Populate).UpdateIdCache("BI.Study.PatientDetails")
+    // Create or update the "ID extent sets" from which we can later get random IDs
+    set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
+    set status=##class(BI.Populate).UpdateIdCache("BI.Study.PatientDetails")
    
-    //Store highest PatientID for later use
-    Set ^BI.Study.SetupData("PatientID")=pat.PatientID
+    // Store highest PatientID for later use
+    set ^BI.Study.SetupData("PatientID")=pat.PatientID
     
-    Write !
-    Write $C(13,27)_"[0J"_$FN(+$G(n),",",0)_" patient(s) created in BI.Study.Patient"
+    write !
+    write $C(13,27)_"[0J"_$FN(+$G(n),",",0)_" patient(s) created in BI.Study.Patient"
 
-    Set currentcount=##class(BI.Populate).Count($CLASSNAME())
-    Write !, "Current patient count is ",currentcount
-    Set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Current patient count is "_currentcount
+    set currentcount=##class(BI.Populate).Count($CLASSNAME())
+    write !, "Current patient count is ",currentcount
+    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Current patient count is "_currentcount
 
-    If initSetup {
-        Set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Building the cube..."
-        Do ##class(%DeepSee.Utils).%BuildCube("patients")
-        Set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Finished building the cube"
+    if initSetup{
+        set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Building the cube..."
+        do ##class(%DeepSee.Utils).%BuildCube("patients")
+        set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Finished building the cube"
     }
 
-    Quit status
+    quit status
 }
 
 /// Delete a few patients randomly. 
 ClassMethod DeleteSomePatients(percent As %Numeric = 1) As %Status
 {
-    Set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Deleting some patients..."
+    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Deleting some patients..."
 
-    //create or update the "ID extent set" from which we can later get random IDs
-    Set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
+    // Create or update the "ID extent set" from which we can later get random IDs
+    set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
     
-    Set patcount=##class(BI.Populate).Count($CLASSNAME())
-    For i=1:1:patcount {
-         If ##class(BI.Populate).RandomTrue(percent) 
+    set patcount=##class(BI.Populate).Count($CLASSNAME())
+    for i=1:1:patcount {
+         if ##class(BI.Populate).RandomTrue(percent) 
          {
-             Set patid=##class(BI.Populate).GetRandomId($CLASSNAME())
-             Set status=..DeletePatient(patid)
-             If $$$ISERR(status) {
-                 Do $System.Status.DisplayError(status) Write !, "Delete error for patient ", patid
+             set patid=##class(BI.Populate).GetRandomId($CLASSNAME())
+             set status=..DeletePatient(patid)
+             if $$$ISERR(status) {
+                 do $System.Status.DisplayError(status) write !, "Delete error for patient ", patid
                  }
              }
   
          }
-    Set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
-    Set currentcount=##class(BI.Populate).Count($CLASSNAME())
-    Set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Current patient count is "_currentcount
-    Quit status
+    set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
+    set currentcount=##class(BI.Populate).Count($CLASSNAME())
+    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Current patient count is "_currentcount
+    quit status
 }
 
 /// Deletes a patient, given its ID. 
 ClassMethod DeletePatient(patid As %String) As %Status
 {
-    //first let's find out what we really need to do;
-    //if we have 0 records in a child table, we can skip processing that table
-    Set deletedetails=##class(BI.Populate).Count("BI.Study.PatientDetails")
-    Set deleteencounters=##class(BI.Populate).Count("BI.Study.PatientEncounter")
-    Set deletediagnoses=##class(BI.Populate).Count("BI.Study.PatientDiagnosis1")
+    // First let's find out what we really need to do;
+    // if we have 0 records in a child table, we can skip processing that table
+    set deletedetails=##class(BI.Populate).Count("BI.Study.PatientDetails")
+    set deleteencounters=##class(BI.Populate).Count("BI.Study.PatientEncounter")
+    set deletediagnoses=##class(BI.Populate).Count("BI.Study.PatientDiagnosis1")
 
-    //clear out records in PatientDetails
-    If deletedetails {
-	    Set status=##class(PatientDetails).DeletePatientDetails(patid)
-        If $$$ISERR(status) {
-	        Do $System.Status.DisplayError(status) 
-            Write !,"Error deleting record in PatientDetails for PatientID ",patid 
-            Quit
+    // Clear out records in PatientDetails
+    if deletedetails {
+	    set status=##class(PatientDetails).DeletePatientDetails(patid)
+        if $$$ISERR(status) {
+	        do $System.Status.DisplayError(status) 
+            write !,"Error deleting record in PatientDetails for PatientID ",patid 
+            quit
             }
-        Set status=##class(BI.Populate).UpdateIdCache("BI.Study.PatientDetails")
+        set status=##class(BI.Populate).UpdateIdCache("BI.Study.PatientDetails")
     }
 
-    //clear out records in PatientEncounter
-    If deleteencounters {
-	    Set patoref=..%OpenId(patid,0)
-        Set status=##class(BI.Study.PatientEncounter).DeleteEncounters(patoref)
-        If $$$ISERR(status) {
-	        Do $System.Status.DisplayError(status) 
-	        Write !,"Error deleting records in PatientEncounter for patient ",patid 
-	        Quit
+    // Clear out records in PatientEncounter
+    if deleteencounters {
+	    set patoref=..%OpenId(patid,0)
+        set status=##class(BI.Study.PatientEncounter).DeleteEncounters(patoref)
+        if $$$ISERR(status) {
+	        do $System.Status.DisplayError(status) 
+	        write !,"Error deleting records in PatientEncounter for patient ",patid 
+	        quit
 	        }
-	    Kill patoref
+	    kill patoref
     }
     
     
-    //clear out records in PatientDiagnosis1 (must delete children before deleting parent)
-    If deletediagnoses {
-        Set myquery="DELETE FROM BI_Study.PatientDiagnosis1 WHERE Patient=?"
-        Set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
-        Set status=rset.Prepare(myquery)
-        If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
-        Set status=rset.Execute(patid)
-        If $$$ISERR(status) {
-	        Do $System.Status.DisplayError(status) 
-	        Write !, "Error deleting records in PatientDiagnosis1" 
-	        Quit
+    // Clear out records in PatientDiagnosis1 (must delete children before deleting parent)
+    if deletediagnoses {
+        set myquery="DELETE FROM BI_Study.PatientDiagnosis1 WHERE Patient=?"
+        set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
+        set status=rset.Prepare(myquery)
+        if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
+        set status=rset.Execute(patid)
+        if $$$ISERR(status) {
+	        do $System.Status.DisplayError(status) 
+	        write !, "Error deleting records in PatientDiagnosis1" 
+	        quit
 	        }
     }
 
-    //clear out records in PatientDiagnosis2
-    If deletediagnoses {
-        Set myquery="DELETE FROM BI_Study.PatientDiagnosis2 WHERE Patient=?"
-        Set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
-        Set status=rset.Prepare(myquery)
-        If $$$ISERR(status) {
-	        Do $System.Status.DisplayError(status) 
-	        Quit
+    // Clear out records in PatientDiagnosis2
+    if deletediagnoses {
+        set myquery="DELETE FROM BI_Study.PatientDiagnosis2 WHERE Patient=?"
+        set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
+        set status=rset.Prepare(myquery)
+        if $$$ISERR(status) {
+	        do $System.Status.DisplayError(status) 
+	        quit
 	        }
-        Set status=rset.Execute(patid)
-        If $$$ISERR(status) {
-	        Do $System.Status.DisplayError(status) 
-    	    Write !, "Error deleting records in PatientDiagnosis2" 
-	        Quit
+        set status=rset.Execute(patid)
+        if $$$ISERR(status) {
+	        do $System.Status.DisplayError(status) 
+    	    write !, "Error deleting records in PatientDiagnosis2" 
+	        quit
 	        }
     }
 
-    Set status=##class(BI.Study.Patient).%DeleteId(patid)
+    set status=##class(BI.Study.Patient).%DeleteId(patid)
 
-    //every time we add or delete records, we need to update the ID cache
-    Set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
+    // Every time we add or delete records, we need to update the ID cache
+    set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
 
-    Do ##class(%DeepSee.Utils).%SynchronizeCube("patients")
+    do ##class(%DeepSee.Utils).%SynchronizeCube("patients")
 
-    Quit status
+    quit status
 }
 
 /// Randomly reassign some patients to different patient groups. 
 ClassMethod ChangePatientGroups(percent As %Numeric = 10)
 {
-    //initialize this just in case
-    Set status=##class(BI.Populate).UpdateIdCache("BI.Study.Patient")
+    // Initialize this just in case
+    set status=##class(BI.Populate).UpdateIdCache("BI.Study.Patient")
     
-    Set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Changing some patient group assignments..."
+    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Changing some patient group assignments..."
 
-    Set patcount=##class(BI.Populate).Count($CLASSNAME())
-    Set changecount=0
-    For i=1:1:patcount {
-        If ##class(BI.Populate).RandomTrue(percent) 
+    set patcount=##class(BI.Populate).Count($CLASSNAME())
+    set changecount=0
+    for i=1:1:patcount {
+        if ##class(BI.Populate).RandomTrue(percent) 
         {
-            Set randomid=##class(BI.Populate).GetRandomId($CLASSNAME())
-            Set pat=..%OpenId(randomid)
+            set randomid=##class(BI.Populate).GetRandomId($CLASSNAME())
+            set pat=..%OpenId(randomid)
         
-            //assign to a patient group if already assigned
-            //want to avoid putting patient into group if not currently assigned
-            //because logic elsewhere ensures TestScore is null for unassigned patients
+            // Assign to a patient group if already assigned
+            // want to avoid putting patient into group if not currently assigned
+            // because logic elsewhere ensures TestScore is null for unassigned patients
             if '(pat.PatientGroup="")
             {
-                Set grouplist=$LB("A","B")
-                Set groupID=$RANDOM($LISTLENGTH(grouplist))+1
-                Set pat.PatientGroup=$LI(grouplist,groupID)
-                Do pat.%Save()
-                Set changecount=changecount+1
+                set grouplist=$LB("A","B")
+                set groupID=$RANdoM($LISTLENGTH(grouplist))+1
+                set pat.PatientGroup=$LI(grouplist,groupID)
+                do pat.%Save()
+                set changecount=changecount+1
             }
 
-            Do ##class(%DeepSee.Utils).%SynchronizeCube("patients")
+            do ##class(%DeepSee.Utils).%SynchronizeCube("patients")
             }
     }
 
-    Set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" "_changecount_" patients changed to other groups"
+    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" "_changecount_" patients changed to other groups"
 }
 
 /// Changes some patient data in various tables.
-/// If rebuild is 1, this method updates the BI indices for each patient affected
+/// if rebuild is 1, this method updates the BI indices for each patient affected
 /// by these changes. 
 ClassMethod ChangeSomePatients(percent As %Numeric = 20, rebuild As %Boolean = 1)
 {
- Set currentcount=##class(BI.Populate).Count($CLASSNAME())
- Write !, "Current patient count is ",currentcount, " and this will not change"
- Do ##class(BI.Study.Patient).ChangePatientGroups(percent)
- Do ##class(BI.Study.PatientDetails).ChangePatientDetails(percent, rebuild)
- Do ##class(BI.Study.PatientEncounter).AddEncounters(percent, rebuild)
+ set currentcount=##class(BI.Populate).Count($CLASSNAME())
+ write !, "Current patient count is ",currentcount, " and this will not change"
+ do ##class(BI.Study.Patient).ChangePatientGroups(percent)
+ do ##class(BI.Study.PatientDetails).ChangePatientDetails(percent, rebuild)
+ do ##class(BI.Study.PatientEncounter).AddEncounters(percent, rebuild)
 
- Quit
+ quit
 }
 
 ClassMethod GetHighestPatientID() As %String
 {
-    Quit ^BI.Study.SetupData("PatientID")
-}
-
-Storage Default
-{
-<Data name="DiagnosesAsArray">
-<Attribute>DiagnosesAsArray</Attribute>
-<Structure>subnode</Structure>
-<Subscript>"DiagnosesAsArray"</Subscript>
-</Data>
-<Data name="PatientDefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>PatientID</Value>
-</Value>
-<Value name="3">
-<Value>Gender</Value>
-</Value>
-<Value name="4">
-<Value>Age</Value>
-</Value>
-<Value name="5">
-<Value>BirthDate</Value>
-</Value>
-<Value name="6">
-<Value>BirthTime</Value>
-</Value>
-<Value name="7">
-<Value>BirthDateTimeStamp</Value>
-</Value>
-<Value name="8">
-<Value>BirthDateMV</Value>
-</Value>
-<Value name="9">
-<Value>PrimaryCarePhysician</Value>
-</Value>
-<Value name="10">
-<Value>Allergies</Value>
-</Value>
-<Value name="11">
-<Value>Diagnoses</Value>
-</Value>
-<Value name="12">
-<Value>DiagnosesAsLB</Value>
-</Value>
-<Value name="13">
-<Value>DiagnosesAsString</Value>
-</Value>
-<Value name="14">
-<Value>HomeCity</Value>
-</Value>
-<Value name="15">
-<Value>PatientGroup</Value>
-</Value>
-<Value name="16">
-<Value>TestScore</Value>
-</Value>
-</Data>
-<DataLocation>^BI.Study.PatientD</DataLocation>
-<DefaultData>PatientDefaultData</DefaultData>
-<IdLocation>^BI.Study.PatientD</IdLocation>
-<IndexLocation>^BI.Study.PatientI</IndexLocation>
-<StreamLocation>^BI.Study.PatientS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+    quit ^BI.Study.SetupData("PatientID")
 }
 
 }

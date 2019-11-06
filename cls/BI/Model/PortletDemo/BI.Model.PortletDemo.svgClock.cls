@@ -61,8 +61,8 @@ ClassMethod OnPage() As %Status
 	style="pointer-events:none; font-size:20pt; fill:gray; stroke:none;	font-family:tahoma verdana;" >
 	</text>
 >
- 		Write "<script language='text/ecmascript'>",!	
- 		Write "function uri() { return '"_uri_"' ; }",!
+ 		write "<script language='text/ecmascript'>",!	
+ 		write "function uri() { return '"_uri_"' ; }",!
  &html<
  </script>
  <script language='text/ecmascript'>

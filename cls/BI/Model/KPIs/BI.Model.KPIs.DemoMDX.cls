@@ -1,5 +1,5 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This KPI class uses an MDX query and has three filters.
+/// This KPI class uses an MDX query and has three filters.
 /// For each filter, multiSelect is false, which simplifies the query construction.
 Class BI.Model.KPIs.DemoMDX Extends %DeepSee.KPI
 {

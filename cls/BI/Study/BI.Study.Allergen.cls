@@ -1,8 +1,8 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
 /// This class is part of the BI Patients sample, whose purpose is to provide
 /// sample data for use with InterSystems IRIS BI. 
-/// <p>This class contains the allergen code lookup table. 
-/// <p>You can extend or modify the data contained here by editing the XData block in this class. 
+/// This class contains the allergen code lookup table. 
+/// You can extend or modify the data contained here by editing the XData block in this class. 
 Class BI.Study.Allergen Extends %Persistent
 {
 
@@ -12,7 +12,7 @@ Property Code As %String;
 /// Unique description (user-visible name) for the allergen
 Property Description As %String;
 
-/// Format: code^description <p>
+/// Format: code^description 
 /// The first row is special: this is the "allergen" that represents no known allergies.
 /// We treat this one differently when creating patient allergens.
 XData LoadData
@@ -41,56 +41,35 @@ XData LoadData
 /// This method is called by BI.Populate:GenerateData().
 ClassMethod Setup() As %Status
 {
-   Set status=$$$OK
-   //first kill extent
-   //never use %KillExtent() in a real application
-   Do ..%KillExtent()
+   set status=$$$OK
+   // First kill extent
+   // Never use %KillExtent() in a real application
+   do ..%KillExtent()
    
    // Get a stream of XML from the XData block contained in this class
-   Set tStream=##class(%Dictionary.CompiledXData).IDKEYOpen($CLASSNAME(),"LoadData").Data
-   If '$IsObject(tStream) {Set tSC=%objlasterror Quit}
+   set tStream=##class(%Dictionary.CompiledXData).IDKEYOpen($CLASSNAME(),"LoadData").Data
+   if '$IsObject(tStream) {set tSC=%objlasterror quit}
    
-   Set status=##class(%XML.TextReader).ParseStream(tStream,.textreader)
-   //check status
-   If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
+   set status=##class(%XML.TextReader).ParseStream(tStream,.textreader)
    
-   //iterate through document, node by node
-   While textreader.Read()
+   // Check status
+   if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
+   
+   // Iterate through document, node by node
+   while textreader.Read()
    {
-       If (textreader.NodeType="chars")
+       if (textreader.NodeType="chars")
        {
-           Set value=textreader.Value
+           set value=textreader.Value
            //write !, "value is: ", value
-           Set obj=..%New()
-           Set obj.Code=$Piece(value,"^",1)
-           Set obj.Description=$Piece(value,"^",2)
-           Set status=obj.%Save()
-           If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
+           set obj=..%New()
+           set obj.Code=$Piece(value,"^",1)
+           set obj.Description=$Piece(value,"^",2)
+           set status=obj.%Save()
+           if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
            }
    }
-   Quit status
+   quit status
 }
-
-Storage Default
-{
-<Data name="AllergenDefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>Code</Value>
-</Value>
-<Value name="3">
-<Value>Description</Value>
-</Value>
-</Data>
-<DataLocation>^BI.Study.AllergenD</DataLocation>
-<DefaultData>AllergenDefaultData</DefaultData>
-<IdLocation>^BI.Study.AllergenD</IdLocation>
-<IndexLocation>^BI.Study.AllergenI</IndexLocation>
-<StreamLocation>^BI.Study.AllergenS</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
-
 }
 
