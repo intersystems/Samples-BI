@@ -319,7 +319,7 @@ valueExpression="%OR({[COLORD].[H1].[FAVORITE COLOR].&amp;[Green],[COLORD].[H1].
 <namedSet name="Sample Set" displayName="Sample Set" 
 setExpression="homed.h1.city.MEMBERS" />
 
-<namedSet name="Sample set 2" displayName="Sample Set 2"
+<namedSet name="Sample Set 2" displayName="Sample Set 2"
 setExpression="{colord.h1.[favorite color].red,allerd.h1.allergies.wheat,aged.h1.age.75}" />
 
 </cube>

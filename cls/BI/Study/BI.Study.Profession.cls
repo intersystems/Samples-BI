@@ -63,7 +63,7 @@ ClassMethod Setup() As %Status
    
    set count=0
    
-   // Iterate through do cument, node by node
+   // Iterate through document, node by node
    while textreader.Read()
    {
        if (textreader.NodeType="chars")
@@ -79,7 +79,7 @@ ClassMethod Setup() As %Status
            }
    }
 
-   // Create an "extent set" from which we can later get rando m IDs
+   // Create an "extent set" from which we can later get random IDs
    set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
 
    quit status

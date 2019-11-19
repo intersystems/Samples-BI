@@ -96,7 +96,7 @@ ClassMethod GenerateData(count As %Integer = 100, genNulls = 1) As %Status
 /// by these changes. 
 ClassMethod ChangeSomeDoctors(percent As %Numeric = 20, rebuild As %Boolean = 1)
 {
-    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Changing some Doctor data..."
+    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Changing some doctor data..."
 
     // Create an "extent set" from which we can later get random IDs
     set status=##class(BI.Populate).UpdateIdCache($CLASSNAME())
@@ -128,7 +128,7 @@ ClassMethod ChangeSomeDoctors(percent As %Numeric = 20, rebuild As %Boolean = 1)
                 // and update the indices for those patients
             
                 set myquery="SELECT ID FROM BI_Study.Patient WHERE PrimaryCarePhysician=?"
-                set rset=##class(%Resultset).%New("%DynamicQuery:SQL")
+                set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
                 set status=rset.Prepare(myquery)
                 if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
                 set status=rset.Execute(docid)
@@ -145,7 +145,7 @@ ClassMethod ChangeSomeDoctors(percent As %Numeric = 20, rebuild As %Boolean = 1)
         } 
 
     // If rebuild {Kill %this} ; needed because zzBuildone doesn't clean this up
-    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" "_changecount_" Doctors changed"
+    set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" "_changecount_" doctors changed"
 }
 
 /// Based on patient age (in years) and gender ("F" or "M"), return the ID of a suitable doctor

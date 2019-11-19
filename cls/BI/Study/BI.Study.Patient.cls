@@ -96,9 +96,9 @@ ClassMethod GenerateData(patCount As %Integer = 500, options As %String = "ADET"
 
 /// Called by GenerateData(); see the comments for that method.
 /// Can also be called directly to add patients after the initial setup.
-ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", genNulls As %Boolean = 1, initSetupAs %Boolean = 0, genNullDates As %Boolean = 0) As %Status
+ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", genNulls As %Boolean = 1, initSetup As %Boolean = 0, genNullDates As %Boolean = 0) As %Status
 {
-    if initSetup{Kill ^BI.Study.Log}
+    if initSetup {Kill ^BI.Study.Log}
     set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Adding patients..."
 
 
@@ -175,11 +175,11 @@ ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", 
 
         // Assign to a patient group
         set grouplist=$LB("A","B")
-        set groupID=$RANdoM($LISTLENGTH(grouplist))+1
+        set groupID=$RANDOM($LISTLENGTH(grouplist))+1
         set pat.PatientGroup=$LI(grouplist,groupID)
 
         // Set TestScore property
-        set pat.TestScore=50+$RANdoM(50)
+        set pat.TestScore=50+$RANDOM(50)
         
         // Null out the previous two properties in some cases
         // Score can be null but won't be 0 (see above)
@@ -228,11 +228,11 @@ ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", 
                      // Build basic diagnosis properties
                      set $LI(diaglist,diagnosiscount)=code 
                      set diagstring=diagstring_","_code
-                     do pat.DiagnosesAsArray.setAt(code,diagnosiscount)
+                     do pat.DiagnosesAsArray.SetAt(code,diagnosiscount)
                     
                      // Now for the more complex properties, choose a random diagnosing doctor
-                     set diagdocid=##class(BI.Populate).GetRandomId("BI.Study.doctor")
-                     set diagdoc=##class(BI.Study.doctor).%OpenId(diagdocid,0)
+                     set diagdocid=##class(BI.Populate).GetRandomId("BI.Study.Doctor")
+                     set diagdoc=##class(BI.Study.Doctor).%OpenId(diagdocid,0)
 
                      // Populate Diagnoses property
                      set patdiag=##class(BI.Study.PatientDiagnosis).%New()    ; this object is serial
@@ -293,7 +293,7 @@ ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", 
            if $$$ISERR(status) {do $System.Status.DisplayError(status) write !, "Encounter creation error"}
            }
         
-        if 'initSetup{do ##class(%DeepSee.Utils).%SynchronizeCube("patients")}
+        if 'initSetup {do ##class(%DeepSee.Utils).%SynchronizeCube("patients")}
 
        if ('(n#1000)) {write $C(13,27)_"[0J"_$FN(n,",",0)_" patients created in BI.Study.Patient"}
        }
@@ -312,7 +312,7 @@ ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", 
     write !, "Current patient count is ",currentcount
     set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Current patient count is "_currentcount
 
-    if initSetup{
+    if initSetup {
         set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Building the cube..."
         do ##class(%DeepSee.Utils).%BuildCube("patients")
         set ^BI.Study.Log($I(^BI.Study.Log))=$zdatetime($h,2,3)_" Finished building the cube"
@@ -443,7 +443,7 @@ ClassMethod ChangePatientGroups(percent As %Numeric = 10)
             if '(pat.PatientGroup="")
             {
                 set grouplist=$LB("A","B")
-                set groupID=$RANdoM($LISTLENGTH(grouplist))+1
+                set groupID=$RANDOM($LISTLENGTH(grouplist))+1
                 set pat.PatientGroup=$LI(grouplist,groupID)
                 do pat.%Save()
                 set changecount=changecount+1

@@ -66,7 +66,7 @@ Method %OnGetSourceResultSet(ByRef pParameters, Output pResultSet) As %Status
     }
 
     if (..%mode="single") {
-        // pPass the ID as a parameter
+        // Pass the ID as a parameter
         set pResultSet = tStatement.%Execute(..%singleId)
     } elseif (..%mode="idlist") {
         // Pass in the listing key as a parameter
