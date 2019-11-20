@@ -31,7 +31,7 @@ ClassMethod Setup(patCount As %Integer = 1000, options As %String = "ADTR")
 	// Must build cubes with shared dimensions in correct order
 	do ..BuildCompoundCubes()
 	
-	// set up term lists used by controls on dashboards
+	// Set up term lists used by controls on dashboards
 	do ..SetupTermLists()
 
     // Define pivot variables
@@ -356,14 +356,14 @@ ClassMethod UpdateIdCache(cls) As %Status [ Internal ]
    set tname=part1_"_"_part2
 
    // Allocate a temporary pointer
-   set tp=$INCREMENT(^CacheTemp)
+   set tp=$INCREMENT(^IRIS.Temp)
    
    // Save this so we can use it later to find this cache
    set ^BI.Study.SetupData("ExtentSetPointers",cls)=tp
    
    // Use same unique tp for temporary pointer and for "name" of
    // the extent set
-   set status=##class(%PopulateUtils).BuildValuesetSQL(tp,tp,tname,"%ID",reccount)
+   set status=##class(%PopulateUtils).BuildValueSetSQL(tp,tp,tname,"%ID",reccount)
    
    quit status
 }
