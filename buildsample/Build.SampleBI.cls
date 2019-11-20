@@ -56,7 +56,7 @@ ClassMethod run(stagingroot As %String = "", interactive As %Boolean = 0)
         return 0
     }
 
-    //load and compile classes ***************************
+    // Load and compile classes ***************************
     set dir=stagingroot_"/cls/" ;works on both Windows and Unix
     if '##class(%File).DirectoryExists(dir) {
         if interactive {
@@ -70,7 +70,7 @@ ClassMethod run(stagingroot As %String = "", interactive As %Boolean = 0)
     }
     do $system.OBJ.LoadDir(dir,"ck",,1)
 
-    // execute the setup code in the loaded classes *********************
+    // Execute the setup code in the loaded classes *********************
     if '##class(%Dictionary.CompiledClass).%ExistsId("BI.Populate") {
         if interactive {
             write !!, "Looking for the class BI.Populate but it does not exist... Quitting."
@@ -78,7 +78,7 @@ ClassMethod run(stagingroot As %String = "", interactive As %Boolean = 0)
         return 0
     }
     
-    //after classes have been loaded, load data
+    // After classes have been loaded, load data
     set dir=stagingroot_"/data/" ;works on both Windows and Unix
     if '##class(%File).DirectoryExists(dir) {
         if interactive {

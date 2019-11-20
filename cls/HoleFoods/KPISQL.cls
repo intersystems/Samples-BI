@@ -26,26 +26,26 @@ xmlns="http://www.intersystems.com/deepsee/kpi"
 /// This callback, if implements, lets a subclass provide an SQL statement to fetch data for this KPI. 
 Method %OnGetSQL(ByRef pSQL As %String) As %Status
 {
-	If $IsObject(..%filterValues) {
-		Set tWHERE = ""
-		If (..%filterValues.City'="") {
-			Set tWHERE = tWHERE _ $S(tWHERE="":"",1:" AND ") _ " Outlet->City = '" _ ..%filterValues.City _"'"
+	if $IsObject(..%filterValues) {
+		set tWHERE = ""
+		if (..%filterValues.City'="") {
+			set tWHERE = tWHERE _ $S(tWHERE="":"",1:" AND ") _ " Outlet->City = '" _ ..%filterValues.City _"'"
 		}
-		If (..%filterValues.Product'="") {
-			Set tWHERE = tWHERE _ $S(tWHERE="":"",1:" AND ") _ " Product = '" _ ..%filterValues.Product _"'"
+		if (..%filterValues.Product'="") {
+			set tWHERE = tWHERE _ $S(tWHERE="":"",1:" AND ") _ " Product = '" _ ..%filterValues.Product _"'"
 		}
 
-		If (tWHERE'="") {
+		if (tWHERE'="") {
 			// insert WHERE clase within query
-			Set tSQL1 = $P(pSQL,"GROUP BY",1)
-			Set tSQL2 = $P(pSQL,"GROUP BY",2)
-			Set pSQL = tSQL1 _ " WHERE " _ tWHERE
-			If (tSQL2 '= "") {
-				Set pSQL = pSQL _ " GROUP BY" _ tSQL2
+			set tSQL1 = $P(pSQL,"GROUP BY",1)
+			set tSQL2 = $P(pSQL,"GROUP BY",2)
+			set pSQL = tSQL1 _ " WHERE " _ tWHERE
+			if (tSQL2 '= "") {
+				set pSQL = pSQL _ " GROUP BY" _ tSQL2
 			}
 		}
 	}
-	Quit $$$OK
+	quit $$$OK
 }
 
 /// This callback, if implemented, returns the text of an SQL query used to provide
@@ -62,14 +62,14 @@ Method %OnGetSQL(ByRef pSQL As %String) As %Status
 /// It takes precedence over the <method>%OnGetListingResultSet</method> method.
 ClassMethod %OnGetListingSQL(ByRef pFilters As %String, ByRef pSelection As %String, pListingName As %String = "") As %String
 {
-	Set tSQL = "SELECT TOP 1000 %ID,DateOfSale,Product FROM HoleFoods.SalesTransaction"
+	set tSQL = "SELECT TOP 1000 %ID,DateOfSale,Product FROM HoleFoods.SalesTransaction"
 
-	// apply sorting, if aksed for
-	If (+$G(pSelection("sortColumn"))>0) {
-		Set tSQL = tSQL _ " ORDER BY " _ pSelection("sortColumn") _ " " _ $G(pSelection("sortDir"))
+	// Apply sorting, if aksed for
+	if (+$G(pSelection("sortColumn"))>0) {
+		set tSQL = tSQL _ " ORDER BY " _ pSelection("sortColumn") _ " " _ $G(pSelection("sortDir"))
 	}
 	
-	Quit tSQL
+	quit tSQL
 }
 
 }

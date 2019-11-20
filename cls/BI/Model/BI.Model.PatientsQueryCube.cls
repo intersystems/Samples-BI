@@ -1,6 +1,6 @@
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-/// <p>This class contains a cube based on BI.Model.PatientsQuery.
-/// <p>This cube is not built by default.
+/// This class contains a cube based on BI.Model.PatientsQuery.
+/// This cube is not built by default.
 Class BI.Model.PatientsQueryCube Extends %DeepSee.CubeDefinition [ DependsOn = BI.Model.PatientsQuery ]
 {
 

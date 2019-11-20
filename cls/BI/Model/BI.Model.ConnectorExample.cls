@@ -46,7 +46,7 @@ Method %OnGetSourceResultSet(ByRef pParameters, Output pResultSet) As %Status
   set tSC = $$$OK
   set pResultSet = ""
   try {
-      //write the basic SQL query
+      // Write the basic SQL query
       set sql="SELECT %ID,PatientID,Gender,Age,HomeCity->Name AS ""HomeCity"""
              _",PatientGroup,TestScore From BI_Study.Patient "
 
@@ -60,23 +60,23 @@ Method %OnGetSourceResultSet(ByRef pParameters, Output pResultSet) As %Status
     set tStatement = ##class(%SQL.Statement).%New()
     set tSC = tStatement.%Prepare(.sql)
 
-    If $$$ISERR(tSC) {
+    if $$$ISERR(tSC) {
         set ex = ##class(%Exception.StatusException).CreateFromStatus(tSC)
         throw ex
     }
 
     if (..%mode="single") {
-        // pass the ID as a parameter
+        // pPass the ID as a parameter
         set pResultSet = tStatement.%Execute(..%singleId)
     } elseif (..%mode="idlist") {
-        // pass in the listing key as a parameter
+        // Pass in the listing key as a parameter
         set pResultSet = tStatement.%Execute(..%listingKey)
     } else {
         set pResultSet = tStatement.%Execute()
     }
 
-    //check %SQLCODE and report if there's an error
-    If pResultSet.%SQLCODE {
+    // Check %SQLCODE and report if there's an error
+    if pResultSet.%SQLCODE {
         set sqlcode=pResultSet.%SQLCODE
         set message=pResultSet.%Message
         set ex = ##class(%Exception.SQL).CreateFromSQLCODE(sqlcode, message)
@@ -88,7 +88,7 @@ Method %OnGetSourceResultSet(ByRef pParameters, Output pResultSet) As %Status
       Set tSC = ex.AsStatus()
   }
 
-  Quit tSC
+  quit tSC
 }
 
 }

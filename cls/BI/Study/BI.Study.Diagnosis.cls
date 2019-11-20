@@ -3,9 +3,7 @@
 /// sample data for use with InterSystems IRIS BI. 
 /// This class contains the diagnosis code lookup table, with a small set of possible
 /// diagnoses. It also defines the incidence rates for these diagnoses, by age and gender.
-/// <p>
 /// You can extend or modify the data contained here by editing the XData block in this class.
-/// <p>
 /// Use the GetPercentChance() method to retrieve the chance of having
 /// a specific diagnosis, given an age and gender.
 Class BI.Study.Diagnosis Extends %Persistent
@@ -27,14 +25,12 @@ Property Description As %String;
 /// Each bucket has the following format:
 /// <pre>lowerAge_upperAge_countPerHundredPatientsOfThisAgeAndGender</pre>
 /// Each row must have data for all ages for patients of either gender.
-/// <ul>
-/// <li>asthma source: ASTHMA06FINAL.PDF from www.lungusa.org/atf/cf/</li>
-/// <li>CHD: www.heartstats.org (used numbers for 1998)</li>
-/// <li>diabetes: www.mchd.com/data_reports/mccha/12_Morbidity_and_Hospitalizations.html (Used U.S. values)</li>
-/// <li>osteoporosis source: http://www.surgeongeneral.gov/library/bonehealth/ (No data for patients under 65)</li>
-/// <li>epilepsy: wikipedia (55 cases per 100000 people)</li>
-/// </ul>
-/// 
+/// Asthma source: ASTHMA06FINAL.PDF from www.lungusa.org/atf/cf/
+/// CHD: www.heartstats.org (used numbers for 1998)
+/// Diabetes: www.mchd.com/data_reports/mccha/12_Morbidity_and_Hospitalizations.html (Used U.S. values)
+/// Osteoporosis source: http://www.surgeongeneral.gov/library/bonehealth/ (No data for patients under 65)
+/// Epilepsy: wikipedia (55 cases per 100000 people)
+
 XData LoadData
 {
 <table>
@@ -69,89 +65,69 @@ XData LoadData
 /// patterns. 
 ClassMethod Setup() As %Status
 {
-   Set status=$$$OK
-   //first kill extent and related global
-   //never use %KillExtent() in a real application
-   Do ..%KillExtent()
-   Kill ^BI.Study.SetupData("diagnoses")
+   set status=$$$OK
+   
+   // First kill extent and related global
+   // Never use %KillExtent() in a real application
+   do ..%KillExtent()
+   kill ^BI.Study.SetupData("diagnoses")
    
    // Get a stream of XML from the XData block contained in this class
-   Set tStream=##class(%Dictionary.CompiledXData).IDKEYOpen($CLASSNAME(),"LoadData").Data
-   If '$IsObject(tStream) {Set tSC=%objlasterror Quit}
+   set tStream=##class(%Dictionary.CompiledXData).IDKEYOpen($CLASSNAME(),"LoadData").Data
+   if '$IsObject(tStream) {set tSC=%objlasterror quit}
    
-   Set status=##class(%XML.TextReader).ParseStream(tStream,.textreader)
-   //check status
-   If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
+   set status=##class(%XML.TextReader).ParseStream(tStream,.textreader)
    
-   //iterate through document, node by node
-   While textreader.Read()
+   // Check status
+   if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
+   
+   // Iterate through document, node by node
+   while textreader.Read()
    {
-       If (textreader.NodeType="chars")
+       if (textreader.NodeType="chars")
        {
-           Set value=textreader.Value
-           Set obj=..%New()
-           Set diagcode=$Piece(value,"^",1) ;use this below in multiple places
-           Set obj.Code=diagcode
-           Set obj.Description=$Piece(value,"^",2)
-           Set status=obj.%Save()
-           If $$$ISERR(status) {Do $System.Status.DisplayError(status) Quit}
+           set value=textreader.Value
+           set obj=..%New()
+           set diagcode=$Piece(value,"^",1) ;use this below in multiple places
+           set obj.Code=diagcode
+           set obj.Description=$Piece(value,"^",2)
+           set status=obj.%Save()
+           if $$$ISERR(status) {do $System.Status.DisplayError(status) quit}
            
-           //now set global to contain occurrence rates by gender and age
-           Set fpiece=$ZSTRIP($Piece(value,"^",3),"*CW")    ; strip out line feed & white space
-           Set mpiece=$ZSTRIP($Piece(value,"^",4),"*CW")    ; strip out line feed & white space
+           // Now set global to contain occurrence rates by gender and age
+           set fpiece=$ZSTRIP($Piece(value,"^",3),"*CW")    ; strip out line feed & white space
+           set mpiece=$ZSTRIP($Piece(value,"^",4),"*CW")    ; strip out line feed & white space
            
-           Set ^BI.Study.SetupData("diagnoses",diagcode,"F")=fpiece
-           Set ^BI.Study.SetupData("diagnoses",diagcode,"M")=mpiece
+           set ^BI.Study.SetupData("diagnoses",diagcode,"F")=fpiece
+           set ^BI.Study.SetupData("diagnoses",diagcode,"M")=mpiece
            }
                
        }
 
-   Quit status
+   quit status
 }
 
 /// For use when generating data; called by Setup method.
 /// Can also use this at the command line for testing purposes.
 ClassMethod GetPercentChance(code As %String, gender As %String, age As %Numeric) As %Numeric
 {
-    //get appropriate global node & convert it to a list
-    Set list=$LISTFROMSTRING(^BI.Study.SetupData("diagnoses",code,gender))
+    // Get appropriate global node & convert it to a list
+    set list=$LISTFROMSTRING(^BI.Study.SetupData("diagnoses",code,gender))
     
-    Set chance=0
-    // iterate through list and find appropriate bucket
+    set chance=0
+    // Iterate through list and find appropriate bucket
     for i=1:1:$LISTLENGTH(list) {
-        //get list item and its upper and lower ages
-        Set item=$LISTGET(list,i)
-        Set itemlowerage=+$Piece(item,"_",1)
-        Set itemupperage=+$Piece(item,"_",2)
+        // Get list item and its upper and lower ages
+        set item=$LISTGET(list,i)
+        set itemlowerage=+$Piece(item,"_",1)
+        set itemupperage=+$Piece(item,"_",2)
 
-        If ((age>itemlowerage) && (age<=itemupperage)) {
-            Set chance=$Piece(item,"_",3)
+        if ((age>itemlowerage) && (age<=itemupperage)) {
+            set chance=$Piece(item,"_",3)
             }
         }
     
-    Quit chance
+    quit chance
 }
-
-Storage Default
-{
-<Data name="DiagnosisDefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>Code</Value>
-</Value>
-<Value name="3">
-<Value>Description</Value>
-</Value>
-</Data>
-<DataLocation>^BI.Study.DiagnosisD</DataLocation>
-<DefaultData>DiagnosisDefaultData</DefaultData>
-<IdLocation>^BI.Study.DiagnosisD</IdLocation>
-<IndexLocation>^BI.Study.DiagnosisI</IndexLocation>
-<StreamLocation>^BI.Study.DiagnosisS</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
-
 }
 
