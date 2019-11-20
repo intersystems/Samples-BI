@@ -29,7 +29,7 @@ ClassMethod BuildData(pCount As %Integer = 1000, pASync As %Boolean = 1, pVerbos
 {
 	// Delete cube if present
 	if ##class(%DeepSee.Utils).%CubeExists("HOLEFOODS") {
-		do ##class(%DeepSee.Utils).%killCube("HOLEFOODS")
+		do ##class(%DeepSee.Utils).%KillCube("HOLEFOODS")
 	}
 
 	// kill old data
@@ -227,10 +227,10 @@ ClassMethod CreateRecords(pNewBuild As %Boolean, pCount As %Integer = 100, pVerb
 			// Products: $LB(name,sku,price,type)
 			kill tList
 			set tList($I(tList)) = $LB("Bagels (dozen)","SKU-101",2.95,"Snack")
-			set tList($I(tList)) = $LB("donuts (dozen)","SKU-192",2.95,"Snack")
+			set tList($I(tList)) = $LB("Donuts (dozen)","SKU-192",2.95,"Snack")
 			set tList($I(tList)) = $LB("Pretzels (bag)","SKU-203",3.95,"Snack")
 			set tList($I(tList)) = $LB("Unsalted Pretzels (bag)","SKU-204",4.25,"Snack")
-			set tList($I(tList)) = $LB("Free-range donuts (dozen)","SKU-195",12.95,"Snack")
+			set tList($I(tList)) = $LB("Free-range Donuts (dozen)","SKU-195",12.95,"Snack")
 			set tList($I(tList)) = $LB("Bundt Cake","SKU-199",19.95,"Snack")
 			set tList($I(tList)) = $LB("Ziti (box)","SKU-296",1.95,"Pasta")
 			set tList($I(tList)) = $LB("Penne (box)","SKU-287",1.95,"Pasta")
@@ -277,7 +277,7 @@ ClassMethod CreateRecords(pNewBuild As %Boolean, pCount As %Integer = 100, pVerb
 			// use existing star tables
 
 			// cities
-			set tRS = ##class(%Resultset).%New()
+			set tRS = ##class(%ResultSet).%New()
 			set tSC = tRS.Prepare("SELECT ID FROM HoleFoods.Outlet")
 			if $$$ISERR(tSC) quit
 			set tSC = tRS.Execute()
@@ -292,7 +292,7 @@ ClassMethod CreateRecords(pNewBuild As %Boolean, pCount As %Integer = 100, pVerb
 			}
 
 			// products
-			set tRS = ##class(%Resultset).%New()
+			set tRS = ##class(%ResultSet).%New()
 			set tSC = tRS.Prepare("SELECT ID FROM HoleFoods.Product")
 			if $$$ISERR(tSC) quit
 			set tSC = tRS.Execute()

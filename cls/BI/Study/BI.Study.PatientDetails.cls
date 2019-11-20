@@ -100,7 +100,7 @@ ClassMethod ChangePatientDetails(percent As %Numeric = 10, rebuild As %Boolean =
                 set patID=patdetails.PatientID
             
                 set myquery="SELECT ID FROM BI_Study.Patient WHERE PatientID=?"
-                set rset=##class(%Resultset).%New("%DynamicQuery:SQL")
+                set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
                 set status=rset.Prepare(myquery)
                 if $$$ISERR(status) {Do $System.Status.DisplayError(status) quit}
                 set status=rset.Execute(patID)
@@ -125,7 +125,7 @@ ClassMethod DeletePatientDetails(PatientID As %String) As %Status
 {
             
     set myquery="DELETE FROM BI_Study.PatientDetails WHERE PatientID=?"
-    set rset=##class(%Resultset).%New("%DynamicQuery:SQL")
+    set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
     set status=rset.Prepare(myquery)
     if $$$ISERR(status) {Do $System.Status.DisplayError(status) quit}
     set status=rset.Execute(PatientID)

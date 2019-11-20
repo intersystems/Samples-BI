@@ -48,7 +48,7 @@ ClassMethod Setup(patCount As %Integer = 1000, options As %String = "ADTR")
 /// If it includes the letter T, the PatientDetails table is populated. This option is on by default.
 /// If it includes the letter E, the PatientEncounter table is populated. This option is off by default.
 /// If it includes the letter R, the CityRainfall table is populated. This option is off by default.
-/// If it includes the letter X, half the patients are written to the BI.Study.Patientset2 
+/// If it includes the letter X, half the patients are written to the BI.Study.PatientSet2 
 /// table (the "extra" set) and half are written to BI.Study.Patients. This option is off by default.
 /// genNulls specifies whether to insert random null values. By default, this option is on, and the
 /// GenerateData method sets the patient's primary care physician, part of the allergy data, and assorted
@@ -99,7 +99,7 @@ ClassMethod GenerateData(patCount As %Integer = 10000, patientsPerDoc As %Numeri
     if $$$ISERR(status) {quit $System.Status.DisplayError(status)}
 
     if generateextraset {
-        set status=##class(BI.Study.Patientset2).GenerateData(extrapatcount,options,genNulls)
+        set status=##class(BI.Study.PatientSet2).GenerateData(extrapatcount,options,genNulls)
         if $$$ISERR(status) {quit $System.Status.DisplayError(status)}
         }
         
@@ -333,7 +333,7 @@ ClassMethod Count(cls) As %Numeric [ Internal ]
     set tname=part1_"_"_part2
  
     set myquery="SELECT Count(*) as RecCount FROM "_tname
-    set rset=##class(%Resultset).%New("%DynamicQuery:SQL")
+    set rset=##class(%ResultSet).%New("%DynamicQuery:SQL")
     set status=rset.Prepare(myquery)
     if $$$ISERR(status) {Do $System.Status.DisplayError(status) quit}
     set status=rset.Execute()
@@ -360,7 +360,7 @@ ClassMethod UpdateIdCache(cls) As %Status [ Internal ]
    Set tp=$INCREMENT(^IRIS.Temp)
       
    // Save this so we can use it later to find this cache
-   set ^BI.Study.SetupData("ExtentsetPointers",cls)=tp
+   set ^BI.Study.SetupData("ExtentSetPointers",cls)=tp
    
    // Use same unique tp for temporary pointer and for "name" of
    // the extent set
@@ -373,8 +373,8 @@ ClassMethod UpdateIdCache(cls) As %Status [ Internal ]
 /// This method assumes that you have already run UpdateIdCache().
 ClassMethod GetRandomId(cls) As %String [ Internal ]
 {
-   set test=$DATA(^BI.Study.SetupData("ExtentsetPointers",cls))
-   if test {set tp=^BI.Study.SetupData("ExtentsetPointers",cls)}
+   set test=$DATA(^BI.Study.SetupData("ExtentSetPointers",cls))
+   if test {set tp=^BI.Study.SetupData("ExtentSetPointers",cls)}
    else {quit "no id"}
 
    // Use same unique tp for temporary pointer and for "name" of
@@ -387,7 +387,7 @@ ClassMethod GeneratePatientQuerySample(patCount As %Integer = 100)
 {
 	// Generate additional patients in the disconnected second set
 	// for the benefit of PatientsQuery cube
-	do ##class(BI.Study.Patientset2).GenerateData(patCount)
+	do ##class(BI.Study.PatientSet2).GenerateData(patCount)
 	
     // Build PatientsQueryCube
 	do ##class(%DeepSee.Utils).%BuildCube("PatientsQueryCube")
