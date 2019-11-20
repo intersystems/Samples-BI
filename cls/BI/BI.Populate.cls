@@ -357,7 +357,7 @@ ClassMethod UpdateIdCache(cls) As %Status [ Internal ]
 
    // Allocate a temporary pointer
    set tp=$INCREMENT(^IRIS.Temp)
-   
+
    // Save this so we can use it later to find this cache
    set ^BI.Study.SetupData("ExtentSetPointers",cls)=tp
    
