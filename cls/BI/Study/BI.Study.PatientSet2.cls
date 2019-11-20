@@ -153,4 +153,4 @@ ClassMethod AddPatients(patCount As %Integer = 500, options As %String = "AD", g
 }
 
 }
-
+}

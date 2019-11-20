@@ -260,7 +260,7 @@ ClassMethod CreateRecords(pNewBuild As %Boolean, pCount As %Integer = 100, pVerb
 
 				// build random distribution of products
 				set c = $R(10)+1
-				For k = 1:1:c {
+				for k = 1:1:c {
 					set tProducts($I(tProductCount)) = tProduct
 				}
 				set n = $O(tList(n))
@@ -304,7 +304,7 @@ ClassMethod CreateRecords(pNewBuild As %Boolean, pCount As %Integer = 100, pVerb
 				if $IsObject(tProduct) {
 					// build random distribution of products
 					set c = $R(10)+1
-					For k = 1:1:c {
+					for k = 1:1:c {
 						set tProducts($I(tProductCount)) = tProduct
 					}
 				}
@@ -319,7 +319,7 @@ ClassMethod CreateRecords(pNewBuild As %Boolean, pCount As %Integer = 100, pVerb
 		set tMonthSeed = 1000
 		set tMonthTotal = tMonthSeed
 		set tMonths = 60 + tCurrMonth
-		For m = 1:1:tMonths {
+		for m = 1:1:tMonths {
 			set tMonthTotal = (tMonthTotal * 1.01)\1
 			set tMonthDist(tMonthTotal) = m
 		}
@@ -328,7 +328,7 @@ ClassMethod CreateRecords(pNewBuild As %Boolean, pCount As %Integer = 100, pVerb
 		set tCount = pCount
 		set tRows = 0
 
-		For n = 1:1:tCount {
+		for n = 1:1:tCount {
 			set tRecord = ##class(Transaction).%New()
 			set tRecord.Actual = 1
 		
@@ -434,7 +434,7 @@ ClassMethod CreateRecords(pNewBuild As %Boolean, pCount As %Integer = 100, pVerb
 			set tGrowth = 1.1
 			
 			// take last full year actuals and multiply by growth
-			For m =1:1:12 {
+			for m =1:1:12 {
 				set tDate = (tCurrYear-1)_"-"_$$$iscPadZero(m,2)
 				set tCurrDate = (tCurrYear)_"-"_$$$iscPadZero(m,2)
 				
@@ -721,7 +721,7 @@ ClassMethod SetupTermLists()
 /// Purely for demo purposes, this method defines pivot variables used by this sample.
 ClassMethod SetupVariables()
 {
-	//cannot assume the following will work from release to release; replace with use of API when available
+	// Cannot assume the following will work from release to release; replace with use of API when available
 
 	write "Defining COMMISSIONPERCENTAGE pivot variable for HOLEFOODS cube",!
 	kill ^DeepSee.Variables("HOLEFOODS","COMMISSIONPERCENTAGE")
