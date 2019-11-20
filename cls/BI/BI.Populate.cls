@@ -349,15 +349,16 @@ ClassMethod Count(cls) As %Numeric [ Internal ]
 /// that class. Use GetRandomId() to get a random ID from this cache.
 ClassMethod UpdateIdCache(cls) As %Status [ Internal ]
 {
-   set reccount = ..Count(cls)
-   set periodpos=$FIND(cls,".")
-   set part1=$EXTRACT(cls,0,periodpos-2)
-   set part2=$EXTRACT(cls,periodpos,*)
-   set tname=part1_"_"_part2
 
-   // Allocate a temporary pointer
-   set tp=$INCREMENT(^CacheTemp)
-   
+   Set reccount = ..Count(cls)
+   Set periodpos=$FIND(cls,".")
+   Set part1=$EXTRACT(cls,0,periodpos-2)
+   Set part2=$EXTRACT(cls,periodpos,*)
+   Set tname=part1_"_"_part2
+
+   //allocate a temporary pointer
+   Set tp=$INCREMENT(^IRIS.Temp)
+      
    // Save this so we can use it later to find this cache
    set ^BI.Study.SetupData("ExtentsetPointers",cls)=tp
    
