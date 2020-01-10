@@ -104,6 +104,15 @@ ClassMethod GenerateData(patCount As %Integer = 10000, patientsPerDoc As %Numeri
         }
         
     write !,"Elapsed time: ",($PIECE($HOROLOG,",",2)-start)," seconds"
+    do $system.SQL.TuneTable("BI.Study.Doctor")
+    do $system.SQL.TuneTable("BI.Study.Patient")
+    do $system.SQL.TuneTable("BI.Study.PatientAllergy1")
+    do $system.SQL.TuneTable("BI.Study.PatientDetails")
+    do $system.SQL.TuneTable("BI.Study.PatientDiagnosis1")
+    do $system.SQL.TuneTable("BI.Study.PatientDiagnosis2")
+    do $system.SQL.TuneTable("BI.Study.PatientEncounter")
+    do $system.SQL.TuneTable("BI.Study.PatientSet2")
+    do $system.SQL.TuneTable("BI.Study.CityRainfall")    
     quit status
 }
 

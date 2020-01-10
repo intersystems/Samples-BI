@@ -64,6 +64,12 @@ ClassMethod BuildData(pCount As %Integer = 1000, pASync As %Boolean = 1, pVerbos
 
     //define pivot variables
     do ..SetupVariables()
+
+	do $system.SQL.TuneTable("HoleFoods.Region")
+	do $system.SQL.TuneTable("HoleFoods.Country")
+	do $system.SQL.TuneTable("HoleFoods.Outlet")
+	do $system.SQL.TuneTable("HoleFoods.Product")
+	do $system.SQL.TuneTable("HoleFoods.Transaction")
 }
 
 /// Add new records to the transactional data that will provide data for the DeepSee model.
