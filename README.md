@@ -110,6 +110,8 @@ an InterSystems IRIS BI model that uses that data.
 
 ZPM stands for ObjectScript Package Manager. It provides the unified way to install ObjectScript modules [Learn More](https://community.intersystems.com/post/introducing-intersystems-objectscript-package-manager)
 
+0. Make sure you have [Docker-desktop](https://www.docker.com/products/docker-desktop) installed.
+
 1. Pull the IRIS image with zpm:
 ```
 $ docker pull intersystemsdc/iris-community:2019.4.0.383.0-zpm
