@@ -3,13 +3,12 @@
   <Document name="samples-bi.ZPM">
     <Module>
       <Name>samples-bi</Name>
-      <Version>1.0.0</Version>
+      <Version>1.0.1</Version>
       <Packaging>module</Packaging>
       <SourcesRoot>src</SourcesRoot>
       <Resource Name="BI.PKG"/>
       <Resource Name="HoleFoods.PKG"/>
        <Resource Name="ZipCodeData.GBL"/>
-      <SystemSetting Name="CSP.DefaultFileCharset" Value="UTF-8"/>
       <Invokes>
         <Invoke Class="HoleFoods.Utils" Method="Setup"></Invoke>
         <Invoke Class="BI.Populate" Method="Setup"></Invoke>
