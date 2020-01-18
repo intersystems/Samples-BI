@@ -10,7 +10,17 @@ Class BI.Populate Extends %RegisteredObject
 /// Invoke this method to set up all the data for these classes.
 ClassMethod Setup(patCount As %Integer = 1000, options As %String = "ADTR")
 {
-	// Generates patients & rainfall data
+	// Enable DeepSee in the default app of the current namespace
+	set namespace = $ZNspace
+	set app = $System.CSP.GetDefaultApp(namespace) _ "/"
+
+	try {
+		do EnableDeepSee^%SYS.cspServer(app)
+	} catch (ex) {
+		write !,"WARNING: failed to enable DeepSee for "_namespace_" namespace."
+	}
+	 
+    // Generates patients & rainfall data
 	// also builds patients and cityrainfall cube 
 	// (because DSTIME="auto" in the source classes
 	// don't generate encounter data by default)
