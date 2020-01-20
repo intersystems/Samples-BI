@@ -106,6 +106,56 @@ an InterSystems IRIS BI model that uses that data.
 
 ## Setup instructions
 
+# Setup with Docker and ZPM
+
+ZPM stands for ObjectScript Package Manager. It provides the unified way to install ObjectScript modules [Learn More](https://community.intersystems.com/post/introducing-intersystems-objectscript-package-manager)
+
+0. Make sure you have [Docker-desktop](https://www.docker.com/products/docker-desktop) installed.
+
+1. Pull the IRIS image with zpm:
+```
+$ docker pull intersystemsdc/iris-community:2019.4.0.383.0-zpm
+```
+You can take the latest tag of IRIS or IRIS for Health Community Edition with ZPM [here](https://hub.docker.com/r/intersystemsdc/iris-community)
+
+2. Run IRIS container with ZPM:
+```
+$ docker run --name irisce -d --publish 52773:52773 intersystemsdc/iris-community:2019.4.0.383.0-zpm
+```
+3. RUN IRIS terminal and install Samples-BI:
+```
+docker exec -it irisce iris session iris
+Node: c6e0f00b8d42, Instance: IRIS
+
+USER>zpm  
+zpm: USER>install samples-bi
+
+[samples-bi]	Reload START
+[samples-bi]	Reload SUCCESS
+[samples-bi]	Module object refreshed.
+[samples-bi]	Validate START
+[samples-bi]	Validate SUCCESS
+[samples-bi]	Compile START
+[samples-bi]	Compile SUCCESS
+[samples-bi]	Activate START
+2,187 row(s) created
+Building cube [HOLEFOODS]
+...
+Complete
+Elapsed time:                  0.009120s
+Source expression time:        0.000307s
+Defining term list Patients Pivots...
+Defining term list Patients RowSpecs...
+Defining YEAR pivot variable in PATIENTS cube
+
+[samples-bi]	Configure SUCCESS
+[samples-bi]	Activate SUCCESS
+```
+4. Open IRIS analytics portal and work with Samples-BI:
+http://localhost:52773/csp/user/_DeepSee.UserPortal.Home.zen?$NAMESPACE=USER
+
+# Step-by-step Insallation 
+
 1. Clone or [download](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=asamples) the repository.
 2. If you have not yet created a namespace in InterSystems IRIS, follow the [detailed instructions](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=ASAMPLES_createns) to do so. 
 3. In the Management Portal, click System Administration > Security > Applications > Web Applications.

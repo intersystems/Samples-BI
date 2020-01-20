@@ -17,6 +17,17 @@ Class HoleFoods.Utils Extends %RegisteredObject
 /// Add this alias so that each DeepSee sample has a Setup() method
 ClassMethod Setup(pCount As %Integer = 1000, pASync As %Boolean = 1, pVerbose As %Boolean = 1)
 {
+	
+	// Enable DeepSee in the default app of the current namespace
+	set namespace = $ZNspace
+	set app = $System.CSP.GetDefaultApp(namespace) _ "/"
+
+	try {
+		do EnableDeepSee^%SYS.cspServer(app)
+	} catch (ex) {
+		write !,"WARNING: failed to enable DeepSee for "_namespace_" namespace."
+	}
+	
 	do ..BuildData(pCount,pASync,pVerbose)
 }
 
