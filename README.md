@@ -2,12 +2,22 @@
 This is the README file for SAMPLES-BI. 
 The end of the file has setup instructions.
 
+* [Overview](#overview)
+  * [Contents of the BI package](#contents-of-the-bi-package)
+  * [Contents of the HoleFoods package](#contents-of-the-holefoods-package)
+* [Setup instructions](#setup-instructions)
+  * [Setup with Docker and ZPM](#setup-with-docker-and-zpm)
+  * [Step-by-step Installation](#step-by-step-installation)
+
 ---
 Use or operation of this code is subject to acceptance of the license available in the code 
 repository for this code.
 
 ---
-SAMPLES-BI is meant for use with the InterSystems IRIS Business Intelligence capabilities.
+
+## Overview
+
+Samples-BI is meant for use with the InterSystems IRIS Business Intelligence capabilities.
 In order to use this sample, you must have an InterSystems IRIS license that includes these capabilities.
 
 These classes provide sample data that you can use to explore the capabilities of InterSystems IRIS BI.
@@ -31,7 +41,7 @@ After setup:
 * You can work through the steps of creating a BI model, pivot tables, and dashboards.
   See [this](http://docs.intersystems.com/irislatest?KEY=D2DT_ch_setup)
 
-## Contents of the BI package
+### Contents of the BI package
 
 This package provides simple data representing a fictitious medical study, and also provides 
 an InterSystems IRIS BI model that uses that data.
@@ -85,7 +95,7 @@ an InterSystems IRIS BI model that uses that data.
   for InterSystems Business Intelligence.
 
 
-## Contents of the HoleFoods package
+### Contents of the HoleFoods package
 
 This package provides simple data representing sales of food products, and also provides 
 an InterSystems IRIS BI model that uses that data.
@@ -106,7 +116,7 @@ an InterSystems IRIS BI model that uses that data.
 
 ## Setup instructions
 
-# Setup with Docker and ZPM
+### Setup with Docker and ZPM
 
 ZPM stands for ObjectScript Package Manager. It provides the unified way to install ObjectScript modules [Learn More](https://community.intersystems.com/post/introducing-intersystems-objectscript-package-manager)
 
@@ -116,7 +126,7 @@ ZPM stands for ObjectScript Package Manager. It provides the unified way to inst
 ```
 $ docker pull intersystemsdc/iris-community:2019.4.0.383.0-zpm
 ```
-You can take the latest tag of IRIS or IRIS for Health Community Edition with ZPM [here](https://hub.docker.com/r/intersystemsdc/iris-community)
+   You can take the latest tag of IRIS or IRIS for Health Community Edition with ZPM [here](https://hub.docker.com/r/intersystemsdc/iris-community)
 
 2. Run IRIS container with ZPM:
 ```
@@ -154,7 +164,7 @@ Defining YEAR pivot variable in PATIENTS cube
 4. Open IRIS analytics portal and work with Samples-BI:
 http://localhost:52773/csp/user/_DeepSee.UserPortal.Home.zen?$NAMESPACE=USER
 
-# Step-by-step Insallation 
+### Step-by-step Installation 
 
 1. Clone or [download](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=asamples) the repository.
 2. If you have not yet created a namespace in InterSystems IRIS, follow the [detailed instructions](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=ASAMPLES_createns) to do so. 
@@ -164,7 +174,7 @@ http://localhost:52773/csp/user/_DeepSee.UserPortal.Home.zen?$NAMESPACE=USER
 
 6. Open the InterSystems IRIS Terminal.
 7. Enter the following command (replacing `mynamespace` with the namespace from step 2):
-```
+   ```
    ZN "mynamespace"
    ```
 8. Enter the following commands (replacing with the full path of the `buildsample/Build.SampleBI.cls` file):
@@ -176,7 +186,7 @@ http://localhost:52773/csp/user/_DeepSee.UserPortal.Home.zen?$NAMESPACE=USER
    ```
 9. When prompted, enter the full path of the directory to which you downloaded this sample. The method then loads and compiles the code and performs other needed setup steps.
 
-Now when you access the Analytics submenu of the Management Portal, this namespace will be listed. For example, you can now use the Analyzer with the cubes that are included within this sample.
+Now, when you access the Analytics submenu of the Management Portal, this namespace will be listed. For example, you can now use the Analyzer with the cubes that are included within this sample.
 
 IMPORTANT: If the namespace is not listed when you access the Analytics submenu of the Management Portal, see [Setting Up the Web Application](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=D2IMP_ch_setup#D2IMP_setup_web_app) in the book [Implementing InterSystems IRIS Business Intelligence](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=D2IMP_ch_setup).
 
