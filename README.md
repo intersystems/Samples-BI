@@ -91,10 +91,6 @@ an InterSystems IRIS BI model that uses that data.
 
 * `BI.Populate` contains the wrapper code used to generate the data for this part of the BI sample.
 
-* `BI.RESTClient` allows you to exercise the BI REST interface. See the book Client-Side APIs 
-  for InterSystems Business Intelligence.
-
-
 ### Contents of the HoleFoods package
 
 This package provides simple data representing sales of food products, and also provides 
