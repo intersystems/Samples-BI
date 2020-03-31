@@ -64,7 +64,7 @@ sourceExpression="1"
 <measure name="Age" displayName="Age" 
 sourceProperty="Age" 
 aggregate="SUM" 
- factName="MxAge"/>
+ factName=""/>
 
 <measure name="Avg Age" displayName="Avg Age" 
 sourceProperty="Age" 
