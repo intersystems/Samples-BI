@@ -1,6 +1,6 @@
 {
     "objectscript.conn.version": 3,
-    "objectscript.conn.ns": "HF",
+    "objectscript.conn.ns": "IRISAPP",
     "objectscript.conn.port": 52779,
     "objectscript.conn.active": true
 
