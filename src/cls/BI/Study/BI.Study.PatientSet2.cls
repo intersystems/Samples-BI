@@ -55,7 +55,7 @@ ClassMethod AddPatients(patCount As %Integer = 500, options As %String = "AD", g
     set dcount=##class(BI.Populate).Count("BI.Study.Diagnosis")
     set currentpatcount=##class(BI.Populate).Count($CLASSNAME())
     if (currentpatcount=0) {set initPat=5000}
-        else {set initPat=patcount+1}
+        else {set initPat=patCount+1}
     set idnumber=initPat
 
     for n = 1:1:patCount {
