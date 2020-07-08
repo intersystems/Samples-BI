@@ -79,7 +79,7 @@ ClassMethod run(stagingroot As %String = "", interactive As %Boolean = 0)
     }
     
     // After classes have been loaded, load data
-    set dir=stagingroot_"/gbl/" ;works on both Windows and Unix
+    set dir=stagingroot_"/src/gbl/" ;works on both Windows and Unix
     if '##class(%File).DirectoryExists(dir) {
         if interactive {
             write !!, "Looking for "_dir
