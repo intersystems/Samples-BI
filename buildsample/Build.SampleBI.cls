@@ -1,7 +1,7 @@
 /// This is from https://github.com/intersystems/Samples-BI.
 /// This class builds the downloaded sample files from https://github.com/intersystems/Samples-BI.
 /// Use or operation of this code is subject to acceptance of the license available in the code repository for this code.
-Class Build.BISample Extends %RegisteredObject
+Class Build.SampleBI Extends %RegisteredObject
 {
 
 /// This method prompts the user for the name of the directory that contains the downloaded files 
