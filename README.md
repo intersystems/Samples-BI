@@ -178,7 +178,7 @@ http://localhost:52773/csp/user/_DeepSee.UserPortal.Home.zen?$NAMESPACE=USER
    ```
    do $system.OBJ.Load("full-path-to-Build.SampleBI.cls","ck")
    
-   do ##class(Build.BISample).Build()
+   do ##class(Build.SampleBI).Build()
    ```
 9. When prompted, enter the full path of the directory to which you downloaded this sample. The method then loads and compiles the code and performs other needed setup steps.
 
