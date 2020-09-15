@@ -35,11 +35,11 @@ null handling, list-based levels, and other features not included in HoleFoods. 
 explicitly demonstrates how to address more difficult modeling scenarios. 
 
 After setup: 
-* You can use the Analyzer to explore these BI models; for information, go [here](http://docs.intersystems.com/irislatest?KEY=D2ANLY_ch_intro)
+* You can use the Analyzer to explore these BI models; for information, go [here](http://docs.intersystems.com/irislatest/csp/docbook/Doc.View.cls?KEY=D2ANLY_ch_intro)
 * You can open the InterSystems IRIS dashboard and explore the sample dashboards and pivot
-  tables. For information, see [this](http://docs.intersystems.com/irislatest?KEY=D2DASH)
+  tables. For information, see [this](http://docs.intersystems.com/irislatest/csp/docbook/Doc.View.cls?KEY=D2DASH)
 * You can work through the steps of creating a BI model, pivot tables, and dashboards.
-  See [this](http://docs.intersystems.com/irislatest?KEY=D2DT_ch_setup)
+  See [this](http://docs.intersystems.com/irislatest/csp/docbook/Doc.View.cls?KEY=D2DT_ch_setup)
 
 ### Contents of the BI package
 
