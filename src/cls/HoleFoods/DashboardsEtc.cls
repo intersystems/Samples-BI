@@ -428,7 +428,7 @@ XData Contents [ XMLNamespace = "http://www.intersystems.com/deepsee/library" ]
   <widget name="Widget1" type="pivot" subtype="pivot" subtypeClass="lineChart" title="HoleFoods Data" dataSource="Pivot Variables/YearVariableInHoleFoods.pivot" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="6" rowSpanL="5" showToolbar="true" theme="" dataColorList="">
     <control name="" action="applyVariable" target="*" targetProperty="$variable.Year" location="dashboard" type="auto" controlClass="" label="Sales Date/Birth Date" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
   </widget>
-  <widget name="Widget2" type="pivot" subtype="pivot" subtypeClass="lineChart" title="Patients Data" dataSource="Pivot Variables/YearVariableInPatients.pivot" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="5" homeColL="0" colSpanL="6" rowSpanL="5" showToolbar="true" theme="" dataColorList="">
+  <widget name="Widget2" type="pivot" subtype="pivot" subtypeClass="lineChart" title="Patients Data" dataSource="Pivot Variables/Year Variable In Patients.pivot" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="5" homeColL="0" colSpanL="6" rowSpanL="5" showToolbar="true" theme="" dataColorList="">
   </widget>
 </dashboard>
 
