@@ -1,14 +1,15 @@
 {
     "objectscript.conn" :{
       "ns": "IRISAPP",
-      "active": false,
+      "active": true,
+      "username": "_SYSTEM",
       "docker-compose": {
         "service": "iris",
         "internalPort": 52773
       },
       "links": {
         "SAMPLES BI in DSW": "http://localhost:${port}/dsw/index.html#/IRISAPP",
-        "SAMPLES BI in ZEN": "http://localhost:${port}/dsw/index.html#/IRISAPP"
+        "SAMPLES BI in ZEN": "http://localhost:${port}/csp/irisapp/_DeepSee.UserPortal.DashboardViewer.zen"
       }
     }
 

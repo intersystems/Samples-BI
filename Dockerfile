@@ -22,7 +22,8 @@ RUN \
   do $SYSTEM.OBJ.Load("Installer.cls", "ck") \
   set sc = ##class(App.Installer).setup() \
   zn "IRISAPP" \
-  zpm "install dsw"
+  do EnableDeepSee^%SYS.cspServer("/csp/irisapp/") \
+  zpm "install dsw" 
   
 
 # bringing the standard shell back
