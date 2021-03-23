@@ -162,7 +162,7 @@ http://localhost:52773/csp/user/_DeepSee.UserPortal.Home.zen?$NAMESPACE=USER
 
 ### Step-by-step Installation 
 
-1. Clone or [download](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=asamples) the repository.
+1. Clone or [download](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=asamples) the repository. If you downloaded a ZIP, extract the files to a directory on the server. You will need to refer to these files' location in step 8.
 2. If you have not yet created a namespace in InterSystems IRIS, follow the [detailed instructions](http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=ASAMPLES_createns) to do so. 
 3. In the Management Portal, click System Administration > Security > Applications > Web Applications.
 4. Click the link in the first column of the row /csp/mynamespace where `mynamespace` is the namespace from step 2.
@@ -173,7 +173,7 @@ http://localhost:52773/csp/user/_DeepSee.UserPortal.Home.zen?$NAMESPACE=USER
    ```
    ZN "mynamespace"
    ```
-8. Enter the following commands (replacing with the full path of the `buildsample/Build.SampleBI.cls` file):
+8. Enter the following commands (replacing `full-path-to-Build.SampleBI.cls` with the full path of the `buildsample/Build.SampleBI.cls` file):
 
    ```
    do $system.OBJ.Load("full-path-to-Build.SampleBI.cls","ck")
