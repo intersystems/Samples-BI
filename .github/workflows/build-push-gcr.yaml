@@ -1,0 +1,94 @@
+name: Cloud Run Deploy
+
+on:
+  push:
+    branches:
+    - master
+    - main
+
+env:
+  # Change this section according to your needs
+  IMAGE_NAME:   samples-bi-demo
+  SERVICE:      samples-bi
+  DOMAIN_NAME:  samples-bi.demo.community.intersystems.com
+
+  # Leave this section untouched
+  PROJECT_ID:   iris-community-demos
+  CLUSTER_NAME: demo
+  GITHUB_SHA:   ${{ github.sha }}
+  GCR_LOCATION: eu.gcr.io
+  REGION:       europe-west2
+  NAMESPACE:    demo
+
+jobs:
+  deploy-cloud-run:
+    name: Deploy to Cloud Run
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+ 
+    - name: Setup Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0.2.0
+      with:
+        version: '327.0.0'
+        service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+
+    - name: Authorize Docker push
+      run: gcloud auth configure-docker
+
+    - name: Build and Push image
+      run: |
+        docker build -t ${GCR_LOCATION}/${PROJECT_ID}/${IMAGE_NAME}:${GITHUB_SHA} .
+        docker push ${GCR_LOCATION}/${PROJECT_ID}/${IMAGE_NAME}:${GITHUB_SHA}
+
+    - name: Deploy to Cloud Run
+      run: |
+        echo "[INFO] Set google project..."
+        gcloud config set project ${PROJECT_ID}
+
+        echo "[INFO] Deploy service..."
+        gcloud run deploy ${SERVICE}   \
+          --platform gke               \
+          --cluster ${CLUSTER_NAME}    \
+          --cluster-location ${REGION} \
+          --namespace ${NAMESPACE}     \
+          --port 52773                 \
+          --min-instances 1            \
+          --memory 512Mi               \
+          --timeout 300                \
+          --verbosity debug            \
+          --image ${GCR_LOCATION}/${PROJECT_ID}/${IMAGE_NAME}:${GITHUB_SHA}
+
+        echo "[INFO] Create domain mappings..."
+        if [[ $(gcloud run domain-mappings list --platform gke --cluster ${CLUSTER_NAME} --cluster-location ${REGION} --namespace ${NAMESPACE} --filter "DOMAIN=${DOMAIN_NAME}" | grep -v DOMAIN | wc -l) == 0 ]]; then
+          gcloud run domain-mappings create \
+            --service ${SERVICE}            \
+            --platform gke                  \
+            --cluster ${CLUSTER_NAME}       \
+            --cluster-location ${REGION}    \
+            --namespace ${NAMESPACE}        \
+            --verbosity debug               \
+            --domain ${DOMAIN_NAME}
+        fi
+
+    - name: Create domain name
+      run: |
+        gcloud container clusters get-credentials ${CLUSTER_NAME} --region ${REGION} --project ${PROJECT_ID}
+        kubectl version
+        echo "[INFO] Checking if [${DOMAIN_NAME}] is in the existing Ingress annotation..."
+        CURRENT_DOMAINS_LIST=$(kubectl -n gke-system get svc istio-ingress -o jsonpath="{.metadata.annotations['external-dns\.alpha\.kubernetes\.io/hostname']}")
+        if [[ $(echo ${CURRENT_DOMAINS_LIST} | grep -w "${DOMAIN_NAME}" | wc -c) -eq 0 ]]; then \
+          echo "[INFO] Domain [${DOMAIN_NAME}] is ABSENT in the domains list. Adding...";       \
+          kubectl -n gke-system annotate --overwrite svc istio-ingress external-dns\.alpha\.kubernetes\.io/hostname=${CURRENT_DOMAINS_LIST},${DOMAIN_NAME}; \
+          echo -n "[INFO] Resulting domain names: "
+          kubectl -n gke-system get svc istio-ingress -o jsonpath="{.metadata.annotations['external-dns\.alpha\.kubernetes\.io/hostname']}"
+        else
+          echo "[INFO] Domain [${DOMAIN_NAME}] is in the domains list. Leave untouched...";     \
+        fi
+
+    - name: Enable TLS-access
+      run: |
+        gcloud container clusters get-credentials ${CLUSTER_NAME} --region ${REGION} --project ${PROJECT_ID}
+        kubectl version
+        kubectl patch configmap config-domainmapping -n knative-serving -p '{"data":{"autoTLS":"Enabled"}}'
