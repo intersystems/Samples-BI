@@ -1,0 +1,21 @@
+    ; run installer to create namespace
+    do $SYSTEM.OBJ.Load("/opt/irisapp/Installer.cls", "ck")
+    set sc = ##class(App.Installer).setup() 
+
+    zn "IRISAPP"
+    zpm "install isc-dev"
+    do ##class(dev.code).workdir("/irisdev/app/src")
+    zpm "install dsw"
+    do EnableDeepSee^%SYS.cspServer("/csp/irisapp/")
+    zpm "load /opt/irisapp/ -v -Dfolder=irisapp"
+
+    zn "%SYS" 
+    w ##class(Security.Users).UnExpireUserPasswords("*")
+    write "Modifying MDX2JSON application security...",! 
+    set webName = "/mdx2json" 
+    set webProperties("AutheEnabled") = 64 
+    set webProperties("MatchRoles")=":%DB_IRISAPP" 
+    set sc = ##class(Security.Applications).Modify(webName, .webProperties) 
+    if sc<1 write $SYSTEM.OBJ.DisplayError(sc) 
+
+    halt

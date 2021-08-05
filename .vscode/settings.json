@@ -1,7 +1,12 @@
 {
+  "files.associations": {
+    
+    "Dockerfile*": "dockerfile",
+    "iris.script": "objectscript"
+  },
     "objectscript.conn" :{
       "ns": "IRISAPP",
-      "active": true,
+      "active": false,
       "username": "_SYSTEM",
       "docker-compose": {
         "service": "iris",

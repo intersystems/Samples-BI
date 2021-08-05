@@ -1,31 +1,21 @@
-ARG IMAGE=intersystems/iris:2019.1.0S.111.0
-ARG IMAGE=store/intersystems/iris-community:2019.3.0.309.0
-ARG IMAGE=store/intersystems/iris-community:2019.4.0.379.0
-ARG IMAGE=intersystemsdc/iris-community:2020.2.0.204.0-zpm
-ARG IMAGE=intersystemsdc/iris-community:2020.4.0.524.0-zpm
+ARG IMAGE=intersystemsdc/iris-community:2020.4.0.547.0-zpm
+ARG IMAGE=intersystemsdc/iris-community
 FROM $IMAGE
 
 USER root
-
 WORKDIR /opt/irisapp
 RUN chown ${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} /opt/irisapp
-COPY irissession.sh /
-RUN chmod +x /irissession.sh 
 
 USER ${ISC_PACKAGE_MGRUSER}
 
+# copy files
 COPY  Installer.cls .
-COPY  src src
-SHELL ["/irissession.sh"]
+COPY src src
+COPY  module.xml .  
+COPY iris.script /tmp/iris.script
 
-RUN \
-  do $SYSTEM.OBJ.Load("Installer.cls", "ck") \
-  set sc = ##class(App.Installer).setup() \
-  zn "IRISAPP" \
-  do EnableDeepSee^%SYS.cspServer("/csp/irisapp/") \
-  zpm "install dsw" 
-  
+# run iris and script
+RUN iris start IRIS \
+	&& iris session IRIS < /tmp/iris.script \
+    && iris stop IRIS quietly
 
-# bringing the standard shell back
-SHELL ["/bin/bash", "-c"]
-CMD [ "-l", "/usr/irissys/mgr/messages.log" ]
