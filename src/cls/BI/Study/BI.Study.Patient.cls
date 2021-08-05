@@ -165,8 +165,7 @@ ClassMethod AddPatients(patCount As %Integer = 100, options As %String = "ADT", 
         // Assign a doctor
         // Set docid=##class(BI.Populate).GetRandomId("BI.Study.Doctor")
         set docid=##class(BI.Study.Doctor).GetDoctorId(pat.Age,pat.Gender)
-        set doctor=##class(BI.Study.Doctor).%OpenId(docid,0)
-        set pat.PrimaryCarePhysician=doctor
+        do pat.PrimaryCarePhysicianSetObjectId(docid)
 
         // Null out this property randomly to simulate missing data
         if genNulls &&##class(BI.Populate).RandomTrue(5){
