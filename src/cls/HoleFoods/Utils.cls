@@ -14,6 +14,25 @@ Include %DeepSee
 Class HoleFoods.Utils Extends %RegisteredObject
 {
 
+// Stop Journalling in the database to speed up data generation and cube building
+ClassMethod StopJournalling(db as %String) As %Status
+{
+  Set sc = $$$OK
+  // disable journalling
+  set ns=$ZNSPACE
+  zn "%SYS"
+  set path = ##class(Config.Databases).Open(db).Directory
+  set database = ##class(SYS.Database).%OpenId($get(path))
+  if $IsObject(database)  {
+    do database.DisableJournaling() 
+    set sc = database.%Save()
+    }
+  else { 
+    set sc=$$$ERROR($$$GeneralError,"Custom error message")}
+  zn ns
+  Return sc
+}
+
 /// Add this alias so that each DeepSee sample has a Setup() method
 ClassMethod Setup(pCount As %Integer = 1000, pASync As %Boolean = 1, pVerbose As %Boolean = 1)
 {

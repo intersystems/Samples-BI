@@ -11,6 +11,9 @@
       <Resource Name="HoleFoods.PKG"/>
        <Resource Name="ZipCodeData.GBL"/>
       <Invokes>
+        <Invoke Class="HoleFoods.Utils" Method="StopJournalling">
+          <Arg>IRISAPP</Arg>
+        </Invoke>
         <Invoke Class="HoleFoods.Utils" Method="Setup"></Invoke>
         <Invoke Class="BI.Populate" Method="Setup"></Invoke>
       </Invokes>

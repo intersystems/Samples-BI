@@ -1,11 +1,20 @@
 {
+  "files.associations": {
+    
+    "Dockerfile*": "dockerfile",
+    "iris.script": "objectscript"
+  },
     "objectscript.conn" :{
-        "ns": "IRISAPP",
-        "active": true,
-        "docker-compose": {
-          "service": "iris",
-          "internalPort": 52773
-        }
+      "ns": "IRISAPP",
+      "active": false,
+      "username": "_SYSTEM",
+      "docker-compose": {
+        "service": "iris",
+        "internalPort": 52773
+      },
+      "links": {
+        "SAMPLES BI in ZEN": "http://localhost:${port}/csp/irisapp/_DeepSee.UserPortal.DashboardViewer.zen"
+      }
     }
 
 }

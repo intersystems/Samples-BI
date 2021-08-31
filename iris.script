@@ -1,0 +1,10 @@
+    ; run installer to create namespace
+    do $SYSTEM.OBJ.Load("/opt/irisapp/Installer.cls", "ck")
+    set sc = ##class(App.Installer).setup() 
+
+    zn "IRISAPP"
+    zpm "install isc-dev"
+    do ##class(dev.code).workdir("/irisdev/app/src")
+    do EnableDeepSee^%SYS.cspServer("/csp/irisapp/")
+    zpm "load /opt/irisapp/ -v -Dfolder=irisapp"
+    halt
