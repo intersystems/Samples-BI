@@ -15,7 +15,8 @@ Setup options
   * `module.xml` is the main descriptor file for setting up the sample through [ZPM](https://github.com/intersystems-community/zpm), as an alternative to the manual setup procedure
 * Docker setup:
   * `Dockerfile` has the build recipe for building an entire Docker image out of this sample repository
-  * `Installer.cls` is an [installation manifest](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GCI_MANIFEST) loaded during the Docker build step as part of the `iris.script` it invokes. That makes this yet another alternative for setting up the sample, although one that builds a full image rather than add to an existing IRIS instance. 
+  * `iris.script` has ObjectScript code to set up the sample namespace and then invokes ZPM for setting up the actual sample as described above.
+  * `Installer.cls` is an [installation manifest](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GCI_MANIFEST) called by `iris.script` to set up the sample namespace 
   * `.dockerignore` is a standard Docker configuration file to leave some repository contents out of the Docker build scope
   * `docker-compose.xml` adds convenience by scripting how to launch a container based on that image.
 
