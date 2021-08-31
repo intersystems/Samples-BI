@@ -9,5 +9,20 @@ Property DiagnosisCode As %String;
 
 Property DiagnosedBy As BI.Study.Doctor;
 
+Storage Default
+{
+<Data name="PatientDiagnosisState">
+<Value name="1">
+<Value>DiagnosisCode</Value>
+</Value>
+<Value name="2">
+<Value>DiagnosedBy</Value>
+</Value>
+</Data>
+<State>PatientDiagnosisState</State>
+<StreamLocation>^BI.Study.PatientDiagnosisS</StreamLocation>
+<Type>%Storage.Serial</Type>
+}
+
 }
 

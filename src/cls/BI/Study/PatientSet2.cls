@@ -151,6 +151,49 @@ ClassMethod AddPatients(patCount As %Integer = 500, options As %String = "AD", g
    write $C(13,27)_"[0J"_$FN(+$G(n),",",0)_" patient(s) created in BI.Study.PatientSet2"
    quit status
 }
+}
+
+Storage Default
+{
+<Data name="PatientSet2DefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>PatientID</Value>
+</Value>
+<Value name="3">
+<Value>Gender</Value>
+</Value>
+<Value name="4">
+<Value>Age</Value>
+</Value>
+<Value name="5">
+<Value>PrimaryCarePhysician</Value>
+</Value>
+<Value name="6">
+<Value>Allergies</Value>
+</Value>
+<Value name="7">
+<Value>Diagnoses</Value>
+</Value>
+<Value name="8">
+<Value>HomeCity</Value>
+</Value>
+<Value name="9">
+<Value>PatientGroup</Value>
+</Value>
+<Value name="10">
+<Value>TestScore</Value>
+</Value>
+</Data>
+<DataLocation>^BI.Study.PatientSet2D</DataLocation>
+<DefaultData>PatientSet2DefaultData</DefaultData>
+<IdLocation>^BI.Study.PatientSet2D</IdLocation>
+<IndexLocation>^BI.Study.PatientSet2I</IndexLocation>
+<StreamLocation>^BI.Study.PatientSet2S</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
 
 }
-}
+

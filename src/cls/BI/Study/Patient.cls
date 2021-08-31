@@ -474,5 +474,70 @@ ClassMethod GetHighestPatientID() As %String
     quit ^BI.Study.SetupData("PatientID")
 }
 
+Storage Default
+{
+<Data name="DiagnosesAsArray">
+<Attribute>DiagnosesAsArray</Attribute>
+<Structure>subnode</Structure>
+<Subscript>"DiagnosesAsArray"</Subscript>
+</Data>
+<Data name="PatientDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>PatientID</Value>
+</Value>
+<Value name="3">
+<Value>Gender</Value>
+</Value>
+<Value name="4">
+<Value>Age</Value>
+</Value>
+<Value name="5">
+<Value>BirthDate</Value>
+</Value>
+<Value name="6">
+<Value>BirthTime</Value>
+</Value>
+<Value name="7">
+<Value>BirthDateTimeStamp</Value>
+</Value>
+<Value name="8">
+<Value>BirthDateMV</Value>
+</Value>
+<Value name="9">
+<Value>PrimaryCarePhysician</Value>
+</Value>
+<Value name="10">
+<Value>Allergies</Value>
+</Value>
+<Value name="11">
+<Value>Diagnoses</Value>
+</Value>
+<Value name="12">
+<Value>DiagnosesAsLB</Value>
+</Value>
+<Value name="13">
+<Value>DiagnosesAsString</Value>
+</Value>
+<Value name="14">
+<Value>HomeCity</Value>
+</Value>
+<Value name="15">
+<Value>PatientGroup</Value>
+</Value>
+<Value name="16">
+<Value>TestScore</Value>
+</Value>
+</Data>
+<DataLocation>^BI.Study.PatientD</DataLocation>
+<DefaultData>PatientDefaultData</DefaultData>
+<IdLocation>^BI.Study.PatientD</IdLocation>
+<IndexLocation>^BI.Study.PatientI</IndexLocation>
+<StreamLocation>^BI.Study.PatientS</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 

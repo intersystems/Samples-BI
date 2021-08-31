@@ -112,5 +112,30 @@ ClassMethod GenerateData() As %Status
 
     quit status
 }
+
+Storage Default
+{
+<Data name="CityRainfallDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>City</Value>
+</Value>
+<Value name="3">
+<Value>MonthAndYear</Value>
+</Value>
+<Value name="4">
+<Value>InchesOfRain</Value>
+</Value>
+</Data>
+<DataLocation>^BI.Study.CityRainfallD</DataLocation>
+<DefaultData>CityRainfallDefaultData</DefaultData>
+<IdLocation>^BI.Study.CityRainfallD</IdLocation>
+<IndexLocation>^BI.Study.CityRainfallI</IndexLocation>
+<StreamLocation>^BI.Study.CityRainfallS</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 

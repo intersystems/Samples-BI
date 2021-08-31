@@ -15,7 +15,8 @@ Class HoleFoods.Utils Extends %RegisteredObject
 {
 
 // Stop Journalling in the database to speed up data generation and cube building
-ClassMethod StopJournalling(db as %String) As %Status
+
+ClassMethod StopJournalling(db As %String) As %Status
 {
   Set sc = $$$OK
   // disable journalling

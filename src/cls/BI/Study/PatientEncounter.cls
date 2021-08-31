@@ -170,5 +170,32 @@ ClassMethod GetRandomEncounterCount(age As %Numeric) As %Integer
 
 Index PatientIndex On Patient;
 
+Storage Default
+{
+<Data name="PatientEncounterDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Patient</Value>
+</Value>
+<Value name="3">
+<Value>EncounterNumber</Value>
+</Value>
+<Value name="4">
+<Value>PrimaryDoctor</Value>
+</Value>
+<Value name="5">
+<Value>EncounterType</Value>
+</Value>
+</Data>
+<DataLocation>^BI.Study.PatientEncounterD</DataLocation>
+<DefaultData>PatientEncounterDefaultData</DefaultData>
+<IdLocation>^BI.Study.PatientEncounterD</IdLocation>
+<IndexLocation>^BI.Study.PatientEncounterI</IndexLocation>
+<StreamLocation>^BI.Study.PatientEncounterS</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 

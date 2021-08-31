@@ -78,5 +78,24 @@ ClassMethod AddAllergy(ByRef pat, allergen As BI.Study.Allergen, genNulls As %Bo
             
     quit status
 }
+
+Storage Default
+{
+<Data name="PatientAllergyState">
+<Value name="1">
+<Value>Allergen</Value>
+</Value>
+<Value name="2">
+<Value>Severity</Value>
+</Value>
+<Value name="3">
+<Value>DiagnosedBy</Value>
+</Value>
+</Data>
+<State>PatientAllergyState</State>
+<StreamLocation>^BI.Study.PatientAllergyS</StreamLocation>
+<Type>%Storage.Serial</Type>
+}
+
 }
 
