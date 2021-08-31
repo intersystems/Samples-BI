@@ -6,7 +6,7 @@ The end of the file has setup instructions.
   * [Contents of the BI package](#contents-of-the-bi-package)
   * [Contents of the HoleFoods package](#contents-of-the-holefoods-package)
 * [Setup instructions](#setup-instructions)
-  * [Setup with Docker and ZPM](#setup-with-docker-and-zpm)
+  * [Setup with ZPM](#setup-with-zpm)
   * [Step-by-step Installation](#step-by-step-installation)
 
 ---
@@ -40,6 +40,9 @@ After setup:
   tables. For information, see [this](http://docs.intersystems.com/irislatest/csp/docbook/Doc.View.cls?KEY=D2DASH)
 * You can work through the steps of creating a BI model, pivot tables, and dashboards.
   See [this](http://docs.intersystems.com/irislatest/csp/docbook/Doc.View.cls?KEY=D2DT_ch_setup)
+
+The repository also includes a number of configuration files and scripts that are not part of the sample itself.
+Please refer to [dev.md] for more about the role of these files.
 
 ### Contents of the BI package
 
@@ -112,27 +115,32 @@ an InterSystems IRIS BI model that uses that data.
 
 ## Setup instructions
 
-### Setup with Docker and ZPM
+### Setup with ZPM
 
-ZPM stands for ObjectScript Package Manager. It provides the unified way to install ObjectScript modules [Learn More](https://community.intersystems.com/post/introducing-intersystems-objectscript-package-manager)
+ZPM stands for ObjectScript Package Manager. It provides a simple and unified way to install ObjectScript modules [Learn More](https://community.intersystems.com/post/introducing-intersystems-objectscript-package-manager). You can either install ZPM on an existing InterSystems IRIS instance based on [these instructions](https://github.com/intersystems-community/zpm), or use one of the prebuilt Community Edition Docker images that have it pre-installed. The instructions below are for the latter option. If you already have ZPM installed, you can immediately proceed to jump to step 4.
 
 0. Make sure you have [Docker-desktop](https://www.docker.com/products/docker-desktop) installed.
 
-1. Pull the IRIS image with zpm:
+1. Pull the IRIS Community Edition image with zpm:
 ```
-$ docker pull intersystemsdc/iris-community:2019.4.0.383.0-zpm
+$ docker pull intersystemsdc/iris-community:2021.1.0.215.0-zpm
 ```
    You can take the latest tag of IRIS or IRIS for Health Community Edition with ZPM [here](https://hub.docker.com/r/intersystemsdc/iris-community)
 
 2. Run IRIS container with ZPM:
 ```
-$ docker run --name irisce -d --publish 52773:52773 intersystemsdc/iris-community:2019.4.0.383.0-zpm
+$ docker run --name irisce -d --publish 52773:52773 intersystemsdc/iris-community:2021.1.0.215.0-zpm
 ```
-3. RUN IRIS terminal and install Samples-BI:
+3. RUN IRIS terminal
 ```
 docker exec -it irisce iris session iris
 Node: c6e0f00b8d42, Instance: IRIS
 
+USER>
+```
+
+4. From the IRIS terminal, start ZPM and install Samples-BI:
+```
 USER>zpm  
 zpm: USER>install samples-bi
 
@@ -157,7 +165,7 @@ Defining YEAR pivot variable in PATIENTS cube
 [samples-bi]	Configure SUCCESS
 [samples-bi]	Activate SUCCESS
 ```
-4. Open IRIS analytics portal and work with Samples-BI:
+5. Open IRIS analytics portal and work with Samples-BI:
 http://localhost:52773/csp/user/_DeepSee.UserPortal.Home.zen?$NAMESPACE=USER
 
 ### Step-by-step Installation 
