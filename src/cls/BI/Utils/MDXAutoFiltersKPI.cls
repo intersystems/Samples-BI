@@ -24,7 +24,6 @@
 /// level members.
 /// Override %OnGetFilters(). In your implementation, get the filters from the 
 /// cube by calling #super() and then add your custom filters to the array.
-
 Class BI.Utils.MDXAutoFiltersKPI Extends %DeepSee.KPI [ Abstract ]
 {
 

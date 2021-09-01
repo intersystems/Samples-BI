@@ -30,7 +30,6 @@ Property Description As %String;
 /// Diabetes: www.mchd.com/data_reports/mccha/12_Morbidity_and_Hospitalizations.html (Used U.S. values)
 /// Osteoporosis source: http://www.surgeongeneral.gov/library/bonehealth/ (No data for patients under 65)
 /// Epilepsy: wikipedia (55 cases per 100000 people)
-
 XData LoadData
 {
 <table>
@@ -129,5 +128,27 @@ ClassMethod GetPercentChance(code As %String, gender As %String, age As %Numeric
     
     quit chance
 }
+
+Storage Default
+{
+<Data name="DiagnosisDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Code</Value>
+</Value>
+<Value name="3">
+<Value>Description</Value>
+</Value>
+</Data>
+<DataLocation>^BI.Study.DiagnosisD</DataLocation>
+<DefaultData>DiagnosisDefaultData</DefaultData>
+<IdLocation>^BI.Study.DiagnosisD</IdLocation>
+<IndexLocation>^BI.Study.DiagnosisI</IndexLocation>
+<StreamLocation>^BI.Study.DiagnosisS</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 

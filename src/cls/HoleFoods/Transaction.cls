@@ -59,5 +59,59 @@ Property Latitude As %Double;
 /// Longitude of customer (determined from zip code).
 Property Longitude As %Double;
 
+Storage Default
+{
+<Data name="TransactionDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Actual</Value>
+</Value>
+<Value name="3">
+<Value>DateOfSale</Value>
+</Value>
+<Value name="4">
+<Value>Product</Value>
+</Value>
+<Value name="5">
+<Value>Outlet</Value>
+</Value>
+<Value name="6">
+<Value>Channel</Value>
+</Value>
+<Value name="7">
+<Value>AmountOfSale</Value>
+</Value>
+<Value name="8">
+<Value>UnitsSold</Value>
+</Value>
+<Value name="9">
+<Value>Discount</Value>
+</Value>
+<Value name="10">
+<Value>TargetAmount</Value>
+</Value>
+<Value name="11">
+<Value>Comment</Value>
+</Value>
+<Value name="12">
+<Value>ZipCode</Value>
+</Value>
+<Value name="13">
+<Value>Latitude</Value>
+</Value>
+<Value name="14">
+<Value>Longitude</Value>
+</Value>
+</Data>
+<DataLocation>^HoleFoods.TransactionD</DataLocation>
+<DefaultData>TransactionDefaultData</DefaultData>
+<IdLocation>^HoleFoods.TransactionD</IdLocation>
+<IndexLocation>^HoleFoods.TransactionI</IndexLocation>
+<StreamLocation>^HoleFoods.TransactionS</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 

@@ -21,5 +21,38 @@ Property Latitude As %Double;
 /// Longitude of this location.
 Property Longitude As %Double;
 
+Storage Default
+{
+<Data name="OutletDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Country</Value>
+</Value>
+<Value name="3">
+<Value>City</Value>
+</Value>
+<Value name="4">
+<Value>Population</Value>
+</Value>
+<Value name="5">
+<Value>Type</Value>
+</Value>
+<Value name="6">
+<Value>Latitude</Value>
+</Value>
+<Value name="7">
+<Value>Longitude</Value>
+</Value>
+</Data>
+<DataLocation>^HoleFoods.OutletD</DataLocation>
+<DefaultData>OutletDefaultData</DefaultData>
+<IdLocation>^HoleFoods.OutletD</IdLocation>
+<IndexLocation>^HoleFoods.OutletI</IndexLocation>
+<StreamLocation>^HoleFoods.OutletS</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 

@@ -200,5 +200,39 @@ ClassMethod GetRandomOtherDoctor()
    set randomdoc=$P(choosefrom,",",randomnumber)
    quit randomdoc
 }
+
+Storage Default
+{
+<Data name="DoctorDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>FirstName</Value>
+</Value>
+<Value name="3">
+<Value>LastName</Value>
+</Value>
+<Value name="4">
+<Value>MainCity</Value>
+</Value>
+<Value name="5">
+<Value>DoctorGroup</Value>
+</Value>
+<Value name="6">
+<Value>DoctorType</Value>
+</Value>
+<Value name="7">
+<Value>PatientsPerWeek</Value>
+</Value>
+</Data>
+<DataLocation>^BI.Study.DoctorD</DataLocation>
+<DefaultData>DoctorDefaultData</DefaultData>
+<IdLocation>^BI.Study.DoctorD</IdLocation>
+<IndexLocation>^BI.Study.DoctorI</IndexLocation>
+<StreamLocation>^BI.Study.DoctorS</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 

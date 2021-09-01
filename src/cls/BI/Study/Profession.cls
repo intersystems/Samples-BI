@@ -85,5 +85,26 @@ ClassMethod Setup() As %Status
    quit status
 }
 
+Storage Default
+{
+<Data name="ProfessionDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Profession</Value>
+</Value>
+<Value name="3">
+<Value>Industry</Value>
+</Value>
+</Data>
+<DataLocation>^BI.Study.ProfessionD</DataLocation>
+<DefaultData>ProfessionDefaultData</DefaultData>
+<IdLocation>^BI.Study.ProfessionD</IdLocation>
+<IndexLocation>^BI.Study.ProfessionI</IndexLocation>
+<StreamLocation>^BI.Study.ProfessionS</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 

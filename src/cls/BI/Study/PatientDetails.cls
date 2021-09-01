@@ -131,5 +131,30 @@ ClassMethod DeletePatientDetails(PatientID As %String) As %Status
     set status=rset.Execute(PatientID)
     quit status
 }
+
+Storage Default
+{
+<Data name="PatientDetailsDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>PatientID</Value>
+</Value>
+<Value name="3">
+<Value>Profession</Value>
+</Value>
+<Value name="4">
+<Value>FavoriteColor</Value>
+</Value>
+</Data>
+<DataLocation>^BI.Study.PatientDetailsD</DataLocation>
+<DefaultData>PatientDetailsDefaultData</DefaultData>
+<IdLocation>^BI.Study.PatientDetailsD</IdLocation>
+<IndexLocation>^BI.Study.PatientDetailsI</IndexLocation>
+<StreamLocation>^BI.Study.PatientDetailsS</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 

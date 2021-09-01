@@ -72,5 +72,33 @@ ClassMethod Setup() As %Status
    
    quit status
 }
+
+Storage Default
+{
+<Data name="CityDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>PostalCode</Value>
+</Value>
+<Value name="3">
+<Value>Name</Value>
+</Value>
+<Value name="4">
+<Value>Population</Value>
+</Value>
+<Value name="5">
+<Value>PrincipalExport</Value>
+</Value>
+</Data>
+<DataLocation>^BI.Study.CityD</DataLocation>
+<DefaultData>CityDefaultData</DefaultData>
+<IdLocation>^BI.Study.CityD</IdLocation>
+<IndexLocation>^BI.Study.CityI</IndexLocation>
+<StreamLocation>^BI.Study.CityS</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 

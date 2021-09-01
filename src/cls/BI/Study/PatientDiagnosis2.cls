@@ -15,5 +15,29 @@ Property DiagnosedBy As BI.Study.Doctor;
 
 Index PatientIndex On Patient;
 
+Storage Default
+{
+<Data name="PatientDiagnosis2DefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Patient</Value>
+</Value>
+<Value name="3">
+<Value>DiagnosisCode</Value>
+</Value>
+<Value name="4">
+<Value>DiagnosedBy</Value>
+</Value>
+</Data>
+<DataLocation>^BI.Study.PatientDiagnosis2D</DataLocation>
+<DefaultData>PatientDiagnosis2DefaultData</DefaultData>
+<IdLocation>^BI.Study.PatientDiagnosis2D</IdLocation>
+<IndexLocation>^BI.Study.PatientDiagnosis2I</IndexLocation>
+<StreamLocation>^BI.Study.PatientDiagnosis2S</StreamLocation>
+<Type>%Storage.Persistent</Type>
+}
+
 }
 
