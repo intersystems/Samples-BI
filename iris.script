@@ -1,4 +1,4 @@
- ; add a bit of stdandard docker comfort
+ ; add a bit of standard docker comfort 
  zn "%SYS"
  set sc=##class(Security.Users).UnExpireUserPasswords("*")
  w sc hang 15
