@@ -1,7 +1,6 @@
  ; add a bit of standard docker comfort 
  zn "%SYS"
- set sc=##class(Security.Users).UnExpireUserPasswords("*")
- w sc hang 15
+ do ##class(Security.Users).UnExpireUserPasswords("*")
  set user=##class(Security.Users).%OpenId("unknownuser")
  do user.Roles.Insert("%All")
 
