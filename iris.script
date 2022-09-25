@@ -1,10 +1,18 @@
-    ; run installer to create namespace
-    do $SYSTEM.OBJ.Load("/opt/irisapp/Installer.cls", "ck")
-    set sc = ##class(App.Installer).setup() 
+ ; add a bit of stdandard docker comfort
+ zn "%SYS"
+ set sc=##class(Security.Users).UnExpireUserPasswords("*")
+ w sc hang 15
+ set user=##class(Security.Users).%OpenId("unknownuser")
+ do user.Roles.Insert("%All")
 
-    zn "IRISAPP"
-    zpm "install isc-dev"
-    do ##class(dev.code).workdir("/irisdev/app/src")
-    do EnableDeepSee^%SYS.cspServer("/csp/irisapp/")
-    zpm "load /opt/irisapp/ -v -Dfolder=irisapp"
-    halt
+ ; run installer to create namespace
+ do $SYSTEM.OBJ.Load("/opt/irisapp/Installer.cls", "ck")
+ set sc = ##class(App.Installer).setup()
+
+ zn "IRISAPP"
+ zpm "install isc-dev"
+ do ##class(dev.code).workdir("/irisdev/app/src")
+ do EnableDeepSee^%SYS.cspServer("/csp/irisapp/")
+ zpm "load /opt/irisapp/ -v -Dfolder=irisapp"
+ 	
+ halt
