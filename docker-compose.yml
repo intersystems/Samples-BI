@@ -4,6 +4,7 @@ services:
     build: 
       context: .
       dockerfile: ${DOCKERFILE:-Dockerfile}
+    command: --check-caps false
     restart: always
     ports: 
       - 1972
