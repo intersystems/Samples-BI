@@ -16,6 +16,7 @@ sourceClass="BI.Study.Patient"
 nullReplacement="None"
 disabled="false"
 countMeasureName="Patient Count"
+defaultListing="CompoundListing"
 >
 
 <dimension name="BirthD" displayName="BirthD" type="time" 
@@ -88,9 +89,12 @@ sourceExpression='##class(BI.Model.PatientsCube).GetAllergyCount(%source.%ID)'
 sourceProperty="TestScore" 
  aggregate="AVG"/>
 
-<listing name="Details" displayName="Details" 
+<listing name="PatientDetailListing" displayName="PatientDetails" 
  fieldList='PatientID,Age,Gender,HomeCity->Name AS "Home City",TestScore AS "Test Score"'
   orderBy="Age,Gender" /> 
+
+<listing name="CompoundListing"
+  fieldList='HomeCity->%ID as "CityID",HomeCity->Name as "CityName",HomeCity->PostalCode as "PostalCode"' />
 
 </cube>
 }
