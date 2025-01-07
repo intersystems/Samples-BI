@@ -16,6 +16,7 @@ sourceClass="BI.Study.Doctor"
 nullReplacement="None"
  disabled="false"
  countMeasureName="Doctor Count"
+ defaultListing="CompoundListing"
 >
 
 <dimension name="DocD" displayName="DocD" 
@@ -74,8 +75,12 @@ displayName="Avg Patients Per Week"
 sourceProperty="PatientsPerWeek" 
  aggregate="AVG"/>
  
-<listing name="Details" displayName="Details" 
+<listing name="DoctorDetailListing" displayName="DoctorDetails" 
   fieldList='FirstName as "First Name",LastName as "Last Name",DoctorType as "Doctor Type",DoctorGroup as "Doctor Group",PatientsPerWeek as "Patients Per Week",MainCity->Name AS "Main City"'>
+</listing>
+
+<listing name="CompoundListing"
+  fieldList='MainCity->%ID as "CityID",MainCity->Name as "CityName",MainCity->PostalCode as "PostalCode"'>
 </listing>
 
 </cube>

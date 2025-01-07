@@ -12,6 +12,7 @@ displayName="CompoundCube/CityRainfall"
 owner="_SYSTEM"
 sourceClass="BI.Study.CityRainfall"
 countMeasureName="Rainfall Observation Count"
+defaultListing="CompoundListing" 
  >
 
 <dimension name="BirthD" displayName="DateD" 
@@ -57,8 +58,12 @@ displayName="Avg Monthly Rainfall Inches"
 sourceProperty="InchesOfRain" 
  aggregate="AVG"/>
 
-<listing name="Details" displayName="Details" 
+<listing name="RainfallDetailListing" displayName="RainfallDetails" 
   fieldList='City->Name as "City",MonthAndYear as "Date",InchesOfRain as "Inches of Rain"'>
+</listing>
+
+<listing name="CompoundListing"
+  fieldList='City->%ID as "CityID",City->Name as "CityName",City->PostalCode as "PostalCode"'>
 </listing>
 
 </cube>
