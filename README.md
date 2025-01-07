@@ -2,12 +2,13 @@
 This is the README file for SAMPLES-BI. 
 The end of the file has setup instructions.
 
-* [Overview](#overview)
-  * [Contents of the BI package](#contents-of-the-bi-package)
-  * [Contents of the HoleFoods package](#contents-of-the-holefoods-package)
-* [Setup instructions](#setup-instructions)
-  * [Setup with ZPM](#setup-with-zpm)
-  * [Step-by-step Installation](#step-by-step-installation)
+- [Samples-BI](#samples-bi)
+  - [Overview](#overview)
+    - [Contents of the BI package](#contents-of-the-bi-package)
+    - [Contents of the HoleFoods package](#contents-of-the-holefoods-package)
+  - [Setup instructions](#setup-instructions)
+    - [Setup with ZPM](#setup-with-zpm)
+    - [Step-by-step Installation](#step-by-step-installation)
 
 ---
 Use or operation of this code is subject to acceptance of the license available in the code 
@@ -121,18 +122,18 @@ ZPM stands for ObjectScript Package Manager. It provides a simple and unified wa
 
 0. Make sure you have [Docker-desktop](https://www.docker.com/products/docker-desktop) installed.
 
-1. Pull the IRIS Community Edition image with zpm:
-```
-$ docker pull intersystemsdc/iris-community:2021.1.0.215.0-zpm
+1. Pull the latest IRIS Community Edition image with zpm:
+```Shell
+$ docker pull intersystemsdc/iris-community:latest
 ```
    You can take the latest tag of IRIS or IRIS for Health Community Edition with ZPM [here](https://hub.docker.com/r/intersystemsdc/iris-community)
 
 2. Run IRIS container with ZPM:
-```
-$ docker run --name irisce -d --publish 52773:52773 intersystemsdc/iris-community:2021.1.0.215.0-zpm
+```Shell
+$ docker run --name irisce -d --publish 52773:52773 intersystemsdc/iris-community:latest
 ```
 3. RUN IRIS terminal
-```
+```Shell
 docker exec -it irisce iris session iris
 Node: c6e0f00b8d42, Instance: IRIS
 
@@ -178,12 +179,12 @@ http://localhost:52773/csp/user/_DeepSee.UserPortal.Home.zen?$NAMESPACE=USER
 
 6. Open the InterSystems IRIS Terminal.
 7. Enter the following command (replacing `mynamespace` with the namespace from step 2):
-   ```
+   ```ObjectScript
    ZN "mynamespace"
    ```
 8. Enter the following commands (replacing `full-path-to-Build.SampleBI.cls` with the full path of the `buildsample/Build.SampleBI.cls` file):
 
-   ```
+   ```ObjectScript
    do $system.OBJ.Load("full-path-to-Build.SampleBI.cls","ck")
    
    do ##class(Build.SampleBI).Build()
