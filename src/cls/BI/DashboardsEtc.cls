@@ -925,6 +925,190 @@ XData Contents [ XMLNamespace = "http://www.intersystems.com/deepsee/library" ]
 </dashboard>
 
 
+<dashboard xmlns="http://www.intersystems.com/deepsee/library" name="Controls examples" folderName="Widget Examples" title="Controls examples" description="" keywords="" owner="" shared="true" public="true" locked="false" resource="" timeCreated="2026-08-19T10:48:33.415Z" createdBy="_SYSTEM" category="Examples" bookCover="" scheme="" worklistCount="2" snapTo="false" snapGrid="false" gridRows="10" gridCols="10" canResize="true" canModify="true" showTitleBar="true" titleBarOpacity="" titleBarColor="" selectedTitleBarOpacity="" selectedTitleBarColor="" titleBarTextColor="" selectedTitleBarTextColor="" titleBarFont="" companyName="" companyLogo="" companyStyle="" backgroundColor="white" backgroundImage="none" backgroundRepeat="no-repeat" backgroundSize="100% 100%" backgroundOpacity="1" widgetBorders="1px solid #F0F0F0" widgetBordersSwitch="edit" widgetBordersColor="#F0F0F0" widgetBordersStyle="solid" widgetBordersWidth="1" widgetBordersToggle="true">
+  <widget name="ApplyFilterTimeFilter" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ApplyFilter-TimeFilter" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="121" left="185" width="420" height="372" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="applyFilter" target="" targetProperty="[DateOfSale].[Actual].[MonthSold]" location="widget" type="auto" controlClass="" label="MonthSold" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="applyFilter" target="" targetProperty="[DateOfSale].[Actual].[YearSold]" location="widget" type="auto" controlClass="" label="YearSold" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="applyFilter" target="" targetProperty="[DateOfSale].[Actual].[DaySold]" location="widget" type="auto" controlClass="" label="DaySold" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="applyFilter" target="" targetProperty="[DateOfSale].[Actual].[DaySold]" location="widget" type="custom" controlClass="%ZEN.Component.calendar" label="ZENCalendar" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="ApplyFilterDataFilter" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ApplyFilter-DataFilter" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="76" left="841" width="289" height="289" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="applyFilter" target="" targetProperty="[Product].[P1].[Product Category]" location="widget" type="auto" controlClass="" label="TextFilter" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="applyFilter" target="" targetProperty="[UnitsPerTransaction].[H1].[UnitsSold]" location="widget" type="auto" controlClass="" label="NumbersFilter" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetFilterTimeFilter" type="pivot" subtype="columnChart" subtypeClass="barChart" title="SetFilter-TimeFilter" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="0" left="0" width="471" height="406" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="setFilter" target="" targetProperty="[DateOfSale].[Actual].[MonthSold]" location="widget" type="auto" controlClass="" label="Month" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="setFilter" target="" targetProperty="[DateOfSale].[Actual].[YearSold]" location="widget" type="auto" controlClass="" label="YearSold" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="setFilter" target="" targetProperty="[DateOfSale].[Actual].[DaySold]" location="widget" type="auto" controlClass="" label="DaySold" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="applyFilter" target="" targetProperty="[DateOfSale].[Actual].[DaySold]" location="widget" type="custom" controlClass="%ZEN.Component.calendar" label="ZENCalendar" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetFilterDataFilter" type="pivot" subtype="columnChart" subtypeClass="barChart" title="SetFilter-DataFilter" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="524" left="60" width="282" height="282" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="applyFilter" target="" targetProperty="[Product].[P1].[Product Category]" location="widget" type="auto" controlClass="" label="TextFilter" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="applyFilter" target="" targetProperty="[UnitsPerTransaction].[H1].[UnitsSold]" location="widget" type="auto" controlClass="" label="NumbersFilter" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="Refresh" type="pivot" subtype="columnChart" subtypeClass="barChart" title="Refresh" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="410" left="630" width="282" height="282" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="refresh" target="" targetProperty="" location="widget" type="auto" controlClass="" label="RefreshControl" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="refresh" target="RefreshControl" targetProperty="" location="dashboard" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="ReloadDashboard" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ReloadDashboard" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="522" left="343" width="279" height="279" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="reloadDashboard" target="" targetProperty="" location="widget" type="auto" controlClass="" label="ReloadDashboard" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="ShowListing" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ShowListing" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="332" left="339" width="276" height="276" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="showListing" target="" targetProperty="Listing By Product" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="itemSelected">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="Pivot analysisClustering" type="pivot" subtype="columnChart" subtypeClass="barChart" title="Pivot analysis-Clustering" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="501" left="626" width="274" height="274" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="showBreakdown" target="" targetProperty="_DeepSee.UI.Analysis.Clustering.zen" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="itemSelected">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="Pivot analysisDistribution" type="pivot" subtype="columnChart" subtypeClass="barChart" title="Pivot analysis-Distribution" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="471" left="226" width="269" height="269" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="showBreakdown" target="" targetProperty="_DeepSee.UI.Analysis.Distribution.zen" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="itemSelected">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="Pivot analysisRegression" type="pivot" subtype="columnChart" subtypeClass="barChart" title="Pivot analysis-Regression" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="450" left="21" width="267" height="267" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="showBreakdown" target="" targetProperty="_DeepSee.UI.Analysis.Regression.zen" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="itemSelected">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetDataSourceKPI" type="pivot" subtype="columnChart" subtypeClass="barChart" title="SetDataSource-KPI" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="493" left="71" width="478" height="277" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="setDataSource" target="" targetProperty="HoleFoods/KPISQL.kpi" location="widget" type="auto" controlClass="" label="Data" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetDataSourcePivot" type="pivot" subtype="columnChart" subtypeClass="barChart" title="SetDataSource-Pivot" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="382" left="136" width="259" height="259" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="setDataSource" target="" targetProperty="Pareto Charts/Product Pareto Data.pivot" location="widget" type="auto" controlClass="" label="Data" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="ChooseDataSourcePivot" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ChooseDataSource-Pivot" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="363" left="13" width="469" height="198" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="chooseDataSource" target="" targetProperty="Products/category.termlist" location="widget" type="auto" controlClass="" label="Pivots" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="ApplyVariableCommision" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ApplyVariable-Commision" dataSource="Pivot Variables/Commission Calculator.pivot" dataLink="" drillDownDataSource="" top="578" left="458" width="467" height="364" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="applyVariable" target="" targetProperty="$variable.CommissionPercentage" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="ApplyVariableYear" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ApplyVariable-Year" dataSource="Pivot Variables/Year Variable In Patients.pivot" dataLink="" drillDownDataSource="" top="680" left="420" width="457" height="216" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="applyVariable" target="" targetProperty="$variable.Year" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetRowSpec" type="pivot" subtype="columnChart" subtypeClass="barChart" title="SetRowSpec" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="478" left="360" width="556" height="332" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="setRowSpec" target="" targetProperty="Outlet.H1.Country.MEMBERS" location="widget" type="auto" controlClass="" label="Countries" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="ChooseRowSpec" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ChooseRowSpec" dataSource="Use in Dashboards/Patient Counts &amp; Allergy Counts.pivot" dataLink="" drillDownDataSource="" top="530" left="488" width="487" height="368" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="chooseRowSpec" target="" targetProperty="PATIENTS ROWSPECS.termlist" location="widget" type="auto" controlClass="" label="Rows" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetColumnSpec" type="pivot" subtype="columnChart" subtypeClass="barChart" title="SetColumnSpec" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="328" left="267" width="374" height="254" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="setColumnSpec" target="" targetProperty="DateOfSale.Actual.YearSold.MEMBERS" location="widget" type="auto" controlClass="" label="DateOfSale" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="ChooseColumnSpec" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ChooseColumnSpec" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="626" left="120" width="529" height="330" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="chooseColumnSpec" target="" targetProperty="COLUMNSPEC.termlist" location="widget" type="auto" controlClass="" label="Columns" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="ViewDashboard" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ViewDashboard" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="595" left="505" width="238" height="238" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="viewDashboard" target="" targetProperty="Pareto Charts/Pareto Chart for Category.dashboard" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="Navigate" type="pivot" subtype="columnChart" subtypeClass="barChart" title="Navigate" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="569" left="497" width="234" height="234" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="navigate" target="" targetProperty="https://dev-dashboards.teccod.com/dashboards/index.html#/irisapp/Widget%20Examples/Controls%20examples.dashboard" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="NewWindow" type="pivot" subtype="columnChart" subtypeClass="barChart" title="NewWindow" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="654" left="0" width="219" height="219" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="newWindow" target="" targetProperty="https://dev-dashboards.teccod.com/dashboards/index.html#/irisapp/Widget%20Examples/Controls%20examples.dashboard" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetRowCount" type="pivot" subtype="columnChart" subtypeClass="barChart" title="SetRowCount" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="654" left="0" width="217" height="217" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="setRowCount" target="" targetProperty="" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetRowSort" type="pivot" subtype="pivot" subtypeClass="lineChart" title="SetRowSort" dataSource="Use in Dashboards/Patient Counts &amp; Allergy Counts.pivot" dataLink="" drillDownDataSource="" top="648" left="0" width="476" height="308" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="setRowSort" target="" targetProperty="" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetColumnCount" type="pivot" subtype="columnChart" subtypeClass="barChart" title="SetColumnCount" dataSource="Use in Dashboards/Patient Allergy Counts by Age &amp; Gender.pivot" dataLink="" drillDownDataSource="" top="654" left="0" width="558" height="235" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="setColumnCount" target="" targetProperty="" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetColumnSort" type="pivot" subtype="columnChart" subtypeClass="barChart" title="SetColumnSort" dataSource="Use in Dashboards/Patient Allergy Counts by Age &amp; Gender.pivot" dataLink="" drillDownDataSource="" top="628" left="10" width="621" height="276" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="setColumnSort" target="" targetProperty="" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="SetChartType" type="pivot" subtype="columnChart" subtypeClass="barChart" title="SetChartType" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="622" left="34" width="209" height="209" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="setChartType" target="" targetProperty="barChart" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="setChartType" target="" targetProperty="columnChart" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="ChooseChartType" type="pivot" subtype="columnChart" subtypeClass="barChart" title="ChooseChartType" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="622" left="26" width="608" height="320" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="chooseChartType" target="" targetProperty="barChart,barChartStacked,columnChart,columnChart3D,columnChartStacked,comboChart,lineChart" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="PrintWidgetPivot" type="pivot" subtype="columnChart" subtypeClass="barChart" title="PrintWidget-Pivot" dataSource="Pareto Charts/Category Pareto Data.pivot" dataLink="" drillDownDataSource="" top="608" left="21" width="205" height="205" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="printWidget" target="" targetProperty="" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+  <widget name="PrintWidgetKPI" type="pivot" subtype="columnChart" subtypeClass="barChart" title="PrintWidget-KPI" dataSource="HoleFoods/KPISQL.kpi" dataLink="" drillDownDataSource="" top="518" left="72" width="201" height="199" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="4" rowSpanL="4" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="printWidget" target="" targetProperty="" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+  </widget>
+</dashboard>
+
+
 
 </items>
 }

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache">
+<Global>
+<Node><Sub>^DeepSee.TermList</Sub>
+<Node><Sub>COLUMNSPEC</Sub>
+<Node><Sub>data</Sub>
+<Node><Sub>DateOfSale</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>DateOfSale.Actual.YearSold.MEMBERS</Data>
+</Node>
+</Node>
+<Node><Sub>Outlet</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Outlet.H1.Region.MEMBERS</Data>
+</Node>
+</Node>
+<Node><Sub>ProductsName</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Product.P1.&quot;Product Name&quot;.MEMBERS</Data>
+</Node>
+</Node>
+</Node>
+<Node><Sub>modDate</Sub>
+<Data>2026-08-22 15:26:46</Data>
+</Node>
+<Node><Sub>name</Sub>
+<Data>COLUMNSPEC</Data>
+</Node>
+</Node>
+<Node><Sub>KPI</Sub>
+<Node><Sub>data</Sub>
+<Node><Sub>DemoMDX</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>DemoMDX.kpi</Data>
+</Node>
+</Node>
+<Node><Sub>KPISQL</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>HoleFoods/KPISQL.kpi</Data>
+</Node>
+</Node>
+</Node>
+<Node><Sub>modDate</Sub>
+<Data>2026-08-22 11:24:24</Data>
+</Node>
+<Node><Sub>name</Sub>
+<Data>KPI</Data>
+</Node>
+</Node>
+<Node><Sub>PATIENTS PIVOTS</Sub>
+<Node><Sub>data</Sub>
+<Node><Sub>Patients by Age &amp; Gender</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Use in Dashboards/Patient Allergy Counts by Age &amp; Gender.pivot</Data>
+</Node>
+</Node>
+<Node><Sub>Patients by Color</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Use in Dashboards/Patients by Favorite Color.pivot</Data>
+</Node>
+</Node>
+<Node><Sub>Patients by Diagnosis</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Use in Dashboards/For Patients Scorecard.pivot</Data>
+</Node>
+</Node>
+<Node><Sub>Patients by Group</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Use in Dashboards/Patients by Group.pivot</Data>
+</Node>
+</Node>
+</Node>
+<Node><Sub>modDate</Sub>
+<Data>2026-08-19 09:09:53</Data>
+</Node>
+<Node><Sub>name</Sub>
+<Data>Patients Pivots</Data>
+</Node>
+</Node>
+<Node><Sub>PATIENTS ROWSPECS</Sub>
+<Node><Sub>data</Sub>
+<Node><Sub>Age Groups</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>[aged].[h1].[age group].MEMBERS</Data>
+</Node>
+</Node>
+<Node><Sub>Allergies</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>[allerd].[h1].[allergies].MEMBERS</Data>
+</Node>
+</Node>
+<Node><Sub>Cities</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>[homed].[h1].[city].MEMBERS</Data>
+</Node>
+</Node>
+<Node><Sub>Diagnoses</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>[diagd].[h1].[diagnoses].MEMBERS</Data>
+</Node>
+</Node>
+<Node><Sub>Favorite Colors</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>[colord].[h1].[favorite color].MEMBERS</Data>
+</Node>
+</Node>
+<Node><Sub>Industries</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>[profd].[h1].[industry].MEMBERS</Data>
+</Node>
+</Node>
+<Node><Sub>Professions</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>[profd].[h1].[profession].MEMBERS</Data>
+</Node>
+</Node>
+<Node><Sub>ZIP Codes</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>[homed].[h1].[zip].MEMBERS</Data>
+</Node>
+</Node>
+</Node>
+<Node><Sub>modDate</Sub>
+<Data>2026-08-19 09:09:53</Data>
+</Node>
+</Node>
+<Node><Sub>PRODUCTS/CATEGORY</Sub>
+<Node><Sub>data</Sub>
+<Node><Sub>Category</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Pareto Charts/Category Pareto Data.pivot</Data>
+</Node>
+</Node>
+<Node><Sub>Products</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Pareto Charts/Product Pareto Data.pivot</Data>
+</Node>
+</Node>
+</Node>
+<Node><Sub>modDate</Sub>
+<Data>2026-08-22 11:06:59</Data>
+</Node>
+<Node><Sub>name</Sub>
+<Data>Products/category</Data>
+</Node>
+</Node>
+<Node><Sub>REGION COLORS</Sub>
+<Node><Sub>data</Sub>
+<Node><Sub>Asia</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Aqua</Data>
+</Node>
+</Node>
+<Node><Sub>Europe</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>BlueViolet</Data>
+</Node>
+</Node>
+<Node><Sub>N. America</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Firebrick</Data>
+</Node>
+</Node>
+<Node><Sub>S. America</Sub>
+<Node><Sub>VALUE</Sub>
+<Data>Green</Data>
+</Node>
+</Node>
+</Node>
+<Node><Sub>modDate</Sub>
+<Data>2026-08-19 09:09:40</Data>
+</Node>
+<Node><Sub>name</Sub>
+<Data>Region Colors</Data>
+</Node>
+</Node>
+</Node>
+</Global>
+</Export>
